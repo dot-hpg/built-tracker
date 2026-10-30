@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Build Streak Tracker · Guntuku Hariprasad</title>
+<meta name="description" content="Every project Guntuku Hariprasad has built, and a 48-day daily build streak tracked in public.">
+<meta name="theme-color" content="#f6f7f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121412" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%23129a6b%22/%3E%3Cpath d=%22M8 22V14M14 22V9M20 22V16M26 22V11%22 stroke=%22white%22 stroke-width=%223%22 stroke-linecap=%22round%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Instrument+Serif&display=swap">
+<style>
+/* Layout: one centered column, tabs switch between dashboard, project table and 48-day log. */
+:root {
+  --font-anthropic-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-anthropic-serif: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
+  --color-bg: #f6f7f4; --color-panel: #ffffff; --color-fg: #161a17; --color-fg-muted: #626b64;
+  --color-border-line: #e1e5df; --color-ok: #137a52; --color-warn: #a35f00; --color-bad: #c0392b;
+  --c0: #129a6b; --c1: #d4890a; --c2: #5a5fd6;
+  --cds-chart-grid: #e8ebe6; --cds-chart-axis: #b9c0b9; --cds-chart-reference: #7c857e; --cds-chart-muted: #c3c9c3;
+  --cds-surface-popover: #ffffff; --cds-border: #dfe3dd; --cds-text-secondary: #626b64;
+  --cds-shadow-popover: 0 8px 24px rgba(20, 30, 22, .12);
+  --cds-font-size-caption: .78rem; --cds-font-size-body: .9rem; --cds-font-size-heading: 1.02rem; --cds-font-size-title: 1.6rem;
+  --cds-font-weight-medium: 500;
+  --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 14px; --cds-gap-lg: 24px; --cds-gap-xl: 36px;
+  --cds-pad-xs: 6px; --cds-pad-sm: 8px; --cds-pad-md: 12px; --cds-pad-lg: 18px;
+  --cds-radius: 10px; --cds-dur-slow: 420ms; --cds-ease-out: cubic-bezier(.2, .7, .2, 1);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --color-bg: #111411; --color-panel: #181c19; --color-fg: #e9ede8; --color-fg-muted: #98a29a;
+  --color-border-line: #2a302b; --color-ok: #4fd39c; --color-warn: #f0b04a; --color-bad: #f07a6c;
+  --c0: #34c48e; --c1: #f0a73a; --c2: #8b8ff0;
+  --cds-chart-grid: #252b26; --cds-chart-axis: #3c443d; --cds-chart-reference: #7d877f; --cds-chart-muted: #424a43;
+  --cds-surface-popover: #1f2420; --cds-border: #323a33; --cds-text-secondary: #98a29a;
+  --cds-shadow-popover: 0 8px 24px rgba(0, 0, 0, .45); color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --color-bg: #111411; --color-panel: #181c19; --color-fg: #e9ede8; --color-fg-muted: #98a29a;
+  --color-border-line: #2a302b; --color-ok: #4fd39c; --color-warn: #f0b04a; --color-bad: #f07a6c;
+  --c0: #34c48e; --c1: #f0a73a; --c2: #8b8ff0;
+  --cds-chart-grid: #252b26; --cds-chart-axis: #3c443d; --cds-chart-reference: #7d877f; --cds-chart-muted: #424a43;
+  --cds-surface-popover: #1f2420; --cds-border: #323a33; --cds-text-secondary: #98a29a;
+  --cds-shadow-popover: 0 8px 24px rgba(0, 0, 0, .45); color-scheme: dark; }
+[hidden] { display: none !important; }
+html, body { margin: 0; background: var(--color-bg); color: var(--color-fg); }
+body { font-family: var(--font-anthropic-sans); font-size: 14px; -webkit-font-smoothing: antialiased;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: max(24px, env(safe-area-inset-top, 0px)) max(40px, env(safe-area-inset-bottom, 0px)); }
+.bt { --bt-c0: var(--c0); --bt-c1: var(--c1); }
+.bt-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; max-width: 1320px; margin: 0 auto 20px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.bt-top a { color: inherit; text-underline-offset: 3px; }
+.bt-foot { max-width: 1320px; margin: 32px auto 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.bt-foot a { color: inherit; }
+</style>
+<script src="d3.min.js"></script>
+<script>
+// A small stand-in for the dashboard runtime: loads the JSON files and runs each drawing.
+(() => {
+  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const store = {}, calcs = {}, draws = {};
+  const dash = window.dash = {
+    get colors() { return [css('--c0'), css('--c1'), css('--c2')]; },
+    data(id) {
+      if (calcs[id]) {
+        const ins = calcs[id].inputs.map((i) => dash.data(i));
+        if (ins.some((r) => r.status !== 'ok')) return { status: 'loading', data: [] };
+        try { return { status: 'ok', data: calcs[id].fn(...ins.map((r) => r.data)) }; }
+        catch (e) { console.error(e); return { status: 'error', data: [] }; }
+      }
+      return store[id] || { status: 'loading', data: [] };
+    },
+    calc(id, def) { calcs[id] = def; },
+    draw(name, fn) {
+      if (fn) draws[name] = typeof fn === 'function' ? fn : (fn.update || fn.mount);
+      const f = draws[name]; if (!f) return;
+      document.querySelectorAll(`[data-draw="${name}"]`).forEach((el) => {
+        if (el.closest('[hidden]')) return;
+        try { f(el); } catch (e) { console.error(name, e); }
+      });
+    },
+    redrawAll() { Object.keys(draws).forEach((n) => dash.draw(n)); },
+    setLink(name) { try { history.replaceState(null, '', '#' + name); } catch (e) {} }
+  };
+  const load = (id, url) => fetch(url, { cache: 'no-cache' }).then((r) => r.json())
+    .then((j) => { store[id] = { status: 'ok', data: Array.isArray(j) ? j : (j.rows || j) }; })
+    .catch(() => { store[id] = { status: 'error', data: [] }; });
+  window.addEventListener('DOMContentLoaded', () => {
+    Promise.all([load('projects', 'data/projects.json'), load('tracker', 'data/tracker.json'), load('meta', 'data/meta.json')])
+      .then(() => {
+        dash.redrawAll();
+        let w = window.innerWidth;
+        window.addEventListener('resize', () => { if (Math.abs(window.innerWidth - w) > 20) { w = window.innerWidth; dash.redrawAll(); } });
+        matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => dash.redrawAll());
+      });
+  });
+})();
+</script>
+</head>
+<body>
+<div class="bt-top"><a href="https://github.com/dot-hpg/built-tracker">dot-hpg / built-tracker</a><span>Updated <span data-draw="updated">—</span> · tracked in public</span></div>
+<div id="dash-root">
+<style>
+.bt { font-family: var(--font-anthropic-sans); display: grid; gap: var(--cds-gap-lg); max-width: 1320px; margin-inline: auto; }
+.bt-head { display: grid; gap: var(--cds-gap-xs); }
+.bt-eyebrow { font-size: var(--cds-font-size-caption); letter-spacing: .08em; text-transform: uppercase; color: var(--color-fg-muted); margin: 0; }
+.bt-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: clamp(1.8rem, 3.4vw, 2.6rem); line-height: 1.1; margin: 0; text-wrap: balance; }
+.bt-take { font-size: var(--cds-font-size-heading); color: var(--color-fg); margin: 0; max-width: 70ch; line-height: 1.5; }
+.bt .bt-take b, .bt .bt-tile b { font-weight: 600; font-variant-numeric: tabular-nums; }
+.bt-tabs { display: flex; gap: var(--cds-gap-xs); border-bottom: 1px solid var(--color-border-line); flex-wrap: wrap; }
+.bt-tab { appearance: none; border: 0; background: none; font: inherit; font-size: var(--cds-font-size-body); color: var(--color-fg-muted); padding: var(--cds-pad-sm) var(--cds-pad-md); border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; }
+.bt-tab[aria-selected="true"] { color: var(--color-fg); border-bottom-color: currentColor; font-weight: var(--cds-font-weight-medium); }
+.bt-tab:focus-visible, .bt-chip:focus-visible, .bt-sort:focus-visible, .bt-search:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
+.bt-section { display: grid; gap: var(--cds-gap-lg); }
+.bt-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr)); gap: var(--cds-gap-md); }
+.bt-tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md) var(--cds-pad-lg); display: grid; gap: var(--cds-gap-xs); align-content: start; }
+.bt-tile-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; }
+.bt-tile-num { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); line-height: 1.1; margin: 0; font-variant-numeric: tabular-nums; }
+.bt-tile-num.bt-big { font-size: clamp(2rem, 3vw, 2.6rem); }
+.bt-tile-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; }
+.bt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--cds-gap-md); }
+.bt-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: grid; gap: var(--cds-gap-sm); align-content: start; min-width: 0; }
+.bt-card h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.bt-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; line-height: 1.45; }
+.bt-chart { position: relative; min-width: 0; }
+.bt-heat { min-height: 300px; }
+.bt-daily { min-height: 220px; }
+.bt-bars { min-height: 180px; }
+.bt-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm) var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; padding: 0; list-style: none; }
+.bt-legend li { display: inline-flex; align-items: center; gap: 6px; }
+.bt-sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.bt-sw-done { background: var(--bt-c0); }
+.bt-sw-today { background: transparent; border: 2px solid var(--color-fg); }
+.bt-sw-missed { background: transparent; border: 2px solid var(--color-bad); }
+.bt-sw-plan { background: transparent; border: 1px dashed var(--color-fg-muted); }
+.bt-sw-ship { background: var(--bt-c0); }
+.bt-sw-active { background: var(--bt-c1); }
+.bt-sw-early { background: var(--cds-chart-muted); }
+.bt-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); max-width: 260px; z-index: 5; line-height: 1.4; }
+.bt-tip .k { color: var(--cds-text-secondary); display: block; }
+.bt-tip .v { font-weight: 600; display: block; }
+.bt-toolbar { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; }
+.bt-search { font: inherit; font-size: var(--cds-font-size-body); padding: var(--cds-pad-xs) var(--cds-pad-sm); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--color-bg); color: var(--color-fg); min-width: 0; flex: 1 1 14rem; max-width: 22rem; }
+.bt-chip { appearance: none; font: inherit; font-size: var(--cds-font-size-caption); padding: 4px 12px; border-radius: 999px; border: 1px solid var(--color-border-line); background: var(--color-bg); color: var(--color-fg-muted); cursor: pointer; }
+.bt-chip[aria-pressed="true"] { background: var(--color-fg); color: var(--color-bg); border-color: var(--color-fg); }
+.bt-tablebox { overflow: auto; max-height: 680px; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); }
+.bt-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-body); font-variant-numeric: tabular-nums; }
+.bt-table th { position: sticky; top: 0; background: var(--color-panel); text-align: left; font-weight: var(--cds-font-weight-medium); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); border-bottom: 1px solid var(--color-border-line); padding: 0; white-space: nowrap; z-index: 1; }
+.bt-sort { appearance: none; border: 0; background: none; font: inherit; color: inherit; padding: var(--cds-pad-sm) var(--cds-pad-md); cursor: pointer; width: 100%; text-align: inherit; }
+.bt-sort::after { content: ""; display: inline-block; width: 1em; }
+th[aria-sort="ascending"] .bt-sort::after { content: " ↑"; }
+th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
+.bt-table td { padding: var(--cds-pad-sm) var(--cds-pad-md); border-bottom: 1px solid var(--color-border-line); vertical-align: top; line-height: 1.4; }
+.bt-table tr:last-child td { border-bottom: 0; }
+.bt-table .num { text-align: right; }
+.bt-table th.num .bt-sort { text-align: right; }
+.bt-name { font-weight: 600; white-space: nowrap; }
+.bt-desc { color: var(--color-fg-muted); min-width: 18rem; max-width: 34rem; }
+.bt-small { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.bt-nowrap { white-space: nowrap; }
+.bt-pill { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: var(--cds-font-size-caption); font-weight: 600; white-space: nowrap; border: 1px solid currentColor; }
+.bt-pill.ok { color: var(--color-ok); }
+.bt-pill.warn { color: var(--color-warn); }
+.bt-pill.bad { color: var(--color-bad); }
+.bt-pill.muted { color: var(--color-fg-muted); }
+.bt-pill.today { color: var(--color-fg); background: var(--color-bg); }
+.bt-lvl { font-size: var(--cds-font-size-caption); white-space: nowrap; }
+.bt-lvl.expert { font-weight: 600; }
+.bt-prog { display: flex; align-items: center; gap: 8px; min-width: 9rem; }
+.bt-prog-track { flex: 1; height: 6px; border-radius: 3px; background: var(--cds-chart-grid); overflow: hidden; }
+.bt-prog-fill { height: 100%; border-radius: 3px; }
+.bt-table a { color: inherit; text-underline-offset: 2px; }
+.bt-row-today td { background: color-mix(in srgb, var(--color-fg) 6%, transparent); }
+.bt-row-done td:first-child { box-shadow: inset 3px 0 0 var(--bt-c0); }
+.bt-method { display: grid; gap: var(--cds-gap-xs); }
+.bt-method p { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.5; max-width: 90ch; }
+[data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+[data-dash-source-state=empty] { color: transparent; }
+@media (max-width: 720px) {
+  .bt-hide-sm { display: none; }
+  .bt-tablebox { max-height: none; border: 0; overflow: visible; }
+  .bt-table thead { display: none; }
+  .bt-table, .bt-table tbody { display: block; }
+  .bt-table tr { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 12px 0; border-bottom: 1px solid var(--color-border-line); }
+  .bt-table td { border: 0; padding: 0; }
+  .bt-table td.bt-name { flex-basis: 100%; white-space: normal; order: -1; font-size: var(--cds-font-size-heading); }
+  .bt-table td.bt-desc { flex-basis: 100%; min-width: 0; max-width: none; order: 5; }
+  .bt-table .num { text-align: left; }
+  .bt-row-done td:first-child { box-shadow: none; }
+  .bt-row-today { background: color-mix(in srgb, var(--color-fg) 6%, transparent); }
+  .bt-prog { min-width: 8rem; flex: 1; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .bt-anim { animation: bt-rise var(--cds-dur-slow) var(--cds-ease-out) both; }
+  @keyframes bt-rise { from { opacity: .35; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+}
+</style>
+
+<div class="bt">
+  <header class="bt-head">
+    <p class="bt-eyebrow">Guntuku Hariprasad · built with Claude</p>
+    <h1 class="bt-title" id="top">Build Streak Tracker</h1>
+    <p class="bt-take">Day <b data-draw="val" data-source="kpis" data-field="days_built" data-row="0">—</b> of <b data-draw="val" data-source="kpis" data-field="total_days" data-row="0">—</b>: a <b data-draw="val" data-source="kpis" data-field="streak" data-row="0">—</b>-day streak and <b data-draw="val" data-source="kpis" data-field="sprint_commits" data-row="0">—</b> commits so far. Next up on <b data-draw="val" data-source="nextup" data-field="date" data-row="0" data-fmt="date">—</b>: <b data-draw="val" data-source="nextup" data-field="project" data-row="0">—</b>.</p>
+  </header>
+
+  <nav class="bt-tabs" role="tablist" aria-label="Views">
+    <button class="bt-tab" role="tab" id="tab-overview" data-tab="overview" aria-selected="true">Dashboard</button>
+    <button class="bt-tab" role="tab" id="tab-projects" data-tab="projects" aria-selected="false">All projects</button>
+    <button class="bt-tab" role="tab" id="tab-plan" data-tab="plan" aria-selected="false">48-day tracker</button>
+  </nav>
+
+  <section class="bt-section" id="overview" data-panel="overview">
+    <div class="bt-tiles">
+      <div class="bt-tile">
+        <p class="bt-tile-label">Projects built</p>
+        <p class="bt-tile-num bt-big" data-draw="val" data-source="kpis" data-field="projects" data-row="0">—</p>
+        <p class="bt-tile-note">July to October 2026</p>
+      </div>
+      <div class="bt-tile">
+        <p class="bt-tile-label">Shipped</p>
+        <p class="bt-tile-num bt-big" data-draw="val" data-source="kpis" data-field="shipped" data-row="0">—</p>
+        <p class="bt-tile-note">Live, documented or submitted</p>
+      </div>
+      <div class="bt-tile">
+        <p class="bt-tile-label">Average progress</p>
+        <p class="bt-tile-num bt-big" data-draw="val" data-source="kpis" data-field="avg_progress" data-row="0" data-fmt="pct">—</p>
+        <p class="bt-tile-note">Across every project</p>
+      </div>
+      <div class="bt-tile">
+        <p class="bt-tile-label">Current streak</p>
+        <p class="bt-tile-num bt-big" data-draw="val" data-source="kpis" data-field="streak" data-row="0" data-fmt="days">—</p>
+        <p class="bt-tile-note">Consecutive days with commits</p>
+      </div>
+      <div class="bt-tile">
+        <p class="bt-tile-label">Commits this sprint</p>
+        <p class="bt-tile-num bt-big" data-draw="val" data-source="kpis" data-field="sprint_commits" data-row="0">—</p>
+        <p class="bt-tile-note">Since day 1, Oct 25</p>
+      </div>
+      <div class="bt-tile">
+        <p class="bt-tile-label">Sprint complete</p>
+        <p class="bt-tile-num bt-big" data-draw="val" data-source="kpis" data-field="sprint_share" data-row="0" data-fmt="pct">—</p>
+        <p class="bt-tile-note"><b data-draw="val" data-source="kpis" data-field="days_left" data-row="0">—</b> days to go</p>
+      </div>
+    </div>
+
+    <div class="bt-card">
+      <h2 id="streak">48-day streak</h2>
+      <p class="bt-note">One square per day from Oct 25 to Dec 11, columns are weeks. Filled squares are days you built, shaded by commits. Red outlines are missed days. Dashed squares are planned days. Hover for the project.</p>
+      <ul class="bt-legend">
+        <li><span class="bt-sw bt-sw-done"></span>Built</li>
+        <li><span class="bt-sw bt-sw-today"></span>Today</li>
+        <li><span class="bt-sw bt-sw-missed"></span>Missed</li>
+        <li><span class="bt-sw bt-sw-plan"></span>Planned</li>
+      </ul>
+      <div class="bt-chart bt-heat" data-draw="heatmap" data-source="tracker"></div>
+    </div>
+
+    <div class="bt-grid">
+      <div class="bt-card">
+        <h2 id="daily">Commits per day</h2>
+        <p class="bt-note">All 48 days on one axis. The empty stretch is the plan still ahead.</p>
+        <div class="bt-chart bt-daily" data-draw="daily" data-source="tracker"></div>
+      </div>
+      <div class="bt-card">
+        <h2 id="categories">Projects by category</h2>
+        <p class="bt-note">Number of projects in each category, with their average progress.</p>
+        <div class="bt-chart bt-bars" data-draw="cats" data-source="categories"></div>
+      </div>
+    </div>
+
+    <div class="bt-grid">
+      <div class="bt-card">
+        <h2 id="progress">Progress by project</h2>
+        <p class="bt-note">Estimated completion of each project, sorted from most to least done.</p>
+        <ul class="bt-legend">
+          <li><span class="bt-sw bt-sw-ship"></span>Shipped</li>
+          <li><span class="bt-sw bt-sw-active"></span>Active</li>
+          <li><span class="bt-sw bt-sw-early"></span>Early stage</li>
+        </ul>
+        <div class="bt-chart bt-bars" data-draw="progress" data-source="projects"></div>
+      </div>
+      <div class="bt-card">
+        <h2 id="planmix">Where the 48 days go</h2>
+        <p class="bt-note">Days per track across the whole sprint, built and planned. Agents and LLM apps lead, with MLOps and from-scratch deep learning for depth.</p>
+        <div class="bt-chart bt-bars" data-draw="planmix" data-source="planmix"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bt-section" id="projects" data-panel="projects" hidden>
+    <div class="bt-card">
+      <h2>All projects</h2>
+      <p class="bt-note">Every project found in your GitHub repos and Claude sessions from July 2026 on. Click a column to sort. Progress is my estimate from what each repo contains.</p>
+      <div class="bt-toolbar">
+        <input class="bt-search" id="p-search" type="search" placeholder="Search projects, stack, category" aria-label="Search projects">
+        <button class="bt-chip" data-pfilter="" aria-pressed="true">All</button>
+        <button class="bt-chip" data-pfilter="Shipped" aria-pressed="false">Shipped</button>
+        <button class="bt-chip" data-pfilter="Active" aria-pressed="false">Active</button>
+        <button class="bt-chip" data-pfilter="Early stage" aria-pressed="false">Early stage</button>
+      </div>
+      <div class="bt-tablebox">
+        <table class="bt-table" id="ptable" data-source="projects" data-row-key="name">
+          <thead><tr>
+            <th data-field="name" data-sortkey="name"><button class="bt-sort">Project</button></th>
+            <th data-field="category" data-sortkey="category"><button class="bt-sort">Category</button></th>
+            <th data-field="status" data-sortkey="status"><button class="bt-sort">Status</button></th>
+            <th data-field="progress" data-sortkey="progress" aria-sort="descending"><button class="bt-sort">Progress</button></th>
+            <th data-field="description"><button class="bt-sort" disabled>What it is</button></th>
+            <th data-field="stack" class="bt-hide-sm"><button class="bt-sort" disabled>Stack</button></th>
+            <th data-field="start" data-sortkey="start"><button class="bt-sort">Started</button></th>
+            <th data-field="last" data-sortkey="last" class="bt-hide-sm"><button class="bt-sort">Last commit</button></th>
+            <th data-field="commits" data-sortkey="commits" class="num"><button class="bt-sort">Commits</button></th>
+            <th data-field="repo"><button class="bt-sort" disabled>Repo</button></th>
+            <th data-field="evidence" class="bt-hide-sm"><button class="bt-sort" disabled>Found in</button></th>
+          </tr></thead>
+          <tbody data-draw="ptable"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="bt-card bt-method">
+      <h2>How this was compiled</h2>
+      <p>I read the commit history, README and file list of every repo you pushed since July 2026, plus your recent Claude sessions and threads. Older repos from 2025 and the early-2026 course repos (pandas-100, eda-100, the Tableau and Power BI collections) are learning material rather than builds, so they are left out. The empty fitcheck- repo is a duplicate of FitCheck and is also left out.</p>
+      <p>Shipped means the repo has a working app, API, live demo or submitted report. Active means real work landed but something is still open (an unmerged branch, a missing link, a deploy). Early stage means a scaffold or a single starter file.</p>
+    </div>
+  </section>
+
+  <section class="bt-section" id="plan" data-panel="plan" hidden>
+    <div class="bt-card">
+      <h2>48-day build tracker</h2>
+      <p class="bt-note">Day 1 is Oct 25, 2026, the first day of your current daily streak and of your Claude Code sessions. Days 1 to 6 are what you actually built, from your commits. Days 7 to 48 are a suggested plan of advanced builds: finish open work first, then LLM engineering, MLOps, agents, deep learning from scratch, and a capstone. Every seventh day is a ship day for write-ups and posts.</p>
+      <div class="bt-toolbar">
+        <input class="bt-search" id="t-search" type="search" placeholder="Search days, projects, focus" aria-label="Search the plan">
+        <button class="bt-chip" data-tfilter="" aria-pressed="true">All days</button>
+        <button class="bt-chip" data-tfilter="built" aria-pressed="false">Built</button>
+        <button class="bt-chip" data-tfilter="Planned" aria-pressed="false">Planned</button>
+      </div>
+      <div class="bt-tablebox">
+        <table class="bt-table" id="ttable" data-source="tracker" data-row-key="day">
+          <thead><tr>
+            <th data-field="day" class="num"><button class="bt-sort" disabled>Day</button></th>
+            <th data-field="date"><button class="bt-sort" disabled>Date</button></th>
+            <th data-field="week" class="bt-hide-sm num"><button class="bt-sort" disabled>Week</button></th>
+            <th data-field="project"><button class="bt-sort" disabled>Project</button></th>
+            <th data-field="focus"><button class="bt-sort" disabled>Focus</button></th>
+            <th data-field="category" class="bt-hide-sm"><button class="bt-sort" disabled>Track</button></th>
+            <th data-field="level"><button class="bt-sort" disabled>Level</button></th>
+            <th data-field="status"><button class="bt-sort" disabled>Status</button></th>
+            <th data-field="commits" class="num"><button class="bt-sort" disabled>Commits</button></th>
+          </tr></thead>
+          <tbody data-draw="ttable"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(() => {
+  const root = document.querySelector('.bt');
+
+  dash.calc('kpis', {
+    inputs: ['projects', 'tracker'],
+    title: 'Headline figures',
+    description: 'Project counts and average progress from the project list; streak, commits and sprint days from the 48-day log.',
+    fn: (projects, tracker) => {
+      const built = tracker.filter((d) => d.status !== 'Planned');
+      let streak = 0;
+      for (let i = built.length - 1; i >= 0; i--) { if (Number(built[i].commits) > 0) streak++; else break; }
+      const avg = projects.reduce((s, p) => s + Number(p.progress), 0) / projects.length / 100;
+      return [{
+        projects: projects.length,
+        shipped: projects.filter((p) => p.status === 'Shipped').length,
+        avg_progress: avg,
+        streak,
+        sprint_commits: built.reduce((s, d) => s + Number(d.commits || 0), 0),
+        days_built: built.length,
+        total_days: tracker.length,
+        days_left: tracker.length - built.length,
+        sprint_share: built.length / tracker.length
+      }];
+    }
+  });
+
+  dash.calc('nextup', {
+    inputs: ['tracker'],
+    title: 'Next planned day',
+    description: 'The first day in the 48-day log that is still planned.',
+    fn: (tracker) => tracker.filter((d) => d.status === 'Planned').slice(0, 1)
+  });
+
+  dash.calc('categories', {
+    inputs: ['projects'],
+    title: 'Projects by category',
+    description: 'Count of projects and their average progress per category.',
+    fn: (projects) => {
+      const m = {};
+      projects.forEach((p) => { (m[p.category] = m[p.category] || []).push(Number(p.progress)); });
+      return Object.keys(m).map((k) => ({ category: k, projects: m[k].length, avg_progress: m[k].reduce((a, b) => a + b, 0) / m[k].length / 100 }))
+        .sort((a, b) => b.projects - a.projects || b.avg_progress - a.avg_progress);
+    }
+  });
+
+  dash.calc('planmix', {
+    inputs: ['tracker'],
+    title: 'Days per track',
+    description: 'Number of the 48 sprint days given to each track, built and planned.',
+    fn: (tracker) => {
+      const m = {};
+      tracker.forEach((d) => { m[d.category] = (m[d.category] || 0) + 1; });
+      return Object.keys(m).map((k) => ({ category: k, days: m[k] })).sort((a, b) => b.days - a.days);
+    }
+  });
+
+  window.btFmt = {
+    date: d3.utcFormat('%b %-d'),
+    pct: d3.format('.0%'),
+    int: d3.format(','),
+    parse: (s) => new Date(String(s).slice(0, 10) + 'T00:00:00Z')
+  };
+
+  // Tabs
+  const tabs = document.querySelectorAll('.bt-tab');
+  const show = (name) => {
+    tabs.forEach((t) => t.setAttribute('aria-selected', String(t.dataset.tab === name)));
+    document.querySelectorAll('[data-panel]').forEach((p) => { p.hidden = p.dataset.panel !== name; });
+  };
+  tabs.forEach((t) => t.addEventListener('click', () => { show(t.dataset.tab); dash.setLink(t.dataset.tab); }));
+  const h = location.hash.slice(1);
+  if (['overview', 'projects', 'plan'].includes(h)) show(h);
+
+  // Generic value
+  dash.draw('val', (el) => {
+    const r = dash.data(el.dataset.source);
+    const row = r.status === 'ok' && r.data ? r.data[Number(el.dataset.row || 0)] : null;
+    if (!row) { el.textContent = '—'; return; }
+    const v = row[el.dataset.field];
+    const f = el.dataset.fmt;
+    let out;
+    if (f === 'date') out = btFmt.date(btFmt.parse(v));
+    else if (f === 'pct') out = btFmt.pct(v);
+    else if (f === 'days') out = btFmt.int(v) + (Number(v) === 1 ? ' day' : ' days');
+    else if (typeof v === 'number') out = btFmt.int(v);
+    else out = String(v);
+    el.textContent = out;
+  });
+})();
+</script>
+
+<script>
+(() => {
+  const tip = (host) => {
+    let t = host.querySelector('.bt-tip');
+    if (!t) { t = document.createElement('div'); t.className = 'bt-tip'; t.hidden = true; host.appendChild(t); }
+    return t;
+  };
+  const placeTip = (host, t, x, y) => {
+    const w = host.clientWidth, tw = t.offsetWidth, th = t.offsetHeight;
+    let left = x + 12, top = y - th - 10;
+    if (left + tw > w) left = Math.max(0, x - tw - 12);
+    if (top < 0) top = y + 14;
+    t.style.left = left + 'px'; t.style.top = top + 'px';
+  };
+  const fillTip = (t, lines) => {
+    t.replaceChildren(...lines.map(([cls, txt]) => { const s = document.createElement('span'); s.className = cls; s.textContent = txt; return s; }));
+  };
+  const muted = () => getComputedStyle(document.querySelector('.bt')).getPropertyValue('--color-fg-muted').trim();
+  let animated = {};
+
+  // Heatmap
+  dash.draw('heatmap', (el) => {
+    const r = dash.data('tracker');
+    el.replaceChildren();
+    if (r.status !== 'ok') { el.textContent = '—'; return; }
+    const rows = r.data;
+    const W = el.clientWidth || 600;
+    const labelW = 34, gap = 6, weeks = Math.ceil(rows.length / 7);
+    const cell = Math.max(18, Math.min(64, (W - labelW - gap * weeks) / weeks));
+    const H = 22 + 7 * (cell + gap);
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', '48-day streak heatmap');
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const first = btFmt.parse(rows[0].date);
+    svg.selectAll('text.wd').data(days).join('text').attr('class', 'wd').attr('x', 0).attr('y', (d, i) => 22 + i * (cell + gap) + cell / 2 + 4)
+      .attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text((d, i) => i % 2 === 0 ? d : '');
+    const off = first.getUTCDay();
+    const maxC = d3.max(rows, (d) => Number(d.commits) || 0) || 1;
+    const shade = d3.scaleSqrt([0, maxC], [0.25, 1]);
+    const pos = (i) => { const k = i + off; return { col: Math.floor(k / 7), row: k % 7 }; };
+    svg.selectAll('text.wk').data(d3.range(weeks)).join('text').attr('class', 'wk')
+      .attr('x', (w) => labelW + w * (cell + gap)).attr('y', 12)
+      .attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)')
+      .text((w) => cell >= 50 ? 'Week ' + (w + 1) : 'W' + (w + 1));
+    const g = svg.selectAll('g.day').data(rows).join('g').attr('class', 'day')
+      .attr('transform', (d, i) => { const p = pos(i); return `translate(${labelW + p.col * (cell + gap)},${22 + p.row * (cell + gap)})`; });
+    g.append('rect').attr('width', cell).attr('height', cell).attr('rx', 4)
+      .attr('fill', (d) => d.status === 'Planned' || d.status === 'Missed' ? 'transparent' : dash.colors[0])
+      .attr('fill-opacity', (d) => d.status === 'Planned' ? 0 : shade(Number(d.commits) || 0))
+      .attr('stroke', (d) => d.status === 'Today' ? 'var(--color-fg)' : d.status === 'Missed' ? 'var(--color-bad)' : d.status === 'Planned' ? 'var(--color-fg-muted)' : 'none')
+      .attr('stroke-width', (d) => d.status === 'Today' || d.status === 'Missed' ? 2 : 1)
+      .attr('stroke-dasharray', (d) => d.status === 'Planned' ? '3 3' : null)
+      .attr('stroke-opacity', (d) => d.status === 'Planned' ? 0.6 : 1);
+    if (cell >= 24) {
+      g.append('text').attr('x', cell / 2).attr('y', cell / 2 + 4).attr('text-anchor', 'middle')
+        .attr('fill', (d) => d.status === 'Planned' ? 'var(--color-fg-muted)' : d.status === 'Missed' ? 'var(--color-bad)' : shade(Number(d.commits) || 0) > 0.6 ? 'var(--color-bg)' : 'var(--color-fg)')
+        .style('font-size', 'var(--cds-font-size-caption)').style('font-variant-numeric', 'tabular-nums')
+        .text((d) => d.day);
+    }
+    const t = tip(el);
+    g.style('cursor', 'default')
+      .on('pointerenter pointermove', (ev, d) => {
+        fillTip(t, [['k', `Day ${d.day} · ${btFmt.date(btFmt.parse(d.date))} · ${d.status}`], ['v', d.project], ['k', d.focus], ['k', d.status === 'Planned' ? d.level : `${d.commits} commits`]]);
+        t.hidden = false; const [x, y] = d3.pointer(ev, el); placeTip(el, t, x, y);
+      })
+      .on('pointerleave', () => { t.hidden = true; });
+  });
+
+  // Daily commits
+  dash.draw('daily', (el) => {
+    const r = dash.data('tracker');
+    el.replaceChildren();
+    if (r.status !== 'ok') { el.textContent = '—'; return; }
+    const rows = r.data;
+    const W = el.clientWidth || 500, H = 220;
+    const m = { t: 16, r: 8, b: 26, l: 30 };
+    const x = d3.scaleBand(rows.map((d) => d.day), [m.l, W - m.r]).padding(0.25);
+    const maxC = d3.max(rows, (d) => Number(d.commits) || 0) || 1;
+    const y = d3.scaleLinear([0, maxC], [H - m.b, m.t]).nice();
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Commits per day');
+    const ticks = y.ticks(4);
+    svg.append('g').selectAll('line').data(ticks).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y).attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').selectAll('text').data(ticks).join('text').attr('x', m.l - 6).attr('y', (d) => y(d) + 4).attr('text-anchor', 'end')
+      .attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text(d3.format('d'));
+    const every = W < 520 ? 14 : 7;
+    const wkStarts = rows.filter((d) => (d.day - 1) % every === 0);
+    svg.append('g').selectAll('text').data(wkStarts).join('text').attr('x', (d) => x(d.day)).attr('y', H - 6)
+      .attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text((d) => btFmt.date(btFmt.parse(d.date)));
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', 'var(--cds-chart-axis)');
+    const bars = svg.append('g').selectAll('rect').data(rows.filter((d) => d.status !== 'Planned')).join('rect')
+      .attr('x', (d) => x(d.day)).attr('width', x.bandwidth()).attr('rx', Math.min(3, x.bandwidth() / 2))
+      .attr('y', (d) => y(Number(d.commits) || 0)).attr('height', (d) => y(0) - y(Number(d.commits) || 0))
+      .attr('fill', dash.colors[0]);
+    svg.append('g').selectAll('circle').data(rows.filter((d) => d.status === 'Planned')).join('circle')
+      .attr('cx', (d) => x(d.day) + x.bandwidth() / 2).attr('cy', y(0) - 4).attr('r', 1.5).attr('fill', 'var(--cds-chart-muted)');
+    const today = rows.find((d) => d.status === 'Today');
+    if (today) {
+      const tx = x(today.day) + x.bandwidth() / 2;
+      svg.append('line').attr('x1', tx).attr('x2', tx).attr('y1', m.t).attr('y2', y(0)).attr('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '3 3');
+      svg.append('text').attr('x', tx + 4).attr('y', m.t + 8).attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text('Today');
+    }
+    const t = tip(el);
+    svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', (d) => x(d.day) - x.step() * x.paddingInner() / 2).attr('width', x.step())
+      .attr('y', m.t).attr('height', H - m.b - m.t).attr('fill', 'transparent')
+      .on('pointerenter pointermove', (ev, d) => {
+        fillTip(t, [['k', `Day ${d.day} · ${btFmt.date(btFmt.parse(d.date))}`], ['v', d.status === 'Planned' ? 'Planned' : `${d.commits} commits`], ['k', d.project]]);
+        t.hidden = false; const [px, py] = d3.pointer(ev, el); placeTip(el, t, px, py);
+      })
+      .on('pointerleave', () => { t.hidden = true; });
+    if (!animated.daily) { animated.daily = true; el.classList.add('bt-anim'); }
+  });
+
+  // Horizontal bar helper
+  const hbars = (el, rows, opt) => {
+    el.replaceChildren();
+    const W = el.clientWidth || 400;
+    const rowH = 26, H = rows.length * rowH + 6;
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', opt.label);
+    const probe = svg.append('text').style('font-size', 'var(--cds-font-size-caption)');
+    let lw = 0, vw = 0;
+    rows.forEach((d) => { probe.text(d[opt.key]); lw = Math.max(lw, probe.node().getComputedTextLength()); probe.text(opt.valText(d)); vw = Math.max(vw, probe.node().getComputedTextLength()); });
+    probe.remove();
+    lw = Math.min(lw, W * 0.45);
+    const x = d3.scaleLinear([0, opt.max], [lw + 10, Math.max(lw + 40, W - vw - 10)]);
+    const g = svg.selectAll('g').data(rows).join('g').attr('transform', (d, i) => `translate(0,${i * rowH + 3})`);
+    g.append('text').attr('x', lw).attr('y', 14).attr('text-anchor', 'end').attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').text((d) => d[opt.key]);
+    g.append('rect').attr('x', x(0)).attr('y', 4).attr('height', 14).attr('width', x(opt.max) - x(0)).attr('rx', 3).attr('fill', 'var(--cds-chart-grid)');
+    g.append('rect').attr('x', x(0)).attr('y', 4).attr('height', 14).attr('width', (d) => Math.max(0, x(opt.val(d)) - x(0))).attr('rx', 3).attr('fill', opt.color);
+    g.append('text').attr('x', (d) => x(opt.max) + 6).attr('y', 15).attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').style('font-variant-numeric', 'tabular-nums').text(opt.valText);
+    if (opt.tip) {
+      const t = tip(el);
+      g.on('pointerenter pointermove', (ev, d) => { fillTip(t, opt.tip(d)); t.hidden = false; const [px, py] = d3.pointer(ev, el); placeTip(el, t, px, py); })
+       .on('pointerleave', () => { t.hidden = true; });
+    }
+  };
+
+  dash.draw('cats', (el) => {
+    const r = dash.data('categories');
+    if (r.status !== 'ok') { el.replaceChildren(); el.textContent = '—'; return; }
+    const max = d3.max(r.data, (d) => d.projects) || 1;
+    hbars(el, r.data, { label: 'Projects by category', key: 'category', max, val: (d) => d.projects, color: dash.colors[0],
+      valText: (d) => `${d.projects} · ${btFmt.pct(d.avg_progress)} done`,
+      tip: (d) => [['k', d.category], ['v', `${d.projects} projects`], ['k', `Average progress ${btFmt.pct(d.avg_progress)}`]] });
+  });
+
+  dash.draw('progress', (el) => {
+    const r = dash.data('projects');
+    if (r.status !== 'ok') { el.replaceChildren(); el.textContent = '—'; return; }
+    const rows = r.data.slice().sort((a, b) => Number(b.progress) - Number(a.progress));
+    const col = (d) => d.status === 'Shipped' ? dash.colors[0] : d.status === 'Active' ? dash.colors[1] : 'var(--cds-chart-muted)';
+    hbars(el, rows, { label: 'Progress by project', key: 'name', max: 100, val: (d) => Number(d.progress), color: col,
+      valText: (d) => `${d.progress}%`,
+      tip: (d) => [['k', `${d.category} · ${d.status}`], ['v', `${d.name}: ${d.progress}%`], ['k', d.description]] });
+  });
+
+  dash.draw('planmix', (el) => {
+    const r = dash.data('planmix');
+    if (r.status !== 'ok') { el.replaceChildren(); el.textContent = '—'; return; }
+    const max = d3.max(r.data, (d) => d.days) || 1;
+    hbars(el, r.data, { label: 'Days per track', key: 'category', max, val: (d) => d.days, color: dash.colors[2],
+      valText: (d) => `${d.days} days`,
+      tip: (d) => [['k', d.category], ['v', `${d.days} of 48 days`]] });
+  });
+})();
+</script>
+
+<script>
+(() => {
+  // Projects table
+  window.btP = { key: 'progress', dir: -1, q: '', status: '' };
+  const pill = (status) => {
+    const s = document.createElement('span');
+    s.className = 'bt-pill ' + (status === 'Shipped' ? 'ok' : status === 'Active' ? 'warn' : 'muted');
+    s.textContent = status;
+    return s;
+  };
+  const td = (txt, cls) => { const e = document.createElement('td'); if (cls) e.className = cls; if (txt instanceof Node) e.appendChild(txt); else e.textContent = txt; return e; };
+
+  dash.draw('ptable', (tb) => {
+    const r = dash.data('projects');
+    tb.replaceChildren();
+    if (r.status !== 'ok') return;
+    const q = btP.q.toLowerCase();
+    const rows = r.data.filter((p) => (!btP.status || p.status === btP.status) &&
+      (!q || [p.name, p.category, p.stack, p.description, p.status].join(' ').toLowerCase().includes(q)));
+    const num = ['progress', 'commits'].includes(btP.key);
+    rows.sort((a, b) => {
+      const va = num ? Number(a[btP.key]) : String(a[btP.key]);
+      const vb = num ? Number(b[btP.key]) : String(b[btP.key]);
+      return (va < vb ? -1 : va > vb ? 1 : 0) * btP.dir;
+    });
+    rows.forEach((p) => {
+      const tr = document.createElement('tr');
+      const prog = document.createElement('div'); prog.className = 'bt-prog';
+      const track = document.createElement('div'); track.className = 'bt-prog-track';
+      const fill = document.createElement('div'); fill.className = 'bt-prog-fill';
+      fill.style.width = Number(p.progress) + '%';
+      fill.style.background = p.status === 'Shipped' ? dash.colors[0] : p.status === 'Active' ? dash.colors[1] : 'var(--cds-chart-muted)';
+      track.appendChild(fill);
+      const lab = document.createElement('span'); lab.className = 'bt-small'; lab.textContent = p.progress + '%';
+      prog.append(track, lab);
+      const a = document.createElement('a'); a.href = p.repo_url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = p.repo;
+      tr.append(
+        td(p.name, 'bt-name'),
+        td(p.category, 'bt-nowrap'),
+        td(pill(p.status)),
+        td(prog),
+        td(p.description, 'bt-desc'),
+        td(p.stack, 'bt-small bt-hide-sm'),
+        td(btFmt.date(btFmt.parse(p.start)), 'bt-nowrap'),
+        td(btFmt.date(btFmt.parse(p.last)), 'bt-nowrap bt-hide-sm'),
+        td(btFmt.int(p.commits), 'num'),
+        td(a, 'bt-small'),
+        td(p.evidence, 'bt-small bt-hide-sm')
+      );
+      tb.appendChild(tr);
+    });
+  });
+
+  document.querySelectorAll('#ptable th[data-sortkey] .bt-sort').forEach((b) => b.addEventListener('click', () => {
+    const th = b.closest('th'); const k = th.dataset.sortkey;
+    if (btP.key === k) btP.dir *= -1; else { btP.key = k; btP.dir = ['progress', 'commits', 'start', 'last'].includes(k) ? -1 : 1; }
+    document.querySelectorAll('#ptable th').forEach((x) => x.removeAttribute('aria-sort'));
+    th.setAttribute('aria-sort', btP.dir === 1 ? 'ascending' : 'descending');
+    dash.draw('ptable');
+  }));
+  document.querySelectorAll('#p-search').forEach((i) => i.addEventListener('input', () => { btP.q = i.value; dash.draw('ptable'); }));
+  document.querySelectorAll('[data-pfilter]').forEach((b) => b.addEventListener('click', () => {
+    btP.status = b.dataset.pfilter;
+    document.querySelectorAll('[data-pfilter]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    dash.draw('ptable');
+  }));
+
+  // Plan table
+  window.btT = { q: '', f: '' };
+  dash.draw('ttable', (tb) => {
+    const r = dash.data('tracker');
+    tb.replaceChildren();
+    if (r.status !== 'ok') return;
+    const q = btT.q.toLowerCase();
+    r.data.filter((d) => (!btT.f || (btT.f === 'built' ? d.status !== 'Planned' : d.status === 'Planned')) &&
+      (!q || [d.project, d.focus, d.category, d.level, d.status, 'day ' + d.day].join(' ').toLowerCase().includes(q)))
+    .forEach((d) => {
+      const tr = document.createElement('tr');
+      tr.className = d.status === 'Today' ? 'bt-row-today' : d.status === 'Done' ? 'bt-row-done' : '';
+      const st = document.createElement('span');
+      st.className = 'bt-pill ' + (d.status === 'Done' ? 'ok' : d.status === 'Today' ? 'today' : d.status === 'Missed' ? 'bad' : 'muted');
+      st.textContent = d.status;
+      const dt = btFmt.parse(d.date);
+      tr.append(
+        td(String(d.day), 'num'),
+        td(d3.utcFormat('%a %b %-d')(dt), 'bt-nowrap'),
+        td(String(d.week), 'num bt-hide-sm'),
+        td(d.project, 'bt-name'),
+        td(d.focus, 'bt-desc'),
+        td(d.category, 'bt-small bt-nowrap bt-hide-sm'),
+        td(d.level, 'bt-lvl' + (d.level === 'Expert' ? ' expert' : '')),
+        td(st),
+        td(d.commits == null ? '' : btFmt.int(d.commits), 'num')
+      );
+      tb.appendChild(tr);
+    });
+  });
+  document.querySelectorAll('#t-search').forEach((i) => i.addEventListener('input', () => { btT.q = i.value; dash.draw('ttable'); }));
+  document.querySelectorAll('[data-tfilter]').forEach((b) => b.addEventListener('click', () => {
+    btT.f = b.dataset.tfilter;
+    document.querySelectorAll('[data-tfilter]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    dash.draw('ttable');
+  }));
+})();
+</script>
+</div>
+<p class="bt-foot">Built with Claude. Commits are pulled from <a href="https://github.com/dot-hpg">github.com/dot-hpg</a> every few hours, and each day is logged as it happens.</p>
+<script>
+dash.draw('updated', (el) => {
+  const r = dash.data('meta');
+  const u = r.status === 'ok' && r.data && r.data.updated;
+  el.textContent = u ? d3.timeFormat('%b %-d, %Y')(new Date(u)) : '—';
+});
+// Re-render drawings that were hidden when a tab opens.
+document.querySelectorAll('.bt-tab').forEach((t) => t.addEventListener('click', () => setTimeout(() => dash.redrawAll(), 0)));
+</script>
+</body>
+</html>
