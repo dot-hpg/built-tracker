@@ -68,7 +68,7 @@
    "category": "AI agents & LLM apps",
    "focus": "Published JobPilot repo; compiled every project into this tracker and the 48-day plan",
    "level": "Intermediate",
-   "status": "Today",
+   "status": "Done",
    "commits": 1,
    "locked": true
   },
@@ -80,8 +80,8 @@
    "category": "AI agents & LLM apps",
    "focus": "Merge the rebuild branch, add a cross-encoder reranker and an evaluation page with recall@k and nDCG",
    "level": "Advanced",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 8,
