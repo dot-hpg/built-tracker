@@ -57,6 +57,8 @@ body { font-family: var(--font-anthropic-sans); font-size: 14px; -webkit-font-sm
 .bt { --bt-c0: var(--c0); --bt-c1: var(--c1); }
 .bt-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; max-width: 1320px; margin: 0 auto 20px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .bt-top a { color: inherit; text-underline-offset: 3px; }
+.bt-install { max-width: 1320px; margin: 0 auto 16px; display: flex; gap: 12px; align-items: center; justify-content: space-between; background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: 10px 14px; font-size: var(--cds-font-size-body); }
+.bt-install button { appearance: none; border: 0; background: none; color: var(--color-fg-muted); font: inherit; font-size: 1.2rem; cursor: pointer; padding: 0 4px; }
 .bt-foot { max-width: 1320px; margin: 32px auto 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .bt-foot a { color: inherit; }
 </style>
@@ -106,6 +108,7 @@ body { font-family: var(--font-anthropic-sans); font-size: 14px; -webkit-font-sm
 </head>
 <body>
 <div class="bt-top"><a href="https://github.com/dot-hpg/built-tracker">dot-hpg / built-tracker</a><span>Updated <span data-draw="updated">—</span> · tracked in public</span></div>
+<div class="bt-install" id="bt-install" hidden><span>Install on your iPhone: tap <b>Share</b>, then <b>Add to Home Screen</b>.</span><button type="button" aria-label="Dismiss">×</button></div>
 <div id="dash-root">
 <style>
 .bt { font-family: var(--font-anthropic-sans); display: grid; gap: var(--cds-gap-lg); max-width: 1320px; margin-inline: auto; }
@@ -735,6 +738,14 @@ dash.draw('updated', (el) => {
 document.querySelectorAll('.bt-tab').forEach((t) => t.addEventListener('click', () => setTimeout(() => dash.redrawAll(), 0)));
 </script>
 <script>
+(() => {
+  const el = document.getElementById('bt-install');
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const installed = window.navigator.standalone || matchMedia('(display-mode: standalone)').matches;
+  let dismissed = false; try { dismissed = localStorage.getItem('bt-install-dismissed') === '1'; } catch (e) {}
+  if (el && ios && !installed && !dismissed) el.hidden = false;
+  el && el.querySelector('button').addEventListener('click', () => { el.hidden = true; try { localStorage.setItem('bt-install-dismissed', '1'); } catch (e) {} });
+})();
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 </script>
 </body>
