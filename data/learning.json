@@ -19,7 +19,7 @@
    "topic": "Interview prep",
    "url": null,
    "total": 100,
-   "watched": 3,
+   "watched": 4,
    "started": "2026-10-30",
    "completed": null,
    "notes": "Mock interviews and interview breakdowns for AI engineer roles, added one by one.",
@@ -40,6 +40,12 @@
      "title": "Top AI engineering interview questions and answers",
      "channel": "upGrad",
      "url": "https://www.youtube.com/results?search_query=upGrad+top+AI+engineering+interview+questions+and+answers",
+     "date": "2026-10-30"
+    },
+    {
+     "title": "Inside a real AI engineer interview: mock interview to evaluation",
+     "channel": "Think in Models",
+     "url": "https://www.youtube.com/results?search_query=Think+in+Models+inside+a+real+AI+engineer+interview+mock+interview",
      "date": "2026-10-30"
     }
    ]
