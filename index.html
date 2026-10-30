@@ -59,6 +59,14 @@ body { font-family: var(--font-anthropic-sans); font-size: 14px; -webkit-font-sm
 .bt-top a { color: inherit; text-underline-offset: 3px; }
 .bt-install { max-width: 1320px; margin: 0 auto 16px; display: flex; gap: 12px; align-items: center; justify-content: space-between; background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: 10px 14px; font-size: var(--cds-font-size-body); }
 .bt-install button { appearance: none; border: 0; background: none; color: var(--color-fg-muted); font: inherit; font-size: 1.2rem; cursor: pointer; padding: 0 4px; }
+.bt-learn-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: var(--cds-gap-md); }
+.bt-learn { border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: grid; gap: var(--cds-gap-sm); background: var(--color-bg); }
+.bt-learn h3 { margin: 0; font-size: var(--cds-font-size-heading); font-weight: 600; }
+.bt-learn .bt-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.bt-learn .bt-big-prog { height: 10px; border-radius: 5px; background: var(--cds-chart-grid); overflow: hidden; }
+.bt-learn .bt-big-prog > div { height: 100%; border-radius: 5px; background: var(--bt-c0); }
+.bt-learn a { color: var(--bt-c0); font-weight: 600; text-underline-offset: 3px; font-size: var(--cds-font-size-caption); }
+.bt-empty { color: var(--color-fg-muted); font-size: var(--cds-font-size-body); margin: 0; }
 .bt-foot { max-width: 1320px; margin: 32px auto 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .bt-foot a { color: inherit; }
 </style>
@@ -95,7 +103,7 @@ body { font-family: var(--font-anthropic-sans); font-size: 14px; -webkit-font-sm
     .then((j) => { store[id] = { status: 'ok', data: Array.isArray(j) ? j : (j.rows || j) }; })
     .catch(() => { store[id] = { status: 'error', data: [] }; });
   window.addEventListener('DOMContentLoaded', () => {
-    Promise.all([load('projects', 'data/projects.json'), load('tracker', 'data/tracker.json'), load('meta', 'data/meta.json')])
+    Promise.all([load('projects', 'data/projects.json'), load('tracker', 'data/tracker.json'), load('meta', 'data/meta.json'), load('learning', 'data/learning.json')])
       .then(() => {
         dash.redrawAll();
         let w = window.innerWidth;
@@ -117,7 +125,8 @@ body { font-family: var(--font-anthropic-sans); font-size: 14px; -webkit-font-sm
 .bt-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: clamp(1.8rem, 3.4vw, 2.6rem); line-height: 1.1; margin: 0; text-wrap: balance; }
 .bt-take { font-size: var(--cds-font-size-heading); color: var(--color-fg); margin: 0; max-width: 70ch; line-height: 1.5; }
 .bt .bt-take b, .bt .bt-tile b { font-weight: 600; font-variant-numeric: tabular-nums; }
-.bt-tabs { display: flex; gap: var(--cds-gap-xs); border-bottom: 1px solid var(--color-border-line); flex-wrap: wrap; }
+.bt-tabs { display: flex; gap: var(--cds-gap-xs); border-bottom: 1px solid var(--color-border-line); flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+.bt-tab { white-space: nowrap; flex: 0 0 auto; }
 .bt-tab { appearance: none; border: 0; background: none; font: inherit; font-size: var(--cds-font-size-body); color: var(--color-fg-muted); padding: var(--cds-pad-sm) var(--cds-pad-md); border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; }
 .bt-tab[aria-selected="true"] { color: var(--color-fg); border-bottom-color: currentColor; font-weight: var(--cds-font-weight-medium); }
 .bt-tab:focus-visible, .bt-chip:focus-visible, .bt-sort:focus-visible, .bt-search:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
@@ -217,6 +226,7 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
     <button class="bt-tab" role="tab" id="tab-overview" data-tab="overview" aria-selected="true">Dashboard</button>
     <button class="bt-tab" role="tab" id="tab-projects" data-tab="projects" aria-selected="false">All projects</button>
     <button class="bt-tab" role="tab" id="tab-plan" data-tab="plan" aria-selected="false">48-day tracker</button>
+    <button class="bt-tab" role="tab" id="tab-learning" data-tab="learning" aria-selected="false">Learning</button>
   </nav>
 
   <section class="bt-section" id="overview" data-panel="overview">
@@ -362,6 +372,41 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
       </div>
     </div>
   </section>
+
+  <section class="bt-section" id="learning" data-panel="learning" hidden>
+    <div class="bt-tiles">
+      <div class="bt-tile">
+        <p class="bt-tile-label">Ongoing</p>
+        <p class="bt-tile-num bt-big" data-draw="learnstat" data-field="ongoing">—</p>
+        <p class="bt-tile-note">Courses and playlists in progress</p>
+      </div>
+      <div class="bt-tile">
+        <p class="bt-tile-label">Completed</p>
+        <p class="bt-tile-num bt-big" data-draw="learnstat" data-field="completed">—</p>
+        <p class="bt-tile-note">Finished end to end</p>
+      </div>
+      <div class="bt-tile">
+        <p class="bt-tile-label">Videos watched</p>
+        <p class="bt-tile-num bt-big" data-draw="learnstat" data-field="watched">—</p>
+        <p class="bt-tile-note">Across everything</p>
+      </div>
+      <div class="bt-tile">
+        <p class="bt-tile-label">Videos left</p>
+        <p class="bt-tile-num bt-big" data-draw="learnstat" data-field="left">—</p>
+        <p class="bt-tile-note">In ongoing courses</p>
+      </div>
+    </div>
+    <div class="bt-card">
+      <h2>YouTube learning for AI engineering</h2>
+      <p class="bt-note">Courses and playlists you're watching. A course moves to Completed when every video is watched.</p>
+      <div class="bt-toolbar">
+        <button class="bt-chip" data-lfilter="ongoing" aria-pressed="true">Ongoing</button>
+        <button class="bt-chip" data-lfilter="completed" aria-pressed="false">Completed</button>
+      </div>
+      <div class="bt-learn-list" data-draw="learnlist"></div>
+    </div>
+  </section>
+
 </div>
 
 <script>
@@ -436,7 +481,7 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
   };
   tabs.forEach((t) => t.addEventListener('click', () => { show(t.dataset.tab); dash.setLink(t.dataset.tab); }));
   const h = location.hash.slice(1);
-  if (['overview', 'projects', 'plan'].includes(h)) show(h);
+  if (['overview', 'projects', 'plan', 'learning'].includes(h)) show(h);
 
   // Generic value
   dash.draw('val', (el) => {
@@ -728,6 +773,52 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
 </script>
 </div>
 <p class="bt-foot">Built with Claude. Commits are pulled from <a href="https://github.com/dot-hpg">github.com/dot-hpg</a> every few hours, and each day is logged as it happens.</p>
+<script>
+(() => {
+  const done = (c) => Number(c.watched) >= Number(c.total);
+  window.btL = { f: 'ongoing' };
+  dash.draw('learnstat', (el) => {
+    const r = dash.data('learning');
+    if (r.status !== 'ok') { el.textContent = '—'; return; }
+    const rows = r.data, on = rows.filter((c) => !done(c));
+    const v = { ongoing: on.length, completed: rows.length - on.length,
+      watched: rows.reduce((s, c) => s + Number(c.watched), 0),
+      left: on.reduce((s, c) => s + Number(c.total) - Number(c.watched), 0) }[el.dataset.field];
+    el.textContent = d3.format(',')(v);
+  });
+  dash.draw('learnlist', (el) => {
+    const r = dash.data('learning');
+    el.replaceChildren();
+    if (r.status !== 'ok') return;
+    const rows = r.data.filter((c) => btL.f === 'completed' ? done(c) : !done(c));
+    if (!rows.length) {
+      const p = document.createElement('p'); p.className = 'bt-empty';
+      p.textContent = btL.f === 'completed' ? 'Nothing finished yet. Courses land here when the last video is watched.' : 'No courses in progress.';
+      el.appendChild(p); return;
+    }
+    const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+    rows.forEach((c) => {
+      const pct = Math.round(100 * Number(c.watched) / Math.max(1, Number(c.total)));
+      const card = mk('div', 'bt-learn');
+      const head = mk('div', 'bt-row');
+      head.append(mk('h3', null, c.title), Object.assign(mk('span', 'bt-pill ' + (done(c) ? 'ok' : 'warn'), done(c) ? 'Completed' : 'Ongoing')));
+      const meta = mk('p', 'bt-note', `${c.channel} · ${c.topic} · started ${btFmt.date(btFmt.parse(c.started))}` + (c.completed ? ` · finished ${btFmt.date(btFmt.parse(c.completed))}` : ''));
+      const bar = mk('div', 'bt-big-prog'); const fill = mk('div'); fill.style.width = pct + '%'; bar.appendChild(fill);
+      const count = mk('div', 'bt-row');
+      count.append(mk('span', 'bt-small', `${c.watched} of ${c.total} videos watched`), mk('span', 'bt-small', `${pct}%`));
+      card.append(head, meta, bar, count);
+      if (c.notes) card.appendChild(mk('p', 'bt-note', c.notes));
+      if (c.url) { const a = mk('a', null, 'Open on YouTube →'); a.href = c.url; a.target = '_blank'; a.rel = 'noopener'; card.appendChild(a); }
+      el.appendChild(card);
+    });
+  });
+  document.querySelectorAll('[data-lfilter]').forEach((b) => b.addEventListener('click', () => {
+    btL.f = b.dataset.lfilter;
+    document.querySelectorAll('[data-lfilter]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    dash.draw('learnlist');
+  }));
+})();
+</script>
 <script>
 dash.draw('updated', (el) => {
   const r = dash.data('meta');

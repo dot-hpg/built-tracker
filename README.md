@@ -25,5 +25,6 @@ It works on phones (the tables turn into cards) and follows the device's light o
 | `index.html` | The whole site (static, no build step) |
 | `data/projects.json` | One row per project |
 | `data/tracker.json` | One row per day of the 48-day sprint. `locked: true` keeps the updater from rewriting a day that was logged by hand. |
+| `data/learning.json` | YouTube courses and playlists: `watched` of `total` videos. A course shows as Completed once every video is watched. |
 | `data/meta.json` | When the data was last updated |
 | `scripts/update_tracker.py` | The updater the workflow runs |

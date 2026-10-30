@@ -1,0 +1,16 @@
+{
+ "rows": [
+  {
+   "id": "campusx-100-days-ml",
+   "title": "100 Days of Machine Learning",
+   "channel": "CampusX",
+   "topic": "Machine learning",
+   "url": "https://www.youtube.com/results?search_query=CampusX+100+days+of+machine+learning",
+   "total": 86,
+   "watched": 3,
+   "started": "2026-10-30",
+   "completed": null,
+   "notes": "Full ML course in Hindi, from basics to deployment."
+  }
+ ]
+}
