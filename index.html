@@ -777,7 +777,7 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
 <p class="bt-foot">Built with Claude. Commits are pulled from <a href="https://github.com/dot-hpg">github.com/dot-hpg</a> every few hours, and each day is logged as it happens.</p>
 <script>
 (() => {
-  const seen = (c) => Array.isArray(c.videos) ? Math.max(c.videos.length, Number(c.watched) || 0) : Number(c.watched);
+  const seen = (c) => Array.isArray(c.videos) ? Math.max(c.videos.filter((v) => !v.partial).length, Number(c.watched) || 0) : Number(c.watched);
   const done = (c) => seen(c) >= Number(c.total);
   window.btL = { f: 'ongoing' };
   dash.draw('learnstat', (el) => {
@@ -813,13 +813,13 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
       if (c.notes) card.appendChild(mk('p', 'bt-note', c.notes));
       if (Array.isArray(c.videos)) {
         const det = mk('details', 'bt-vids');
-        det.appendChild(mk('summary', null, c.videos.length ? `Videos watched (${c.videos.length})` : 'No videos logged yet'));
+        det.appendChild(mk('summary', null, c.videos.length ? `Videos logged (${c.videos.length})` : 'No videos logged yet'));
         const ol = mk('ol');
         c.videos.slice().reverse().forEach((v) => {
           const li = mk('li');
           if (v.url) { const a = mk('a', null, v.title || v.url); a.href = v.url; a.target = '_blank'; a.rel = 'noopener'; li.appendChild(a); }
           else li.appendChild(mk('span', null, v.title));
-          const bits = [v.channel, v.date ? btFmt.date(btFmt.parse(v.date)) : null].filter(Boolean).join(' · ');
+          const bits = [v.channel, v.date ? btFmt.date(btFmt.parse(v.date)) : null, v.partial ? `in progress, ${v.position || '?'} of ${v.length || '?'}` : null].filter(Boolean).join(' · ');
           if (bits) li.appendChild(mk('span', 'bt-small', ' ' + bits));
           ol.appendChild(li);
         });
