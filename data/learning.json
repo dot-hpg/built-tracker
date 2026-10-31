@@ -42,7 +42,7 @@
    "topic": "Interview prep",
    "url": null,
    "total": 100,
-   "watched": 4,
+   "watched": 5,
    "started": "2026-10-30",
    "completed": null,
    "notes": "Mock interviews and interview breakdowns for AI engineer roles, added one by one.",
@@ -75,10 +75,7 @@
      "title": "AI engineer mock interview: real technical round simulation",
      "channel": "Think in Models",
      "url": "https://www.youtube.com/results?search_query=Think+in+Models+AI+engineer+mock+interview+real+technical+round+simulation",
-     "date": "2026-10-31",
-     "partial": true,
-     "position": "19:50",
-     "length": "51:24"
+     "date": "2026-10-31"
     }
    ]
   }
