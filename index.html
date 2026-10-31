@@ -76,6 +76,13 @@ a.bt-vtitle:hover { color: var(--bt-c0); }
 .bt-big-prog { height: 10px; border-radius: 5px; background: var(--cds-chart-grid); overflow: hidden; }
 .bt-big-prog > div { height: 100%; border-radius: 5px; background: var(--bt-c0); }
 .bt-big-prog.bt-amber > div { background: var(--bt-c1); }
+.bt-vnum { grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; }
+.bt-vbody { display: grid; gap: 6px; min-width: 0; }
+.bt-num { min-width: 3.2em; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; font-size: var(--cds-font-size-caption); padding: 4px 8px; border-radius: 999px; background: var(--cds-chart-grid); color: var(--color-fg); }
+.bt-done { font-size: var(--cds-font-size-caption); color: var(--bt-c0); font-weight: 600; white-space: nowrap; }
+.bt-subtabs { margin-bottom: 4px; }
+.bt-subtabs + .bt-note { margin: 0 0 10px; }
+@media (max-width: 560px) { .bt-vnum { grid-template-columns: auto 1fr; } .bt-done { grid-column: 2; } }
 .bt-empty { color: var(--color-fg-muted); font-size: var(--cds-font-size-body); margin: 0; }
 .bt-foot { max-width: 1320px; margin: 32px auto 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .bt-foot a { color: inherit; }
@@ -408,7 +415,7 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
     </div>
     <div class="bt-card">
       <h2>YouTube learning for AI engineering</h2>
-      <p class="bt-note">In progress lists videos you stopped partway through, so you can resume them. Completed lists every video you finished. Course trackers shows each course's overall progress.</p>
+      <p class="bt-note">In progress lists videos you stopped partway through, so you can resume them. Completed groups finished videos by tracker, numbered with the date you finished each one. Course trackers shows each course's overall progress.</p>
       <div class="bt-toolbar">
         <button class="bt-chip" data-lfilter="inprogress" aria-pressed="true">In progress</button>
         <button class="bt-chip" data-lfilter="watched" aria-pressed="false">Completed</button>
@@ -788,7 +795,7 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
 (() => {
   const seen = (c) => Array.isArray(c.videos) ? Math.max(c.videos.filter((v) => !v.partial).length, Number(c.watched) || 0) : Number(c.watched);
   const done = (c) => seen(c) >= Number(c.total);
-  window.btL = { f: 'inprogress' };
+  window.btL = { f: 'inprogress', c: null };
   const secs = (t) => String(t || '').split(/[:.]/).reduce((a, x) => a * 60 + (Number(x) || 0), 0);
   const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
   const link = (v, text) => {
@@ -814,27 +821,53 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
     if (r.status !== 'ok') return;
     const empty = (txt) => el.appendChild(mk('p', 'bt-empty', txt));
 
-    if (btL.f === 'inprogress' || btL.f === 'watched') {
-      const want = btL.f === 'inprogress';
-      const vids = r.data.flatMap((c) => (Array.isArray(c.videos) ? c.videos : []).map((v) => ({ ...v, course: c.title })))
-        .filter((v) => !!v.partial === want)
+    const tag = (c, v) => c.unit ? `${c.unit} ${v.n}` : `#${v.n}`;
+    const withNums = (c) => (Array.isArray(c.videos) ? c.videos : []).map((v, i) => ({ ...v, n: i + 1, course: c }));
+    const item = (v, inprog) => {
+      const c = v.course, li = mk('li', 'bt-vitem bt-vnum');
+      li.appendChild(mk('span', 'bt-num', tag(c, v)));
+      const body = mk('div', 'bt-vbody');
+      body.appendChild(link(v, v.untitled ? `${c.title}, ${tag(c, v)}` : v.title));
+      const meta = [inprog ? c.title : null, v.channel, inprog ? (v.date ? 'Started ' + btFmt.date(btFmt.parse(v.date)) : null) : null].filter(Boolean).join(' · ');
+      if (meta) body.appendChild(mk('span', 'bt-small', meta));
+      li.appendChild(body);
+      if (inprog) {
+        const pct = v.length ? Math.min(100, Math.round(100 * secs(v.position) / Math.max(1, secs(v.length)))) : 0;
+        const bar = mk('div', 'bt-big-prog bt-amber'); const fill = mk('div'); fill.style.width = pct + '%'; bar.appendChild(fill);
+        const row = mk('div', 'bt-row');
+        row.append(mk('span', 'bt-small', `Stopped at ${v.position || '?'} of ${v.length || '?'}`), mk('span', 'bt-small', `${pct}%`));
+        body.append(bar, row);
+      } else {
+        li.appendChild(mk('span', 'bt-done', v.date ? 'Completed ' + btFmt.date(btFmt.parse(v.date)) : 'Completed'));
+      }
+      return li;
+    };
+
+    if (btL.f === 'inprogress') {
+      const vids = r.data.flatMap(withNums).filter((v) => v.partial)
         .sort((a, b) => String(b.date).localeCompare(String(a.date)));
-      if (!vids.length) return empty(want ? 'Nothing half-watched. When you stop partway through a video, it shows up here so you can pick it back up.' : 'No finished videos yet.');
-      const list = mk('ul', 'bt-vlist');
-      vids.forEach((v) => {
-        const li = mk('li', 'bt-vitem');
-        li.appendChild(link(v, v.title));
-        li.appendChild(mk('span', 'bt-small', [v.course, v.channel, v.date ? btFmt.date(btFmt.parse(v.date)) : null].filter(Boolean).join(' · ')));
-        if (want) {
-          const pct = v.length ? Math.min(100, Math.round(100 * secs(v.position) / Math.max(1, secs(v.length)))) : 0;
-          const bar = mk('div', 'bt-big-prog bt-amber'); const fill = mk('div'); fill.style.width = pct + '%'; bar.appendChild(fill);
-          const row = mk('div', 'bt-row');
-          row.append(mk('span', 'bt-small', `Stopped at ${v.position || '?'} of ${v.length || '?'}`), mk('span', 'bt-small', `${pct}%`));
-          li.append(bar, row);
-        }
-        list.appendChild(li);
+      if (!vids.length) return empty('Nothing half-watched. When you stop partway through a video, it shows up here so you can pick it back up.');
+      const list = mk('ul', 'bt-vlist'); vids.forEach((v) => list.appendChild(item(v, true))); el.appendChild(list);
+      return;
+    }
+
+    if (btL.f === 'watched') {
+      const courses = r.data.filter((c) => withNums(c).some((v) => !v.partial));
+      if (!courses.length) return empty('No finished videos yet.');
+      if (!courses.some((c) => c.id === btL.c)) btL.c = courses[0].id;
+      const bar = mk('div', 'bt-toolbar bt-subtabs');
+      courses.forEach((c) => {
+        const n = withNums(c).filter((v) => !v.partial).length;
+        const b = mk('button', 'bt-chip', `${c.title} (${n})`);
+        b.setAttribute('aria-pressed', String(c.id === btL.c));
+        b.addEventListener('click', () => { btL.c = c.id; dash.draw('learnlist'); });
+        bar.appendChild(b);
       });
-      el.appendChild(list);
+      el.appendChild(bar);
+      const c = courses.find((x) => x.id === btL.c);
+      const vids = withNums(c).filter((v) => !v.partial);
+      el.appendChild(mk('p', 'bt-note', `${vids.length} of ${c.total} done, numbered in the order you finished them.`));
+      const list = mk('ul', 'bt-vlist'); vids.forEach((v) => list.appendChild(item(v, false))); el.appendChild(list);
       return;
     }
 
