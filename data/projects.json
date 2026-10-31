@@ -36,7 +36,7 @@
    "repo": "rag-hybrid-search",
    "repo_url": "https://github.com/dot-hpg/rag-hybrid-search",
    "start": "2026-10-25",
-   "last": "2026-10-27",
+   "last": "2026-10-31",
    "commits": 15,
    "status": "Active",
    "progress": 75,
@@ -50,7 +50,7 @@
    "repo": "sales-forecasting",
    "repo_url": "https://github.com/dot-hpg/sales-forecasting",
    "start": "2026-10-26",
-   "last": "2026-10-28",
+   "last": "2026-10-31",
    "commits": 11,
    "status": "Shipped",
    "progress": 95,
@@ -209,6 +209,48 @@
    "status": "Shipped",
    "progress": 100,
    "evidence": "GitHub"
+  },
+  {
+   "name": "Aura",
+   "category": "New this sprint",
+   "description": "New repo picked up automatically. Tell Claude what it is to categorise it.",
+   "stack": "HTML",
+   "repo": "aura",
+   "repo_url": "https://github.com/dot-hpg/aura",
+   "start": "2026-10-31",
+   "last": "2026-10-31",
+   "commits": 2,
+   "status": "Active",
+   "progress": 20,
+   "evidence": "GitHub (auto)"
+  },
+  {
+   "name": "Netflix Content Strategy Analysis",
+   "category": "New this sprint",
+   "description": "New repo picked up automatically. Tell Claude what it is to categorise it.",
+   "stack": "Jupyter Notebook",
+   "repo": "netflix-content-strategy-analysis",
+   "repo_url": "https://github.com/dot-hpg/netflix-content-strategy-analysis",
+   "start": "2026-02-22",
+   "last": "2026-10-31",
+   "commits": 1,
+   "status": "Active",
+   "progress": 20,
+   "evidence": "GitHub (auto)"
+  },
+  {
+   "name": "Projects",
+   "category": "New this sprint",
+   "description": "New repo picked up automatically. Tell Claude what it is to categorise it.",
+   "stack": "HTML",
+   "repo": "Projects",
+   "repo_url": "https://github.com/dot-hpg/Projects",
+   "start": "2026-02-21",
+   "last": "2026-10-31",
+   "commits": 2,
+   "status": "Active",
+   "progress": 20,
+   "evidence": "GitHub (auto)"
   }
  ]
 }

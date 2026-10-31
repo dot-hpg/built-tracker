@@ -76,12 +76,14 @@
    "day": 7,
    "date": "2026-10-31",
    "week": 1,
-   "project": "RAG Hybrid Search",
+   "project": "Aura, Netflix Content Strategy Analysis, Projects, Rag Hybrid Search, Sales Forecasting",
    "category": "AI agents & LLM apps",
-   "focus": "Merge the rebuild branch, add a cross-encoder reranker and an evaluation page with recall@k and nDCG",
+   "focus": "Use the real AURA logo in header, footer and favicon; Add AURA Automation website; Rebuild Netflix EDA case study: executed notebook, 33-page report, 23 charts, cleaned data",
    "level": "Advanced",
-   "status": "Today",
-   "commits": 0
+   "status": "Done",
+   "commits": 7,
+   "plan_project": "RAG Hybrid Search",
+   "plan_focus": "Merge the rebuild branch, add a cross-encoder reranker and an evaluation page with recall@k and nDCG"
   },
   {
    "day": 8,
@@ -91,8 +93,8 @@
    "category": "AI agents & LLM apps",
    "focus": "Turn server.py into a full MCP server with tools, resources, prompts, auth and tests; connect it to Claude",
    "level": "Advanced",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 9,
