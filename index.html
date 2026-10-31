@@ -827,7 +827,7 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
       const c = v.course, li = mk('li', 'bt-vitem bt-vnum');
       li.appendChild(mk('span', 'bt-num', tag(c, v)));
       const body = mk('div', 'bt-vbody');
-      body.appendChild(link(v, v.untitled ? `${c.title}, ${tag(c, v)}` : v.title));
+      body.appendChild(link(v, v.untitled ? `${c.title}, video ${v.n}` : v.title));
       const meta = [inprog ? c.title : null, v.channel, inprog ? (v.date ? 'Started ' + btFmt.date(btFmt.parse(v.date)) : null) : null].filter(Boolean).join(' · ');
       if (meta) body.appendChild(mk('span', 'bt-small', meta));
       li.appendChild(body);

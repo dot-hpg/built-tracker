@@ -11,24 +11,23 @@
    "started": "2026-10-30",
    "completed": null,
    "notes": "Full ML course in Hindi, from basics to deployment.",
-   "unit": "Day",
    "videos": [
     {
-     "title": "Day 1",
+     "title": "Video 1",
      "channel": "CampusX",
      "url": "https://www.youtube.com/results?search_query=CampusX+100+days+of+machine+learning",
      "date": "2026-10-30",
      "untitled": true
     },
     {
-     "title": "Day 2",
+     "title": "Video 2",
      "channel": "CampusX",
      "url": "https://www.youtube.com/results?search_query=CampusX+100+days+of+machine+learning",
      "date": "2026-10-30",
      "untitled": true
     },
     {
-     "title": "Day 3",
+     "title": "Video 3",
      "channel": "CampusX",
      "url": "https://www.youtube.com/results?search_query=CampusX+100+days+of+machine+learning",
      "date": "2026-10-30",
