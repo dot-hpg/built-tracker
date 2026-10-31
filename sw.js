@@ -1,5 +1,5 @@
 // Keeps the tracker usable offline: the page shell is cached, data is fetched fresh when online.
-const SHELL = 'built-shell-v5';
+const SHELL = 'built-shell-v6';
 const DATA = 'built-data';
 const FILES = ['./', 'index.html', 'd3.min.js', 'manifest.webmanifest', 'icons/apple-touch-icon.png', 'icons/icon-192.png'];
 

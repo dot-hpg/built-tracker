@@ -68,6 +68,14 @@ body { font-family: var(--font-anthropic-sans); font-size: 14px; -webkit-font-sm
 .bt-learn a { color: var(--bt-c0); font-weight: 600; text-underline-offset: 3px; font-size: var(--cds-font-size-caption); }
 .bt-vids summary { cursor: pointer; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .bt-vids ol { margin: 8px 0 0; padding-left: 1.4em; display: grid; gap: 4px; font-size: var(--cds-font-size-caption); }
+.bt-vlist { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--cds-gap-sm); }
+.bt-vitem { border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md) var(--cds-pad-lg); display: grid; gap: 6px; background: var(--color-bg); }
+.bt-vtitle { font-weight: 600; color: var(--color-fg); text-underline-offset: 3px; }
+a.bt-vtitle:hover { color: var(--bt-c0); }
+.bt-vitem .bt-row { display: flex; justify-content: space-between; gap: 10px; }
+.bt-big-prog { height: 10px; border-radius: 5px; background: var(--cds-chart-grid); overflow: hidden; }
+.bt-big-prog > div { height: 100%; border-radius: 5px; background: var(--bt-c0); }
+.bt-big-prog.bt-amber > div { background: var(--bt-c1); }
 .bt-empty { color: var(--color-fg-muted); font-size: var(--cds-font-size-body); margin: 0; }
 .bt-foot { max-width: 1320px; margin: 32px auto 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .bt-foot a { color: inherit; }
@@ -393,19 +401,20 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
         <p class="bt-tile-note">Across everything</p>
       </div>
       <div class="bt-tile">
-        <p class="bt-tile-label">Videos left</p>
-        <p class="bt-tile-num bt-big" data-draw="learnstat" data-field="left">—</p>
-        <p class="bt-tile-note">In ongoing courses</p>
+        <p class="bt-tile-label">Half-watched</p>
+        <p class="bt-tile-num bt-big" data-draw="learnstat" data-field="inprogress">—</p>
+        <p class="bt-tile-note">Videos to resume</p>
       </div>
     </div>
     <div class="bt-card">
       <h2>YouTube learning for AI engineering</h2>
-      <p class="bt-note">Courses and playlists you're watching. A course moves to Completed when every video is watched.</p>
+      <p class="bt-note">In progress lists videos you stopped partway through, so you can resume them. Completed lists every video you finished. Course trackers shows each course's overall progress.</p>
       <div class="bt-toolbar">
-        <button class="bt-chip" data-lfilter="ongoing" aria-pressed="true">Ongoing</button>
-        <button class="bt-chip" data-lfilter="completed" aria-pressed="false">Completed</button>
+        <button class="bt-chip" data-lfilter="inprogress" aria-pressed="true">In progress</button>
+        <button class="bt-chip" data-lfilter="watched" aria-pressed="false">Completed</button>
+        <button class="bt-chip" data-lfilter="trackers" aria-pressed="false">Course trackers</button>
       </div>
-      <div class="bt-learn-list" data-draw="learnlist"></div>
+      <div data-draw="learnlist"></div>
     </div>
   </section>
 
@@ -779,13 +788,23 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
 (() => {
   const seen = (c) => Array.isArray(c.videos) ? Math.max(c.videos.filter((v) => !v.partial).length, Number(c.watched) || 0) : Number(c.watched);
   const done = (c) => seen(c) >= Number(c.total);
-  window.btL = { f: 'ongoing' };
+  window.btL = { f: 'inprogress' };
+  const secs = (t) => String(t || '').split(/[:.]/).reduce((a, x) => a * 60 + (Number(x) || 0), 0);
+  const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+  const link = (v, text) => {
+    if (!v.url) return mk('span', 'bt-vtitle', text);
+    let href = v.url;
+    if (v.partial && /youtube\.com\/watch|youtu\.be\//.test(href) && v.position) href += (href.includes('?') ? '&' : '?') + 't=' + secs(v.position) + 's';
+    const a = mk('a', 'bt-vtitle', text); a.href = href; a.target = '_blank'; a.rel = 'noopener'; return a;
+  };
   dash.draw('learnstat', (el) => {
     const r = dash.data('learning');
     if (r.status !== 'ok') { el.textContent = '—'; return; }
     const rows = r.data, on = rows.filter((c) => !done(c));
+    const vids = rows.flatMap((c) => Array.isArray(c.videos) ? c.videos : []);
     const v = { ongoing: on.length, completed: rows.length - on.length,
       watched: rows.reduce((s, c) => s + seen(c), 0),
+      inprogress: vids.filter((x) => x.partial).length,
       left: on.reduce((s, c) => s + Number(c.total) - seen(c), 0) }[el.dataset.field];
     el.textContent = d3.format(',')(v);
   });
@@ -793,42 +812,51 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
     const r = dash.data('learning');
     el.replaceChildren();
     if (r.status !== 'ok') return;
-    const rows = r.data.filter((c) => btL.f === 'completed' ? done(c) : !done(c));
-    if (!rows.length) {
-      const p = document.createElement('p'); p.className = 'bt-empty';
-      p.textContent = btL.f === 'completed' ? 'Nothing finished yet. Courses land here when the last video is watched.' : 'No courses in progress.';
-      el.appendChild(p); return;
+    const empty = (txt) => el.appendChild(mk('p', 'bt-empty', txt));
+
+    if (btL.f === 'inprogress' || btL.f === 'watched') {
+      const want = btL.f === 'inprogress';
+      const vids = r.data.flatMap((c) => (Array.isArray(c.videos) ? c.videos : []).map((v) => ({ ...v, course: c.title })))
+        .filter((v) => !!v.partial === want)
+        .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+      if (!vids.length) return empty(want ? 'Nothing half-watched. When you stop partway through a video, it shows up here so you can pick it back up.' : 'No finished videos yet.');
+      const list = mk('ul', 'bt-vlist');
+      vids.forEach((v) => {
+        const li = mk('li', 'bt-vitem');
+        li.appendChild(link(v, v.title));
+        li.appendChild(mk('span', 'bt-small', [v.course, v.channel, v.date ? btFmt.date(btFmt.parse(v.date)) : null].filter(Boolean).join(' · ')));
+        if (want) {
+          const pct = v.length ? Math.min(100, Math.round(100 * secs(v.position) / Math.max(1, secs(v.length)))) : 0;
+          const bar = mk('div', 'bt-big-prog bt-amber'); const fill = mk('div'); fill.style.width = pct + '%'; bar.appendChild(fill);
+          const row = mk('div', 'bt-row');
+          row.append(mk('span', 'bt-small', `Stopped at ${v.position || '?'} of ${v.length || '?'}`), mk('span', 'bt-small', `${pct}%`));
+          li.append(bar, row);
+        }
+        list.appendChild(li);
+      });
+      el.appendChild(list);
+      return;
     }
-    const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+
+    const rows = r.data.slice().sort((a, b) => Number(done(a)) - Number(done(b)));
+    if (!rows.length) return empty('No courses yet.');
+    const grid = mk('div', 'bt-learn-list');
     rows.forEach((c) => {
       const pct = Math.round(100 * seen(c) / Math.max(1, Number(c.total)));
       const card = mk('div', 'bt-learn');
       const head = mk('div', 'bt-row');
-      head.append(mk('h3', null, c.title), Object.assign(mk('span', 'bt-pill ' + (done(c) ? 'ok' : 'warn'), done(c) ? 'Completed' : 'Ongoing')));
+      head.append(mk('h3', null, c.title), mk('span', 'bt-pill ' + (done(c) ? 'ok' : 'warn'), done(c) ? 'Completed' : 'Ongoing'));
       const meta = mk('p', 'bt-note', `${c.channel} · ${c.topic} · started ${btFmt.date(btFmt.parse(c.started))}` + (c.completed ? ` · finished ${btFmt.date(btFmt.parse(c.completed))}` : ''));
       const bar = mk('div', 'bt-big-prog'); const fill = mk('div'); fill.style.width = pct + '%'; bar.appendChild(fill);
       const count = mk('div', 'bt-row');
-      count.append(mk('span', 'bt-small', `${seen(c)} of ${c.total} videos watched`), mk('span', 'bt-small', `${pct}%`));
+      const partial = Array.isArray(c.videos) ? c.videos.filter((v) => v.partial).length : 0;
+      count.append(mk('span', 'bt-small', `${seen(c)} of ${c.total} videos watched` + (partial ? ` · ${partial} in progress` : '')), mk('span', 'bt-small', `${pct}%`));
       card.append(head, meta, bar, count);
       if (c.notes) card.appendChild(mk('p', 'bt-note', c.notes));
-      if (Array.isArray(c.videos)) {
-        const det = mk('details', 'bt-vids');
-        det.appendChild(mk('summary', null, c.videos.length ? `Videos logged (${c.videos.length})` : 'No videos logged yet'));
-        const ol = mk('ol');
-        c.videos.slice().reverse().forEach((v) => {
-          const li = mk('li');
-          if (v.url) { const a = mk('a', null, v.title || v.url); a.href = v.url; a.target = '_blank'; a.rel = 'noopener'; li.appendChild(a); }
-          else li.appendChild(mk('span', null, v.title));
-          const bits = [v.channel, v.date ? btFmt.date(btFmt.parse(v.date)) : null, v.partial ? `in progress, ${v.position || '?'} of ${v.length || '?'}` : null].filter(Boolean).join(' · ');
-          if (bits) li.appendChild(mk('span', 'bt-small', ' ' + bits));
-          ol.appendChild(li);
-        });
-        if (c.videos.length) det.appendChild(ol);
-        card.appendChild(det);
-      }
       if (c.url) { const a = mk('a', null, 'Open on YouTube →'); a.href = c.url; a.target = '_blank'; a.rel = 'noopener'; card.appendChild(a); }
-      el.appendChild(card);
+      grid.appendChild(card);
     });
+    el.appendChild(grid);
   });
   document.querySelectorAll('[data-lfilter]').forEach((b) => b.addEventListener('click', () => {
     btL.f = b.dataset.lfilter;
