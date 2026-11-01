@@ -93,7 +93,7 @@
    "category": "AI agents & LLM apps",
    "focus": "Netflix EDA case study: executed notebook, 33-page report, 23 charts, cleaned data; Move the Target Brazil SQL case study to its own repository; Point links at the dedicated repository",
    "level": "Advanced",
-   "status": "Today",
+   "status": "Done",
    "commits": 5,
    "plan_project": "MCP Task Server v2",
    "plan_focus": "Turn server.py into a full MCP server with tools, resources, prompts, auth and tests; connect it to Claude"
@@ -106,8 +106,8 @@
    "category": "AI agents & LLM apps",
    "focus": "LangGraph multi-agent research assistant: planner, searcher, writer and critic with shared state",
    "level": "Advanced",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 10,
