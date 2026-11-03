@@ -106,7 +106,7 @@
    "category": "AI agents & LLM apps",
    "focus": "LangGraph multi-agent research assistant: planner, searcher, writer and critic with shared state",
    "level": "Advanced",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -117,8 +117,8 @@
    "category": "AI agents & LLM apps",
    "focus": "Deploy JobPilot and add email and calendar follow-ups for every application it sends",
    "level": "Advanced",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 11,
