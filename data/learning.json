@@ -42,7 +42,7 @@
    "topic": "Interview prep",
    "url": null,
    "total": 100,
-   "watched": 6,
+   "watched": 7,
    "started": "2026-10-30",
    "completed": null,
    "notes": "Mock interviews and interview breakdowns for AI engineer roles, added one by one.",
@@ -82,6 +82,12 @@
      "channel": "Think in Models",
      "url": "https://www.youtube.com/results?search_query=Think+in+Models+how+to+approach+AI+system+design+questions+in+interviews",
      "date": "2026-10-31"
+    },
+    {
+     "title": "Cognizant GenAI interview experience",
+     "channel": "Meghna Srivastava",
+     "url": "https://www.youtube.com/watch?v=9VBdSll7hBA",
+     "date": "2026-11-03"
     }
    ]
   }
