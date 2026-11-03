@@ -117,7 +117,7 @@
    "category": "AI agents & LLM apps",
    "focus": "Deploy JobPilot and add email and calendar follow-ups for every application it sends",
    "level": "Advanced",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -128,8 +128,8 @@
    "category": "MLOps & infra",
    "focus": "Upgrade the network anomaly model to real-time scoring on a Redpanda stream with a FastAPI consumer",
    "level": "Expert",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 12,
