@@ -128,7 +128,7 @@
    "category": "MLOps & infra",
    "focus": "Upgrade the network anomaly model to real-time scoring on a Redpanda stream with a FastAPI consumer",
    "level": "Expert",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -139,8 +139,8 @@
    "category": "AI agents & LLM apps",
    "focus": "Reusable evaluation framework: golden sets, LLM-as-judge, regression runs in CI",
    "level": "Expert",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 13,
