@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Build Streak Tracker · Guntuku Hariprasad</title>
 <meta name="description" content="Every project Guntuku Hariprasad has built, and a 48-day daily build streak tracked in public.">
-<meta name="theme-color" content="#f6f7f4" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#121412" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%23129a6b%22/%3E%3Cpath d=%22M8 22V14M14 22V9M20 22V16M26 22V11%22 stroke=%22white%22 stroke-width=%223%22 stroke-linecap=%22round%22/%3E%3C/svg%3E">
+<meta name="theme-color" content="#f5f5f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%235b54e8%22/%3E%3Cpath d=%22M8 22V14M14 22V9M20 22V16M26 22V11%22 stroke=%22white%22 stroke-width=%223%22 stroke-linecap=%22round%22/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,32 +22,38 @@
 :root {
   --font-anthropic-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-anthropic-serif: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
-  --color-bg: #f6f7f4; --color-panel: #ffffff; --color-fg: #161a17; --color-fg-muted: #626b64;
-  --color-border-line: #e1e5df; --color-ok: #137a52; --color-warn: #a35f00; --color-bad: #c0392b;
-  --c0: #129a6b; --c1: #d4890a; --c2: #5a5fd6;
-  --cds-chart-grid: #e8ebe6; --cds-chart-axis: #b9c0b9; --cds-chart-reference: #7c857e; --cds-chart-muted: #c3c9c3;
-  --cds-surface-popover: #ffffff; --cds-border: #dfe3dd; --cds-text-secondary: #626b64;
+  --color-bg: #f5f5f9; --color-panel: #ffffff; --color-fg: #14151f; --color-fg-muted: #61647a;
+  --color-border-line: #e3e4ee; --color-ok: #0f7a55; --color-warn: #a35a00; --color-bad: #c0392b;
+  --c0: #5b54e8; --c1: #d9820b; --c2: #0f9b8e;
+  --cds-chart-grid: #ebebf3; --cds-chart-axis: #babcd0; --cds-chart-reference: #7d8098; --cds-chart-muted: #c7c9da;
+  --cds-surface-popover: #ffffff; --cds-border: #e0e1ec; --cds-text-secondary: #61647a;
+  --bt-shadow: 0 1px 2px rgba(20, 21, 40, .04), 0 6px 20px rgba(20, 21, 40, .05);
+  --bt-glow: linear-gradient(135deg, #5b54e8 0%, #8b5cf6 55%, #d9820b 120%);
   --cds-shadow-popover: 0 8px 24px rgba(20, 30, 22, .12);
   --cds-font-size-caption: .78rem; --cds-font-size-body: .9rem; --cds-font-size-heading: 1.02rem; --cds-font-size-title: 1.6rem;
   --cds-font-weight-medium: 500;
   --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 14px; --cds-gap-lg: 24px; --cds-gap-xl: 36px;
   --cds-pad-xs: 6px; --cds-pad-sm: 8px; --cds-pad-md: 12px; --cds-pad-lg: 18px;
-  --cds-radius: 10px; --cds-dur-slow: 420ms; --cds-ease-out: cubic-bezier(.2, .7, .2, 1);
+  --cds-radius: 14px; --cds-dur-slow: 420ms; --cds-ease-out: cubic-bezier(.2, .7, .2, 1);
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --color-bg: #111411; --color-panel: #181c19; --color-fg: #e9ede8; --color-fg-muted: #98a29a;
-  --color-border-line: #2a302b; --color-ok: #4fd39c; --color-warn: #f0b04a; --color-bad: #f07a6c;
-  --c0: #34c48e; --c1: #f0a73a; --c2: #8b8ff0;
-  --cds-chart-grid: #252b26; --cds-chart-axis: #3c443d; --cds-chart-reference: #7d877f; --cds-chart-muted: #424a43;
-  --cds-surface-popover: #1f2420; --cds-border: #323a33; --cds-text-secondary: #98a29a;
+  --color-bg: #0c0d14; --color-panel: #15161f; --color-fg: #ecedf6; --color-fg-muted: #9a9cb5;
+  --color-border-line: #252738; --color-ok: #4fd39c; --color-warn: #f2ae45; --color-bad: #f07a6c;
+  --c0: #8f89ff; --c1: #f2ae45; --c2: #3cc9b6;
+  --cds-chart-grid: #222433; --cds-chart-axis: #3a3d52; --cds-chart-reference: #80839c; --cds-chart-muted: #3f4258;
+  --cds-surface-popover: #1c1d29; --cds-border: #2e3044; --cds-text-secondary: #9a9cb5;
+  --bt-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 28px rgba(0, 0, 0, .25);
+  --bt-glow: linear-gradient(135deg, #8f89ff 0%, #b28cff 55%, #f2ae45 120%);
   --cds-shadow-popover: 0 8px 24px rgba(0, 0, 0, .45); color-scheme: dark; } }
 :root[data-theme="dark"] {
-  --color-bg: #111411; --color-panel: #181c19; --color-fg: #e9ede8; --color-fg-muted: #98a29a;
-  --color-border-line: #2a302b; --color-ok: #4fd39c; --color-warn: #f0b04a; --color-bad: #f07a6c;
-  --c0: #34c48e; --c1: #f0a73a; --c2: #8b8ff0;
-  --cds-chart-grid: #252b26; --cds-chart-axis: #3c443d; --cds-chart-reference: #7d877f; --cds-chart-muted: #424a43;
-  --cds-surface-popover: #1f2420; --cds-border: #323a33; --cds-text-secondary: #98a29a;
+  --color-bg: #0c0d14; --color-panel: #15161f; --color-fg: #ecedf6; --color-fg-muted: #9a9cb5;
+  --color-border-line: #252738; --color-ok: #4fd39c; --color-warn: #f2ae45; --color-bad: #f07a6c;
+  --c0: #8f89ff; --c1: #f2ae45; --c2: #3cc9b6;
+  --cds-chart-grid: #222433; --cds-chart-axis: #3a3d52; --cds-chart-reference: #80839c; --cds-chart-muted: #3f4258;
+  --cds-surface-popover: #1c1d29; --cds-border: #2e3044; --cds-text-secondary: #9a9cb5;
+  --bt-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 28px rgba(0, 0, 0, .25);
+  --bt-glow: linear-gradient(135deg, #8f89ff 0%, #b28cff 55%, #f2ae45 120%);
   --cds-shadow-popover: 0 8px 24px rgba(0, 0, 0, .45); color-scheme: dark; }
 [hidden] { display: none !important; }
 html, body { margin: 0; background: var(--color-bg); color: var(--color-fg); }
@@ -120,7 +126,7 @@ a.bt-vtitle:hover { color: var(--bt-c0); }
     .then((j) => { store[id] = { status: 'ok', data: Array.isArray(j) ? j : (j.rows || j) }; })
     .catch(() => { store[id] = { status: 'error', data: [] }; });
   window.addEventListener('DOMContentLoaded', () => {
-    Promise.all([load('projects', 'data/projects.json'), load('tracker', 'data/tracker.json'), load('meta', 'data/meta.json'), load('learning', 'data/learning.json')])
+    Promise.all([load('projects', 'data/projects.json'), load('tracker', 'data/tracker.json'), load('meta', 'data/meta.json'), load('learning', 'data/learning.json'), load('goals', 'data/goals.json')])
       .then(() => {
         dash.redrawAll();
         let w = window.innerWidth;
@@ -226,6 +232,57 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
   .bt-row-today { background: color-mix(in srgb, var(--color-fg) 6%, transparent); }
   .bt-prog { min-width: 8rem; flex: 1; }
 }
+/* v2 design: softer cards, pill tabs that stay on screen, gradient title. */
+.bt-title { font-size: clamp(2.2rem, 4.6vw, 3.4rem); background: var(--bt-glow); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: .06em; }
+.bt-head { gap: 10px; padding: 8px 0 4px; }
+.bt-tile, .bt-card { box-shadow: var(--bt-shadow); border-color: color-mix(in srgb, var(--color-border-line) 70%, transparent); }
+.bt-tile { padding: var(--cds-pad-lg); position: relative; overflow: hidden; }
+.bt-tile::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--c0); opacity: .75; }
+.bt-tabs { position: sticky; top: max(8px, env(safe-area-inset-top, 0px)); z-index: 10; border: 1px solid var(--color-border-line); border-radius: 999px; padding: 4px; gap: 2px; width: max-content; max-width: 100%; background: color-mix(in srgb, var(--color-panel) 85%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: var(--bt-shadow); }
+.bt-tab { border: 0; margin: 0; border-radius: 999px; padding: 7px 16px; }
+.bt-tab[aria-selected="true"] { background: var(--color-fg); color: var(--color-bg); }
+.bt-chip[aria-pressed="true"] { background: var(--c0); border-color: var(--c0); color: #fff; }
+.bt-goals { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr)); gap: var(--cds-gap-md); align-items: start; }
+.bt-goal { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: 18px; box-shadow: var(--bt-shadow); padding: 22px; display: grid; gap: 18px; position: relative; overflow: hidden; }
+.bt-goal::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: var(--bt-glow); }
+.bt-goal-today::before { background: var(--c1); }
+.bt-goal-over::before { background: var(--color-bad); }
+.bt-goal-done::before { background: var(--color-ok); }
+.bt-goal-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.bt-goal-tags { display: flex; gap: 6px; align-items: center; }
+.bt-tag { font-size: var(--cds-font-size-caption); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--c0); background: color-mix(in srgb, var(--c0) 12%, transparent); padding: 3px 9px; border-radius: 999px; }
+.bt-goal-main { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+.bt-goal-words { display: grid; gap: 6px; min-width: 0; }
+.bt-goal-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: clamp(1.6rem, 2.6vw, 2.1rem); line-height: 1.1; margin: 0; }
+.bt-clock { display: grid; justify-items: center; align-content: center; min-width: 6.5rem; padding: 10px 14px; border-radius: 14px; background: color-mix(in srgb, var(--c0) 10%, transparent); }
+.bt-goal-today .bt-clock { background: color-mix(in srgb, var(--c1) 16%, transparent); }
+.bt-goal-done .bt-clock { background: color-mix(in srgb, var(--color-ok) 14%, transparent); }
+.bt-clock-num { font-family: var(--font-anthropic-serif); font-size: 2.6rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.bt-clock-unit { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); white-space: nowrap; }
+.bt-goal-bars { display: grid; gap: 12px; }
+.bt-goal-bar { display: grid; gap: 6px; }
+.bt-goal-bar .bt-row { display: flex; justify-content: space-between; }
+.bt-strong { color: var(--color-fg); font-weight: 600; font-variant-numeric: tabular-nums; }
+.bt-fill-main { background: var(--bt-glow) !important; }
+.bt-fill-time { background: var(--cds-chart-reference) !important; }
+.bt-goal-mets { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: 8px; }
+.bt-met { display: grid; gap: 2px; padding: 10px 12px; border-radius: 12px; background: var(--color-bg); border: 1px solid var(--color-border-line); }
+.bt-met-num { font-family: var(--font-anthropic-serif); font-size: 1.6rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.bt-ms { display: grid; gap: 8px; }
+.bt-ms-head { margin: 0; font-size: var(--cds-font-size-caption); font-weight: 600; color: var(--color-fg-muted); letter-spacing: .04em; text-transform: uppercase; }
+.bt-ms-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.bt-ms-list li { display: flex; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px dashed var(--color-border-line); font-size: var(--cds-font-size-body); }
+.bt-ms-list li:last-child { border-bottom: 0; }
+.bt-check { flex: 0 0 auto; width: 18px; height: 18px; border-radius: 6px; border: 1.5px solid var(--cds-chart-axis); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: #fff; }
+.bt-ms-list li.is-done .bt-check { background: var(--color-ok); border-color: var(--color-ok); }
+.bt-ms-list li.is-done > span:last-child { color: var(--color-fg-muted); text-decoration: line-through; }
+.bt-note code { font-size: .95em; }
+@media (max-width: 560px) {
+  .bt-goal { padding: 18px 16px; }
+  .bt-goal-main { flex-direction: column; }
+  .bt-clock { grid-auto-flow: column; align-items: baseline; gap: 8px; justify-content: start; width: 100%; box-sizing: border-box; }
+  .bt-tabs { width: auto; }
+}
 @media (prefers-reduced-motion: no-preference) {
   .bt-anim { animation: bt-rise var(--cds-dur-slow) var(--cds-ease-out) both; }
   @keyframes bt-rise { from { opacity: .35; transform: translateY(4px); } to { opacity: 1; transform: none; } }
@@ -240,13 +297,41 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
   </header>
 
   <nav class="bt-tabs" role="tablist" aria-label="Views">
-    <button class="bt-tab" role="tab" id="tab-overview" data-tab="overview" aria-selected="true">Dashboard</button>
+    <button class="bt-tab" role="tab" id="tab-goals" data-tab="goals" aria-selected="true">Goals</button>
+    <button class="bt-tab" role="tab" id="tab-overview" data-tab="overview" aria-selected="false">Dashboard</button>
     <button class="bt-tab" role="tab" id="tab-projects" data-tab="projects" aria-selected="false">All projects</button>
     <button class="bt-tab" role="tab" id="tab-plan" data-tab="plan" aria-selected="false">48-day tracker</button>
     <button class="bt-tab" role="tab" id="tab-learning" data-tab="learning" aria-selected="false">Learning</button>
   </nav>
 
-  <section class="bt-section" id="overview" data-panel="overview">
+  <section class="bt-section" id="goals" data-panel="goals">
+    <div class="bt-tiles">
+      <div class="bt-tile">
+        <p class="bt-tile-label">Active goals</p>
+        <p class="bt-tile-num bt-big" data-draw="goalstat" data-field="active">—</p>
+        <p class="bt-tile-note">Being worked on now</p>
+      </div>
+      <div class="bt-tile">
+        <p class="bt-tile-label">Due today</p>
+        <p class="bt-tile-num bt-big" data-draw="goalstat" data-field="today">—</p>
+        <p class="bt-tile-note" data-draw="goalstat" data-field="todaynote">—</p>
+      </div>
+      <div class="bt-tile">
+        <p class="bt-tile-label">Next deadline</p>
+        <p class="bt-tile-num bt-big" data-draw="goalstat" data-field="next">—</p>
+        <p class="bt-tile-note" data-draw="goalstat" data-field="nextnote">—</p>
+      </div>
+      <div class="bt-tile">
+        <p class="bt-tile-label">Milestones done</p>
+        <p class="bt-tile-num bt-big" data-draw="goalstat" data-field="ms">—</p>
+        <p class="bt-tile-note">Across all goals</p>
+      </div>
+    </div>
+    <div class="bt-goals" data-draw="goals"></div>
+    <p class="bt-note">Goals, deadlines and milestones live in <code>data/goals.json</code>. Tell Claude when you tick something off and it updates here. The interview-video numbers come straight from the Learning tab.</p>
+  </section>
+
+  <section class="bt-section" id="overview" data-panel="overview" hidden>
     <div class="bt-tiles">
       <div class="bt-tile">
         <p class="bt-tile-label">Projects built</p>
@@ -496,10 +581,11 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
   const show = (name) => {
     tabs.forEach((t) => t.setAttribute('aria-selected', String(t.dataset.tab === name)));
     document.querySelectorAll('[data-panel]').forEach((p) => { p.hidden = p.dataset.panel !== name; });
+    const cur = document.querySelector(`.bt-tab[data-tab="${name}"]`); if (cur && cur.parentElement.scrollWidth > cur.parentElement.clientWidth) cur.parentElement.scrollLeft = cur.offsetLeft - 8;
   };
   tabs.forEach((t) => t.addEventListener('click', () => { show(t.dataset.tab); dash.setLink(t.dataset.tab); }));
   const h = location.hash.slice(1);
-  if (['overview', 'projects', 'plan', 'learning'].includes(h)) show(h);
+  if (['goals', 'overview', 'projects', 'plan', 'learning'].includes(h)) { show(h); requestAnimationFrame(() => window.scrollTo(0, 0)); }
 
   // Generic value
   dash.draw('val', (el) => {
@@ -896,6 +982,134 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
     document.querySelectorAll('[data-lfilter]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     dash.draw('learnlist');
   }));
+})();
+</script>
+
+<script>
+// Goals: countdowns, milestone progress and live metrics from the learning tracker.
+(() => {
+  const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+  const day = (s) => { const [y, m, d] = String(s).slice(0, 10).split('-').map(Number); return new Date(y, m - 1, d); };
+  const today = () => { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); };
+  const DAY = 864e5;
+  const fmt = (s) => day(s).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const learnCount = (src) => {
+    const id = String(src || '').replace(/^learning:/, '');
+    const r = dash.data('learning'); if (r.status !== 'ok') return null;
+    const c = r.data.find((x) => x.id === id); if (!c) return null;
+    return Array.isArray(c.videos) ? c.videos.filter((v) => !v.partial).length : Number(c.watched) || 0;
+  };
+  const goalsById = () => { const r = dash.data('goals'); return r.status === 'ok' ? Object.fromEntries(r.data.map((g) => [g.id, g])) : {}; };
+  const msDone = (m, all) => {
+    if (m.done) return true;
+    if (m.goal && all[m.goal] && all[m.goal].status === 'done') return true;
+    if (m.source && m.target) { const n = learnCount(m.source); return n != null && n >= m.target; }
+    return false;
+  };
+  const state = (g) => {
+    if (g.status === 'done') return { key: 'done', label: 'Done', big: '✓', unit: g.done_date ? 'Finished ' + fmt(g.done_date) : 'Finished' };
+    const left = Math.round((day(g.deadline) - today()) / DAY);
+    if (left < 0) return { key: 'over', label: 'Overdue', big: String(-left), unit: (-left === 1 ? 'day' : 'days') + ' overdue' };
+    if (left === 0) {
+      const n = new Date(), end = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1);
+      const h = Math.max(0, Math.floor((end - n) / 36e5));
+      return { key: 'today', label: 'Due today', big: h + 'h', unit: 'left today' };
+    }
+    return { key: 'on', label: 'On track', big: String(left), unit: (left === 1 ? 'day' : 'days') + ' left' };
+  };
+  const pctOf = (g, all) => {
+    if (g.status === 'done') return 100;
+    const ms = g.milestones || [];
+    return ms.length ? Math.round(100 * ms.filter((m) => msDone(m, all)).length / ms.length) : 0;
+  };
+
+  dash.draw('goalstat', (el) => {
+    const r = dash.data('goals');
+    if (r.status !== 'ok') { el.textContent = '—'; return; }
+    const all = goalsById(), act = r.data.filter((g) => g.status !== 'done');
+    const dueToday = act.filter((g) => state(g).key === 'today');
+    const upcoming = act.filter((g) => state(g).key === 'on').sort((a, b) => day(a.deadline) - day(b.deadline));
+    const ms = r.data.flatMap((g) => g.milestones || []);
+    const f = el.dataset.field;
+    if (f === 'active') el.textContent = act.length;
+    else if (f === 'today') el.textContent = dueToday.length;
+    else if (f === 'todaynote') el.textContent = dueToday.length ? dueToday.map((g) => g.title).join(', ') : 'Nothing due today';
+    else if (f === 'next') el.textContent = upcoming.length ? state(upcoming[0]).big + 'd' : '—';
+    else if (f === 'nextnote') el.textContent = upcoming.length ? `${upcoming[0].title}, ${fmt(upcoming[0].deadline)}` : 'No upcoming deadlines';
+    else if (f === 'ms') el.textContent = `${ms.filter((m) => msDone(m, all)).length}/${ms.length}`;
+  });
+
+  dash.draw('goals', (el) => {
+    const r = dash.data('goals');
+    el.replaceChildren();
+    if (r.status !== 'ok') { el.appendChild(mk('p', 'bt-empty', r.status === 'error' ? 'Could not load goals.' : 'Loading…')); return; }
+    const all = goalsById();
+    const order = { today: 0, over: 1, on: 2, done: 3 };
+    r.data.slice().sort((a, b) => order[state(a).key] - order[state(b).key] || day(a.deadline) - day(b.deadline)).forEach((g) => {
+      const st = state(g), pct = pctOf(g, all);
+      const card = mk('article', 'bt-goal bt-goal-' + st.key);
+      const top = mk('div', 'bt-goal-top');
+      const tags = mk('div', 'bt-goal-tags');
+      if (g.category) tags.appendChild(mk('span', 'bt-tag', g.category));
+      tags.appendChild(mk('span', 'bt-pill ' + ({ done: 'ok', today: 'warn', over: 'bad', on: 'ok' })[st.key], st.label));
+      top.append(tags, mk('span', 'bt-small', g.start === g.deadline ? 'Due ' + fmt(g.deadline) : `${fmt(g.start)} → ${fmt(g.deadline)}`));
+      card.appendChild(top);
+
+      const main = mk('div', 'bt-goal-main');
+      const words = mk('div', 'bt-goal-words');
+      words.append(mk('h3', 'bt-goal-title', g.title));
+      if (g.why) words.appendChild(mk('p', 'bt-note', g.why));
+      const clock = mk('div', 'bt-clock');
+      clock.append(mk('span', 'bt-clock-num', st.big), mk('span', 'bt-clock-unit', st.unit));
+      main.append(words, clock);
+      card.appendChild(main);
+
+      // Time used vs work done
+      const span = Math.max(1, Math.round((day(g.deadline) - day(g.start)) / DAY) + 1);
+      const used = Math.min(span, Math.max(0, Math.round((today() - day(g.start)) / DAY) + 1));
+      const tpct = g.status === 'done' ? 100 : Math.round(100 * used / span);
+      const bars = mk('div', 'bt-goal-bars');
+      [['Progress', pct + '%', pct, 'bt-fill-main'], ['Time used', g.start === g.deadline ? 'Today' : `Day ${used} of ${span}`, tpct, 'bt-fill-time']].forEach(([k, v, w, cls]) => {
+        const row = mk('div', 'bt-goal-bar');
+        const lab = mk('div', 'bt-row'); lab.append(mk('span', 'bt-small', k), mk('span', 'bt-small bt-strong', v));
+        const tr = mk('div', 'bt-big-prog'); const fill = mk('div', cls); fill.style.width = w + '%'; tr.appendChild(fill);
+        row.append(lab, tr); bars.appendChild(row);
+      });
+      card.appendChild(bars);
+
+      if (Array.isArray(g.metrics) && g.metrics.length) {
+        const mets = mk('div', 'bt-goal-mets');
+        g.metrics.forEach((m) => {
+          const v = m.source ? learnCount(m.source) : m.value;
+          const box = mk('div', 'bt-met');
+          box.append(mk('span', 'bt-met-num', v == null ? '—' : String(v) + (m.target ? '/' + m.target : '')), mk('span', 'bt-small', m.label));
+          mets.appendChild(box);
+        });
+        card.appendChild(mets);
+      }
+
+      if (Array.isArray(g.milestones) && g.milestones.length) {
+        const ms = g.milestones, n = ms.filter((m) => msDone(m, all)).length;
+        const wrap = mk('div', 'bt-ms');
+        wrap.appendChild(mk('p', 'bt-ms-head', `Milestones · ${n} of ${ms.length}`));
+        const ul = mk('ul', 'bt-ms-list');
+        ms.forEach((m) => {
+          const ok = msDone(m, all);
+          const li = mk('li', ok ? 'is-done' : '');
+          li.appendChild(mk('span', 'bt-check', ok ? '✓' : ''));
+          let t = m.title;
+          if (m.source && m.target) { const c = learnCount(m.source); if (c != null) t += ` (${Math.min(c, m.target)}/${m.target})`; }
+          li.appendChild(mk('span', null, t));
+          ul.appendChild(li);
+        });
+        wrap.appendChild(ul);
+        card.appendChild(wrap);
+      }
+      el.appendChild(card);
+    });
+  });
+  // Keep the "hours left" fresh while the page stays open.
+  setInterval(() => { dash.draw('goals'); dash.draw('goalstat'); }, 60e3);
 })();
 </script>
 <script>

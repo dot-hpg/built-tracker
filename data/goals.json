@@ -1,0 +1,44 @@
+{
+ "rows": [
+  {
+   "id": "campusx-evals",
+   "title": "Complete CampusX evals",
+   "why": "Finish the CampusX evals material today.",
+   "category": "Learning",
+   "start": "2026-11-05",
+   "deadline": "2026-11-05",
+   "status": "active",
+   "done_date": null,
+   "milestones": [
+    { "title": "Watch and finish the CampusX evals content", "done": false }
+   ]
+  },
+  {
+   "id": "ai-engineer-job",
+   "title": "Get an AI engineer job",
+   "why": "Land an AI engineer role within a month.",
+   "category": "Career",
+   "start": "2026-11-05",
+   "deadline": "2026-12-05",
+   "status": "active",
+   "done_date": null,
+   "metrics": [
+    { "label": "Interview videos", "source": "learning:ai-engineer-interviews" },
+    { "label": "Applications sent", "value": 0 },
+    { "label": "Interviews", "value": 0 },
+    { "label": "Offers", "value": 0 }
+   ],
+   "milestones": [
+    { "title": "Resume tailored for AI engineer roles", "done": false },
+    { "title": "Portfolio and GitHub show the best 3 projects", "done": false },
+    { "title": "LinkedIn updated and open to work", "done": false },
+    { "title": "Finish CampusX evals", "done": false, "goal": "campusx-evals" },
+    { "title": "Watch 30 AI engineer interview videos", "done": false, "source": "learning:ai-engineer-interviews", "target": 30 },
+    { "title": "Send 50 applications", "done": false },
+    { "title": "Do 5 mock interviews", "done": false },
+    { "title": "Get the first interview call", "done": false },
+    { "title": "Get an offer", "done": false }
+   ]
+  }
+ ]
+}
