@@ -305,28 +305,6 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
   </nav>
 
   <section class="bt-section" id="goals" data-panel="goals">
-    <div class="bt-tiles">
-      <div class="bt-tile">
-        <p class="bt-tile-label">Active goals</p>
-        <p class="bt-tile-num bt-big" data-draw="goalstat" data-field="active">—</p>
-        <p class="bt-tile-note">Being worked on now</p>
-      </div>
-      <div class="bt-tile">
-        <p class="bt-tile-label">Due today</p>
-        <p class="bt-tile-num bt-big" data-draw="goalstat" data-field="today">—</p>
-        <p class="bt-tile-note" data-draw="goalstat" data-field="todaynote">—</p>
-      </div>
-      <div class="bt-tile">
-        <p class="bt-tile-label">Next deadline</p>
-        <p class="bt-tile-num bt-big" data-draw="goalstat" data-field="next">—</p>
-        <p class="bt-tile-note" data-draw="goalstat" data-field="nextnote">—</p>
-      </div>
-      <div class="bt-tile">
-        <p class="bt-tile-label">Milestones done</p>
-        <p class="bt-tile-num bt-big" data-draw="goalstat" data-field="ms">—</p>
-        <p class="bt-tile-note">Across all goals</p>
-      </div>
-    </div>
     <div class="bt-goals" data-draw="goals"></div>
     <p class="bt-note">Goals, deadlines and milestones live in <code>data/goals.json</code>. Tell Claude when you tick something off and it updates here. The interview-video numbers come straight from the Learning tab.</p>
   </section>

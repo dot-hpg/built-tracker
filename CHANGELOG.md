@@ -2,6 +2,10 @@
 
 Each version is frozen on a `release/vN` branch. `main` is the live site, and the automatic activity logs and new videos land there between versions.
 
+## v2.1 (2026-11-05)
+
+- Removed the four summary cards from the top of the Goals tab, so the goal cards come first.
+
 ## v2 (2026-11-05)
 
 New look and a goal dashboard.
