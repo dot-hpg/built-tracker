@@ -74,6 +74,10 @@
      "goal": "campusx-evals"
     },
     {
+     "title": "AI evals",
+     "done": false
+    },
+    {
      "title": "Watch 30 AI engineer interview videos",
      "done": false,
      "source": "learning:ai-engineer-interviews",
