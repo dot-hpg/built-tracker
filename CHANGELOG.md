@@ -2,6 +2,17 @@
 
 Each version is frozen on a `release/vN` branch. `main` is the live site, and the automatic activity logs and new videos land there between versions.
 
+## v3 (2026-11-05)
+
+A full redesign into a platform-style app called Built.
+
+- App layout: a sidebar on desktop with icons, live counts for each section, a 48-day sprint ring, and your profile. On phones a floating bottom bar replaces the sidebar.
+- Sticky top bar with the page title, a live date and time, a GitHub link, and a light or dark switch that is remembered.
+- Goals opens with a greeting hero and a "Focus today" panel showing the goal due today and its next step.
+- Goal countdowns are now rings that empty as time runs out (hours on the due day, days otherwise).
+- New visual system: glass cards, soft glow background with a faint grid, Geist and Geist Mono type, gradient accents, smooth tab transitions, and hover states everywhere.
+- Learning opens on Completed when nothing is half-watched.
+
 ## v2.1 (2026-11-05)
 
 - Removed the four summary cards from the top of the Goals tab, so the goal cards come first.

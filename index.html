@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Build Streak Tracker · Guntuku Hariprasad</title>
+<title>Built · Guntuku Hariprasad</title>
 <meta name="description" content="Every project Guntuku Hariprasad has built, and a 48-day daily build streak tracked in public.">
 <meta name="theme-color" content="#f5f5f9" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-title" content="Built">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Instrument+Serif&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif&display=swap">
 <style>
 /* Layout: one centered column, tabs switch between dashboard, project table and 48-day log. */
 :root {
@@ -93,6 +93,7 @@ a.bt-vtitle:hover { color: var(--bt-c0); }
 .bt-foot { max-width: 1320px; margin: 32px auto 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .bt-foot a { color: inherit; }
 </style>
+<script>try { const t = localStorage.getItem('bt-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}</script>
 <script src="d3.min.js"></script>
 <script>
 // A small stand-in for the dashboard runtime: loads the JSON files and runs each drawing.
@@ -138,7 +139,38 @@ a.bt-vtitle:hover { color: var(--bt-c0); }
 </script>
 </head>
 <body>
-<div class="bt-top"><a href="https://github.com/dot-hpg/built-tracker">dot-hpg / built-tracker</a><span>Updated <span data-draw="updated">—</span> · tracked in public</span></div>
+<div class="app">
+  <aside class="side" aria-label="Main">
+    <a class="brand" href="./" aria-label="Built home"><span class="brand-mark"><svg viewBox="0 0 32 32"><path d="M9 23V15M14 23V10M19 23V17M24 23V12"/></svg></span><span class="brand-text"><b>Built</b><span>Career OS</span></span></a>
+    <p class="side-h">Workspace</p>
+    <nav class="side-nav" role="tablist" aria-label="Views">
+      <button class="bt-tab nav-item" role="tab" data-tab="goals" aria-selected="true"><span class="nav-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><span class="nav-label">Goals</span><span class="nav-badge" data-draw="navbadge" data-field="goals"></span></button>
+      <button class="bt-tab nav-item" role="tab" data-tab="overview" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="9" rx="2"/><rect x="13.5" y="3.5" width="7" height="5" rx="2"/><rect x="13.5" y="11.5" width="7" height="9" rx="2"/><rect x="3.5" y="15.5" width="7" height="5" rx="2"/></svg></span><span class="nav-label">Dashboard</span><span class="nav-badge" data-draw="navbadge" data-field="overview"></span></button>
+      <button class="bt-tab nav-item" role="tab" data-tab="projects" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg></span><span class="nav-label">Projects</span><span class="nav-badge" data-draw="navbadge" data-field="projects"></span></button>
+      <button class="bt-tab nav-item" role="tab" data-tab="plan" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h2M12 14h2M8 17h2"/></svg></span><span class="nav-label">48-day plan</span><span class="nav-badge" data-draw="navbadge" data-field="plan"></span></button>
+      <button class="bt-tab nav-item" role="tab" data-tab="learning" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10.5 9.5v5l4-2.5z" fill="currentColor"/></svg></span><span class="nav-label">Learning</span><span class="nav-badge" data-draw="navbadge" data-field="learning"></span></button>
+    </nav>
+    <div class="sprint" data-draw="sprintcard">
+      <div class="sprint-ring"><svg viewBox="0 0 64 64"><circle class="trk" cx="32" cy="32" r="27"/><circle class="arc" cx="32" cy="32" r="27" pathLength="100"/></svg><b class="sprint-pct">—</b></div>
+      <div class="sprint-words"><p class="sprint-k">48-day sprint</p><p class="sprint-v">—</p><p class="sprint-n">—</p></div>
+    </div>
+    <div class="side-foot">
+      <div class="me"><span class="avatar">GH</span><span class="me-w"><b>Guntuku Hariprasad</b><span>Aspiring AI engineer</span></span></div>
+      <p class="side-meta"><span class="live-dot"></span>Synced <span data-draw="updated">—</span> from <a href="https://github.com/dot-hpg">GitHub</a></p>
+    </div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-l">
+        <a class="brand brand-sm" href="./" aria-label="Built home"><span class="brand-mark"><svg viewBox="0 0 32 32"><path d="M9 23V15M14 23V10M19 23V17M24 23V12"/></svg></span></a>
+        <div class="topbar-t"><p class="crumb">Workspace <span>/</span> <span id="crumb-now">Goals</span></p><h1 class="page-title" id="page-title">Goals</h1></div>
+      </div>
+      <div class="topbar-r">
+        <span class="chip-live"><span class="live-dot"></span><span id="clock">—</span></span>
+        <a class="icon-btn" href="https://github.com/dot-hpg/built-tracker" aria-label="Source on GitHub" title="Source on GitHub"><svg viewBox="0 0 24 24"><path d="M9 19c-4 1.5-4-2-6-2.5m12 4.5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a>
+        <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch light or dark" title="Switch light or dark"><svg class="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
+      </div>
+    </header>
 <div class="bt-install" id="bt-install" hidden><span>Install on your iPhone: tap <b>Share</b>, then <b>Add to Home Screen</b>.</span><button type="button" aria-label="Dismiss">×</button></div>
 <div id="dash-root">
 <style>
@@ -283,6 +315,195 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
   .bt-clock { grid-auto-flow: column; align-items: baseline; gap: 8px; justify-content: start; width: 100%; box-sizing: border-box; }
   .bt-tabs { width: auto; }
 }
+/* ===== v3: platform shell ===== */
+:root {
+  --font-anthropic-serif: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --color-bg: #f3f4f8; --color-panel: #ffffff; --glass: rgba(255, 255, 255, .78); --line-soft: rgba(20, 22, 50, .08);
+  --track: #e7e8f0; --side-bg: rgba(255, 255, 255, .62); --hover: rgba(20, 22, 50, .045);
+  --bt-shadow: 0 1px 1px rgba(16, 18, 40, .03), 0 8px 30px -8px rgba(16, 18, 40, .10);
+  --glow-a: rgba(91, 84, 232, .16); --glow-b: rgba(178, 140, 255, .12); --glow-c: rgba(217, 130, 11, .07); --grid: rgba(20, 22, 50, .05);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --color-bg: #06070b; --color-panel: #10111a; --glass: rgba(18, 19, 29, .66); --line-soft: rgba(255, 255, 255, .07);
+  --track: #1f2130; --side-bg: rgba(10, 11, 18, .7); --hover: rgba(255, 255, 255, .045);
+  --bt-shadow: 0 1px 0 rgba(255, 255, 255, .03) inset, 0 20px 50px -20px rgba(0, 0, 0, .6);
+  --glow-a: rgba(124, 116, 255, .20); --glow-b: rgba(178, 140, 255, .12); --glow-c: rgba(242, 174, 69, .06); --grid: rgba(255, 255, 255, .035); } }
+:root[data-theme="dark"] {
+  --color-bg: #06070b; --color-panel: #10111a; --glass: rgba(18, 19, 29, .66); --line-soft: rgba(255, 255, 255, .07);
+  --track: #1f2130; --side-bg: rgba(10, 11, 18, .7); --hover: rgba(255, 255, 255, .045);
+  --bt-shadow: 0 1px 0 rgba(255, 255, 255, .03) inset, 0 20px 50px -20px rgba(0, 0, 0, .6);
+  --glow-a: rgba(124, 116, 255, .20); --glow-b: rgba(178, 140, 255, .12); --glow-c: rgba(242, 174, 69, .06); --grid: rgba(255, 255, 255, .035); }
+:root[data-theme="light"] { color-scheme: light; }
+html, body { background: var(--color-bg); }
+body { padding: 0; min-height: 100vh; font-size: 14.5px; letter-spacing: -.005em; }
+body::before { content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background: radial-gradient(1000px 640px at 18% -12%, var(--glow-a), transparent 62%), radial-gradient(760px 520px at 100% -6%, var(--glow-b), transparent 60%), radial-gradient(900px 640px at 70% 115%, var(--glow-c), transparent 60%); }
+body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%); mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%); }
+svg { flex: 0 0 auto; }
+.app { display: grid; grid-template-columns: 268px minmax(0, 1fr); min-height: 100vh; }
+.side { position: sticky; top: 0; height: 100vh; box-sizing: border-box; display: flex; flex-direction: column; gap: 6px; padding: 22px 16px 18px; border-right: 1px solid var(--line-soft); background: var(--side-bg); -webkit-backdrop-filter: blur(24px) saturate(1.3); backdrop-filter: blur(24px) saturate(1.3); overflow-y: auto; }
+.brand { display: flex; align-items: center; gap: 11px; color: var(--color-fg); text-decoration: none; padding: 2px 8px 18px; }
+.brand-mark { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--bt-glow); box-shadow: 0 6px 18px -6px var(--c0), inset 0 1px 0 rgba(255, 255, 255, .35); }
+.brand-mark svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 3.2; stroke-linecap: round; }
+.brand-text { display: grid; line-height: 1.1; }
+.brand-text b { font-size: 1.08rem; font-weight: 700; letter-spacing: -.02em; }
+.brand-text span { font-family: var(--font-mono); font-size: .68rem; color: var(--color-fg-muted); letter-spacing: .06em; text-transform: uppercase; }
+.side-h { margin: 6px 10px 4px; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--color-fg-muted); opacity: .8; }
+.side-nav { display: grid; gap: 2px; }
+.nav-item { appearance: none; border: 0; background: none; font: inherit; color: var(--color-fg-muted); display: flex; align-items: center; gap: 12px; padding: 9px 10px; border-radius: 10px; cursor: pointer; text-align: left; position: relative; transition: background .15s, color .15s; }
+.nav-item:hover { background: var(--hover); color: var(--color-fg); }
+.nav-item[aria-selected="true"] { color: var(--color-fg); background: color-mix(in srgb, var(--c0) 13%, transparent); font-weight: 600; }
+.nav-item[aria-selected="true"]::before { content: ""; position: absolute; left: -16px; top: 9px; bottom: 9px; width: 3px; border-radius: 0 3px 3px 0; background: var(--c0); }
+.nav-item[aria-selected="true"] .nav-ic { color: var(--c0); }
+.nav-ic { display: grid; place-items: center; }
+.nav-ic svg, .icon-btn svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.nav-label { flex: 1; }
+.nav-badge.is-empty { display: none; }
+.nav-badge { font-family: var(--font-mono); font-size: .68rem; font-weight: 500; padding: 2px 7px; border-radius: 999px; background: var(--hover); border: 1px solid var(--line-soft); color: var(--color-fg-muted); }
+.sprint { margin-top: 18px; display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 14px; border: 1px solid var(--line-soft); background: var(--glass); }
+.sprint-ring { position: relative; width: 56px; height: 56px; flex: 0 0 auto; }
+.sprint-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.sprint-ring circle { fill: none; stroke-width: 6; }
+.sprint-ring .trk { stroke: var(--track); }
+.sprint-ring .arc { stroke: var(--c0); stroke-linecap: round; stroke-dasharray: 0 100; transition: stroke-dasharray 1s var(--cds-ease-out); }
+.sprint-pct { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--font-mono); font-size: .72rem; }
+.sprint-words p { margin: 0; }
+.sprint-k { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; color: var(--color-fg-muted); }
+.sprint-v { font-weight: 600; margin-top: 2px !important; }
+.sprint-n { font-size: .74rem; color: var(--color-fg-muted); }
+.side-foot { margin-top: auto; display: grid; gap: 10px; padding-top: 16px; border-top: 1px solid var(--line-soft); }
+.me { display: flex; gap: 10px; align-items: center; padding: 0 4px; }
+.avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-size: .74rem; font-weight: 700; color: #fff; background: var(--bt-glow); flex: 0 0 auto; }
+.me-w { display: grid; line-height: 1.25; min-width: 0; }
+.me-w b { font-size: .84rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.me-w span { font-size: .74rem; color: var(--color-fg-muted); }
+.side-meta { margin: 0; padding: 0 4px; font-size: .72rem; color: var(--color-fg-muted); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.side-meta a { color: inherit; }
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--color-ok); box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-ok) 60%, transparent); animation: bt-pulse 2.4s infinite; flex: 0 0 auto; }
+@keyframes bt-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-ok) 55%, transparent); } 70% { box-shadow: 0 0 0 7px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+.main { min-width: 0; padding: 0 clamp(16px, 3vw, 40px) 40px; display: flex; flex-direction: column; }
+.topbar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: max(16px, env(safe-area-inset-top, 0px)) 0 14px; margin: 0 calc(-1 * clamp(16px, 3vw, 40px)); padding-inline: clamp(16px, 3vw, 40px); background: color-mix(in srgb, var(--color-bg) 72%, transparent); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); border-bottom: 1px solid var(--line-soft); }
+.topbar-l { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.brand-sm { display: none; padding: 0; }
+.crumb { margin: 0; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--color-fg-muted); }
+.crumb span:first-child { opacity: .5; margin: 0 2px; }
+.page-title { margin: 1px 0 0; font-size: 1.32rem; font-weight: 650; letter-spacing: -.025em; line-height: 1.2; }
+.topbar-r { display: flex; align-items: center; gap: 8px; }
+.chip-live { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line-soft); background: var(--glass); font-family: var(--font-mono); font-size: .72rem; color: var(--color-fg-muted); white-space: nowrap; }
+.icon-btn { appearance: none; width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--line-soft); background: var(--glass); color: var(--color-fg-muted); display: grid; place-items: center; cursor: pointer; text-decoration: none; transition: color .15s, border-color .15s; }
+.icon-btn:hover { color: var(--color-fg); border-color: color-mix(in srgb, var(--c0) 45%, transparent); }
+.i-moon { display: none; }
+:root[data-theme="dark"] .i-sun { display: none; } :root[data-theme="dark"] .i-moon { display: block; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .i-sun { display: none; } :root:not([data-theme="light"]) .i-moon { display: block; } }
+#dash-root { flex: 1; }
+.bt { max-width: 1240px; margin: 26px auto 0; gap: 22px; }
+.bt-install { max-width: 1240px; margin: 18px auto 0; width: 100%; box-sizing: border-box; }
+.bt-section { gap: 20px; }
+[data-panel]:not([hidden]) { animation: bt-enter .45s var(--cds-ease-out) both; }
+@keyframes bt-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.bt-card, .bt-tile, .bt-goal, .hero, .bt-learn, .bt-vitem { background: var(--glass); border: 1px solid var(--line-soft); box-shadow: var(--bt-shadow); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+.bt-card { border-radius: 18px; padding: 22px; gap: 10px; }
+.bt-card h2 { font-size: 1.02rem; font-weight: 650; letter-spacing: -.015em; }
+.bt-tile { border-radius: 16px; padding: 18px 18px 16px; transition: transform .2s var(--cds-ease-out), border-color .2s; }
+.bt-tile:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--c0) 35%, transparent); }
+.bt-tile::before { inset: 0 0 auto 0; width: auto; height: 2px; background: var(--bt-glow); opacity: .9; }
+.bt-tile-label { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; }
+.bt-tile-num, .bt-tile-num.bt-big { font-weight: 650; letter-spacing: -.035em; font-size: clamp(1.8rem, 2.6vw, 2.3rem); }
+.bt-tiles { grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: 14px; }
+.bt-grid { gap: 20px; }
+#panel-overview .bt-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 720px) { #panel-overview .bt-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.bt-note { font-size: .8rem; line-height: 1.55; }
+.bt-chip { padding: 6px 14px; border-color: var(--line-soft); background: var(--glass); font-weight: 500; transition: background .15s, color .15s; }
+.bt-chip:hover { color: var(--color-fg); }
+.bt-search { border-radius: 10px; padding: 8px 12px; background: var(--glass); border-color: var(--line-soft); }
+.bt-tablebox { border-radius: 14px; border-color: var(--line-soft); }
+.bt-table th { background: var(--color-panel); font-family: var(--font-mono); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; }
+.bt-table tbody tr { transition: background .12s; }
+.bt-table tbody tr:hover td { background: var(--hover); }
+.bt-table td { border-bottom-color: var(--line-soft); }
+.bt-pill { border-width: 1px; background: color-mix(in srgb, currentColor 10%, transparent); border-color: color-mix(in srgb, currentColor 30%, transparent); }
+.bt-big-prog { height: 8px; border-radius: 99px; background: var(--track); }
+.bt-big-prog > div { border-radius: 99px; transition: width .9s var(--cds-ease-out); }
+.bt-prog-track { background: var(--track); }
+.bt-tip { border-radius: 12px; }
+.hero { position: relative; overflow: hidden; border-radius: 22px; padding: clamp(22px, 3vw, 34px); display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px; align-items: center; }
+.hero::before { content: ""; position: absolute; inset: -40% -10% auto auto; width: 520px; height: 520px; background: radial-gradient(circle, var(--glow-a), transparent 65%); pointer-events: none; }
+.hero > * { position: relative; }
+.hero-slim { grid-template-columns: 1fr; }
+.hero-k { margin: 0 0 8px; font-family: var(--font-mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--c0); }
+.hero-title { margin: 0; font-size: clamp(1.9rem, 3.6vw, 2.9rem); font-weight: 650; letter-spacing: -.04em; line-height: 1.05; }
+.hero-title span { background: var(--bt-glow); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero-sub, .hero .bt-take { margin: 12px 0 0; font-size: 1rem; color: var(--color-fg-muted); max-width: 56ch; line-height: 1.55; }
+.hero .bt-take b { color: var(--color-fg); }
+.hero-focus { border-radius: 16px; padding: 18px; background: color-mix(in srgb, var(--color-bg) 55%, transparent); border: 1px solid var(--line-soft); display: grid; gap: 8px; }
+.focus-k { margin: 0; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--color-fg-muted); }
+.focus-item { display: flex; align-items: center; gap: 10px; }
+.focus-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--c1); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c1) 20%, transparent); }
+.focus-t { font-weight: 650; font-size: 1.08rem; letter-spacing: -.015em; margin: 0; }
+.focus-n { margin: 0 0 0 19px; font-size: .8rem; color: var(--color-fg-muted); }
+.bt-goals { gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr)); }
+.bt-goal { border-radius: 22px; padding: 26px; gap: 20px; }
+.bt-goal::before { height: 3px; }
+.bt-goal-title { font-weight: 650; letter-spacing: -.035em; font-size: clamp(1.5rem, 2.4vw, 1.95rem); }
+.bt-tag { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .1em; }
+.bt-goal-main { align-items: center; }
+.bt-goal .bt-clock, .bt-goal-today .bt-clock, .bt-goal-done .bt-clock { --ring: var(--c0); width: 124px; height: 124px; min-width: 0; padding: 0; border-radius: 50%; flex: 0 0 auto; display: grid; place-items: center; background: conic-gradient(var(--ring) calc(var(--p, 1) * 360deg), var(--track) 0); box-shadow: 0 10px 30px -12px var(--ring); }
+.bt-goal-today .bt-clock { --ring: var(--c1); }
+.bt-goal-done .bt-clock { --ring: var(--color-ok); }
+.bt-goal-over .bt-clock { --ring: var(--color-bad); }
+.bt-goal .bt-clock { position: relative; }
+.bt-clock-in { position: absolute; inset: 7px; border-radius: 50%; background: var(--color-panel); display: grid; place-content: center; justify-items: center; gap: 2px; }
+.bt-clock-num { font-weight: 650; letter-spacing: -.04em; font-size: 2.3rem; }
+.bt-clock-unit { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .06em; text-transform: uppercase; }
+.bt-goal-mets { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.bt-met { border-radius: 14px; background: color-mix(in srgb, var(--color-bg) 55%, transparent); border-color: var(--line-soft); padding: 12px 14px; }
+.bt-met-num { font-weight: 650; letter-spacing: -.03em; }
+.bt-ms-head, .bt-goal-bar .bt-small { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; }
+.bt-goal-bar .bt-strong { font-family: var(--font-mono); text-transform: none; letter-spacing: 0; }
+.bt-ms-list li { border-bottom-color: var(--line-soft); border-bottom-style: solid; padding: 9px 0; }
+.bt-check { border-radius: 7px; border-color: color-mix(in srgb, var(--color-fg-muted) 50%, transparent); }
+.bt-vitem, .bt-learn { border-radius: 16px; transition: border-color .2s, transform .2s var(--cds-ease-out); }
+.bt-vitem:hover { border-color: color-mix(in srgb, var(--c0) 35%, transparent); }
+.bt-num { font-family: var(--font-mono); background: color-mix(in srgb, var(--c0) 14%, transparent); color: var(--c0); }
+.bt-learn h3 { font-weight: 650; letter-spacing: -.015em; }
+.bt-foot { max-width: 1240px; width: 100%; margin: 40px auto 0; padding-top: 18px; border-top: 1px solid var(--line-soft); display: flex; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; font-size: .74rem; }
+.dock { display: none; }
+@media (max-width: 960px) {
+  .app { grid-template-columns: minmax(0, 1fr); }
+  .side { display: none; }
+  .brand-sm { display: flex; }
+  .brand-sm .brand-mark { width: 30px; height: 30px; border-radius: 9px; }
+  .main { padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)); }
+  .topbar { padding-top: max(12px, env(safe-area-inset-top, 0px)); padding-bottom: 10px; }
+  .page-title { font-size: 1.12rem; }
+  .bt { margin-top: 16px; }
+  .dock { display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; z-index: 30; left: 10px; right: 10px; bottom: max(10px, env(safe-area-inset-bottom, 0px)); padding: 6px; border-radius: 20px; border: 1px solid var(--line-soft); background: color-mix(in srgb, var(--color-panel) 80%, transparent); -webkit-backdrop-filter: blur(22px) saturate(1.5); backdrop-filter: blur(22px) saturate(1.5); box-shadow: 0 12px 40px -12px rgba(0, 0, 0, .35); }
+  .dock-item { appearance: none; border: 0; background: none; font: inherit; font-size: .64rem; font-weight: 500; color: var(--color-fg-muted); display: grid; justify-items: center; gap: 3px; padding: 7px 2px; border-radius: 14px; cursor: pointer; }
+  .dock-item[aria-selected="true"] { color: var(--c0); background: color-mix(in srgb, var(--c0) 13%, transparent); }
+  .dock-item .nav-ic svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .hero { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .crumb { display: none; }
+  .chip-live { display: none; }
+  .bt-card { padding: 18px 16px; border-radius: 16px; }
+  .bt-goal { padding: 20px 16px; border-radius: 18px; }
+  .bt-goal-main { flex-direction: row; align-items: center; }
+  .bt-goal .bt-clock, .bt-goal-today .bt-clock, .bt-goal-done .bt-clock { width: 96px; height: 96px; }
+  .bt-clock-num { font-size: 1.7rem; }
+  .bt-clock-unit { font-size: .56rem; }
+  .bt-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .bt-tile { padding: 14px; }
+  .bt-goal-mets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bt-clock-in { inset: 6px; }
+  .bt-foot { flex-direction: column; }
+}
+@media (max-width: 380px) { #clock { display: none; } .chip-live { padding: 0 11px; } }
+@media (prefers-reduced-motion: reduce) { [data-panel]:not([hidden]) { animation: none; } .live-dot { animation: none; } }
 @media (prefers-reduced-motion: no-preference) {
   .bt-anim { animation: bt-rise var(--cds-dur-slow) var(--cds-ease-out) both; }
   @keyframes bt-rise { from { opacity: .35; transform: translateY(4px); } to { opacity: 1; transform: none; } }
@@ -290,26 +511,27 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
 </style>
 
 <div class="bt">
-  <header class="bt-head">
-    <p class="bt-eyebrow">Guntuku Hariprasad · built with Claude</p>
-    <h1 class="bt-title" id="top">Build Streak Tracker</h1>
-    <p class="bt-take">Day <b data-draw="val" data-source="kpis" data-field="days_built" data-row="0">—</b> of <b data-draw="val" data-source="kpis" data-field="total_days" data-row="0">—</b>: a <b data-draw="val" data-source="kpis" data-field="streak" data-row="0">—</b>-day streak and <b data-draw="val" data-source="kpis" data-field="sprint_commits" data-row="0">—</b> commits so far. Next up on <b data-draw="val" data-source="nextup" data-field="date" data-row="0" data-fmt="date">—</b>: <b data-draw="val" data-source="nextup" data-field="project" data-row="0">—</b>.</p>
-  </header>
 
-  <nav class="bt-tabs" role="tablist" aria-label="Views">
-    <button class="bt-tab" role="tab" id="tab-goals" data-tab="goals" aria-selected="true">Goals</button>
-    <button class="bt-tab" role="tab" id="tab-overview" data-tab="overview" aria-selected="false">Dashboard</button>
-    <button class="bt-tab" role="tab" id="tab-projects" data-tab="projects" aria-selected="false">All projects</button>
-    <button class="bt-tab" role="tab" id="tab-plan" data-tab="plan" aria-selected="false">48-day tracker</button>
-    <button class="bt-tab" role="tab" id="tab-learning" data-tab="learning" aria-selected="false">Learning</button>
-  </nav>
-
-  <section class="bt-section" id="goals" data-panel="goals">
+  <section class="bt-section" id="panel-goals" data-panel="goals">
+    <div class="hero">
+      <div class="hero-words">
+        <p class="hero-k" id="hero-date">—</p>
+        <h2 class="hero-title"><span id="hero-greet">Hello</span>, Hariprasad.</h2>
+        <p class="hero-sub">Two goals, one month. Every video, application and commit you log moves these numbers.</p>
+      </div>
+      <div class="hero-focus" data-draw="focus"></div>
+    </div>
     <div class="bt-goals" data-draw="goals"></div>
     <p class="bt-note">Goals, deadlines and milestones live in <code>data/goals.json</code>. Tell Claude when you tick something off and it updates here. The interview-video numbers come straight from the Learning tab.</p>
   </section>
 
-  <section class="bt-section" id="overview" data-panel="overview" hidden>
+  <section class="bt-section" id="panel-overview" data-panel="overview" hidden>
+    <div class="hero hero-slim">
+      <div class="hero-words">
+        <p class="hero-k">Build sprint · Oct 25 to Dec 11</p>
+        <p class="bt-take">Day <b data-draw="val" data-source="kpis" data-field="days_built" data-row="0">—</b> of <b data-draw="val" data-source="kpis" data-field="total_days" data-row="0">—</b>: a <b data-draw="val" data-source="kpis" data-field="streak" data-row="0">—</b>-day streak and <b data-draw="val" data-source="kpis" data-field="sprint_commits" data-row="0">—</b> commits so far. Next up on <b data-draw="val" data-source="nextup" data-field="date" data-row="0" data-fmt="date">—</b>: <b data-draw="val" data-source="nextup" data-field="project" data-row="0">—</b>.</p>
+      </div>
+    </div>
     <div class="bt-tiles">
       <div class="bt-tile">
         <p class="bt-tile-label">Projects built</p>
@@ -387,7 +609,7 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
     </div>
   </section>
 
-  <section class="bt-section" id="projects" data-panel="projects" hidden>
+  <section class="bt-section" id="panel-projects" data-panel="projects" hidden>
     <div class="bt-card">
       <h2>All projects</h2>
       <p class="bt-note">Every project found in your GitHub repos and Claude sessions from July 2026 on. Click a column to sort. Progress is my estimate from what each repo contains.</p>
@@ -424,7 +646,7 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
     </div>
   </section>
 
-  <section class="bt-section" id="plan" data-panel="plan" hidden>
+  <section class="bt-section" id="panel-plan" data-panel="plan" hidden>
     <div class="bt-card">
       <h2>48-day build tracker</h2>
       <p class="bt-note">Day 1 is Oct 25, 2026, the first day of your current daily streak and of your Claude Code sessions. Days 1 to 6 are what you actually built, from your commits. Days 7 to 48 are a suggested plan of advanced builds: finish open work first, then LLM engineering, MLOps, agents, deep learning from scratch, and a capstone. Every seventh day is a ship day for write-ups and posts.</p>
@@ -453,7 +675,7 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
     </div>
   </section>
 
-  <section class="bt-section" id="learning" data-panel="learning" hidden>
+  <section class="bt-section" id="panel-learning" data-panel="learning" hidden>
     <div class="bt-tiles">
       <div class="bt-tile">
         <p class="bt-tile-label">Ongoing</p>
@@ -555,13 +777,19 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
   };
 
   // Tabs
-  const tabs = document.querySelectorAll('.bt-tab');
+  const TITLES = { goals: 'Goals', overview: 'Dashboard', projects: 'Projects', plan: '48-day plan', learning: 'Learning' };
   const show = (name) => {
-    tabs.forEach((t) => t.setAttribute('aria-selected', String(t.dataset.tab === name)));
+    document.querySelectorAll('.bt-tab').forEach((t) => t.setAttribute('aria-selected', String(t.dataset.tab === name)));
+    ['page-title', 'crumb-now'].forEach((id) => { const e = document.getElementById(id); if (e) e.textContent = TITLES[name] || ''; });
     document.querySelectorAll('[data-panel]').forEach((p) => { p.hidden = p.dataset.panel !== name; });
-    const cur = document.querySelector(`.bt-tab[data-tab="${name}"]`); if (cur && cur.parentElement.scrollWidth > cur.parentElement.clientWidth) cur.parentElement.scrollLeft = cur.offsetLeft - 8;
   };
-  tabs.forEach((t) => t.addEventListener('click', () => { show(t.dataset.tab); dash.setLink(t.dataset.tab); }));
+  window.btShow = show;
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('.bt-tab'); if (!t) return;
+    show(t.dataset.tab); dash.setLink(t.dataset.tab);
+    window.scrollTo(0, 0);
+    setTimeout(() => dash.redrawAll(), 0);
+  });
   const h = location.hash.slice(1);
   if (['goals', 'overview', 'projects', 'plan', 'learning'].includes(h)) { show(h); requestAnimationFrame(() => window.scrollTo(0, 0)); }
 
@@ -854,7 +1082,16 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
 })();
 </script>
 </div>
-<p class="bt-foot">Built with Claude. Commits are pulled from <a href="https://github.com/dot-hpg">github.com/dot-hpg</a> every few hours, and each day is logged as it happens.</p>
+<footer class="bt-foot"><span>Built with Claude · tracked in public</span><span>Commits sync from <a href="https://github.com/dot-hpg">github.com/dot-hpg</a> every few hours</span></footer>
+  </div>
+</div>
+<nav class="dock" role="tablist" aria-label="Views">
+  <button class="bt-tab dock-item" role="tab" data-tab="goals" aria-selected="true"><span class="nav-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><span>Goals</span></button>
+  <button class="bt-tab dock-item" role="tab" data-tab="overview" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="9" rx="2"/><rect x="13.5" y="3.5" width="7" height="5" rx="2"/><rect x="13.5" y="11.5" width="7" height="9" rx="2"/><rect x="3.5" y="15.5" width="7" height="5" rx="2"/></svg></span><span>Dashboard</span></button>
+  <button class="bt-tab dock-item" role="tab" data-tab="projects" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg></span><span>Projects</span></button>
+  <button class="bt-tab dock-item" role="tab" data-tab="plan" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h2M12 14h2M8 17h2"/></svg></span><span>Plan</span></button>
+  <button class="bt-tab dock-item" role="tab" data-tab="learning" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10.5 9.5v5l4-2.5z" fill="currentColor"/></svg></span><span>Learning</span></button>
+</nav>
 <script>
 (() => {
   const seen = (c) => Array.isArray(c.videos) ? Math.max(c.videos.filter((v) => !v.partial).length, Number(c.watched) || 0) : Number(c.watched);
@@ -910,6 +1147,11 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
     if (btL.f === 'inprogress') {
       const vids = r.data.flatMap(withNums).filter((v) => v.partial)
         .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+      if (!vids.length && !btL.touched) {
+        btL.f = 'watched';
+        document.querySelectorAll('[data-lfilter]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.lfilter === 'watched')));
+        return dash.draw('learnlist');
+      }
       if (!vids.length) return empty('Nothing half-watched. When you stop partway through a video, it shows up here so you can pick it back up.');
       const list = mk('ul', 'bt-vlist'); vids.forEach((v) => list.appendChild(item(v, true))); el.appendChild(list);
       return;
@@ -956,7 +1198,7 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
     el.appendChild(grid);
   });
   document.querySelectorAll('[data-lfilter]').forEach((b) => b.addEventListener('click', () => {
-    btL.f = b.dataset.lfilter;
+    btL.f = b.dataset.lfilter; btL.touched = true;
     document.querySelectorAll('[data-lfilter]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     dash.draw('learnlist');
   }));
@@ -1038,7 +1280,15 @@ th[aria-sort="descending"] .bt-sort::after { content: " ↓"; }
       words.append(mk('h3', 'bt-goal-title', g.title));
       if (g.why) words.appendChild(mk('p', 'bt-note', g.why));
       const clock = mk('div', 'bt-clock');
-      clock.append(mk('span', 'bt-clock-num', st.big), mk('span', 'bt-clock-unit', st.unit));
+      const spanDays = Math.max(1, Math.round((day(g.deadline) - day(g.start)) / DAY) + 1);
+      let frac = 1;
+      if (st.key === 'over') frac = 0;
+      else if (st.key === 'today') frac = Math.max(0, (new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1) - new Date()) / DAY);
+      else if (st.key === 'on') frac = Math.min(1, (Math.round((day(g.deadline) - today()) / DAY) + 1) / spanDays);
+      clock.style.setProperty('--p', frac.toFixed(3));
+      const ring = mk('div', 'bt-clock-in');
+      ring.append(mk('span', 'bt-clock-num', st.big), mk('span', 'bt-clock-unit', st.unit));
+      clock.appendChild(ring);
       main.append(words, clock);
       card.appendChild(main);
 
@@ -1097,7 +1347,70 @@ dash.draw('updated', (el) => {
   el.textContent = u ? d3.timeFormat('%b %-d, %Y')(new Date(u)) : '—';
 });
 // Re-render drawings that were hidden when a tab opens.
-document.querySelectorAll('.bt-tab').forEach((t) => t.addEventListener('click', () => setTimeout(() => dash.redrawAll(), 0)));
+</script>
+<script>
+// App shell: clock, greeting, theme switch, sidebar badges, sprint ring and today's focus.
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const tick = () => {
+    const n = new Date();
+    const c = $('clock'); if (c) c.textContent = n.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) + ' · ' + n.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+    const h = n.getHours();
+    const g = $('hero-greet'); if (g) g.textContent = h < 5 ? 'Working late' : h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+    const d = $('hero-date'); if (d) d.textContent = n.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  };
+  tick(); setInterval(tick, 30e3);
+
+  const btn = $('theme-btn');
+  const isDark = () => document.documentElement.dataset.theme ? document.documentElement.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  btn && btn.addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem('bt-theme', next); } catch (e) {}
+    dash.redrawAll();
+  });
+
+  const row = (id) => { const r = dash.data(id); return r.status === 'ok' && r.data ? r.data[0] : null; };
+  dash.draw('navbadge', (el) => {
+    const f = el.dataset.field; let t = '';
+    if (f === 'goals') { const r = dash.data('goals'); if (r.status === 'ok') t = String(r.data.filter((g) => g.status !== 'done').length); }
+    else if (f === 'overview') { const k = row('kpis'); if (k) t = `${k.days_built}/${k.total_days}`; }
+    else if (f === 'projects') { const k = row('kpis'); if (k) t = String(k.projects); }
+    else if (f === 'plan') { const k = row('kpis'); if (k) t = `${k.days_left}d`; }
+    else if (f === 'learning') {
+      const r = dash.data('learning');
+      if (r.status === 'ok') t = String(r.data.reduce((s, c) => s + (Array.isArray(c.videos) ? c.videos.filter((v) => !v.partial).length : Number(c.watched) || 0), 0));
+    }
+    el.textContent = t; el.classList.toggle('is-empty', !t);
+  });
+  dash.draw('sprintcard', (el) => {
+    const k = row('kpis'); if (!k) return;
+    const pct = Math.round(100 * k.sprint_share);
+    el.querySelector('.arc').setAttribute('stroke-dasharray', `${pct} 100`);
+    el.querySelector('.sprint-pct').textContent = pct + '%';
+    el.querySelector('.sprint-v').textContent = `Day ${k.days_built} of ${k.total_days}`;
+    el.querySelector('.sprint-n').textContent = `${d3.format(',')(k.sprint_commits)} commits · ${k.streak}-day streak`;
+  });
+  dash.draw('focus', (el) => {
+    const r = dash.data('goals'); el.replaceChildren();
+    if (r.status !== 'ok') return;
+    const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+    const td = new Date(); const iso = `${td.getFullYear()}-${String(td.getMonth() + 1).padStart(2, '0')}-${String(td.getDate()).padStart(2, '0')}`;
+    const act = r.data.filter((g) => g.status !== 'done');
+    const due = act.filter((g) => String(g.deadline).slice(0, 10) <= iso);
+    const next = act.filter((g) => String(g.deadline).slice(0, 10) > iso).sort((a, b) => String(a.deadline).localeCompare(String(b.deadline)))[0];
+    el.appendChild(mk('p', 'focus-k', due.length ? 'Focus today' : 'Up next'));
+    const list = due.length ? due : next ? [next] : [];
+    if (!list.length) { el.appendChild(mk('p', 'focus-t', 'All goals done. Set a new one.')); return; }
+    list.forEach((g) => {
+      const open = (g.milestones || []).find((m) => !m.done);
+      const item = mk('div', 'focus-item');
+      item.append(mk('span', 'focus-dot'), mk('span', 'focus-t', g.title));
+      el.appendChild(item);
+      if (open) el.appendChild(mk('p', 'focus-n', 'Next step: ' + open.title));
+    });
+  });
+})();
 </script>
 <script>
 (() => {

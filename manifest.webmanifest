@@ -1,7 +1,7 @@
 {
   "name": "Built Tracker",
   "short_name": "Built",
-  "description": "Every project I build, and my 48-day daily build streak.",
+  "description": "Built: goals, projects, a 48-day build streak and learning, in one place.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
