@@ -139,7 +139,7 @@
    "category": "AI agents & LLM apps",
    "focus": "v7: Add Meet the founder section with cut-out photo; v6: Centre the hero animation as a full-width centrepiece; v5: Cinematic smart-home hero run from the AURA phone app",
    "level": "Expert",
-   "status": "Today",
+   "status": "Done",
    "commits": 6,
    "plan_project": "LLM Eval Harness",
    "plan_focus": "Reusable evaluation framework: golden sets, LLM-as-judge, regression runs in CI"
@@ -152,8 +152,8 @@
    "category": "Web & product",
    "focus": "Write-ups, LinkedIn posts and portfolio case studies for the week's work",
    "level": "Intermediate",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 14,
