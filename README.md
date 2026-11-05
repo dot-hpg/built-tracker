@@ -35,4 +35,4 @@ It works on phones (the tables turn into cards) and follows the device's light o
 
 ## Versions
 
-Each meaningful change to the site is tagged (`v1`, `v2`, ...). See the repository's tags for the history.
+Each meaningful change to the site is saved as a version branch (`release/v1`, `release/v2`, ...) that stays frozen at that point, and is listed in [CHANGELOG.md](CHANGELOG.md). `main` is always the live site.
