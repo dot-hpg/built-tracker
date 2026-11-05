@@ -1,0 +1,51 @@
+name: Android APK
+
+# Builds an installable Android app (APK) on GitHub's free runners and attaches
+# it to a GitHub release, so it can be downloaded straight to a phone.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore: ["**.md"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-apk
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - run: npm ci
+
+      - name: Generate the native Android project
+        run: npx expo prebuild --platform android --no-install
+
+      - name: Build the APK
+        working-directory: android
+        run: ./gradlew assembleRelease --no-daemon
+
+      - name: Publish the APK as the latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp android/app/build/outputs/apk/release/app-release.apk BuiltTracker.apk
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest BuiltTracker.apk \
+            --title "Built Tracker (Android)" \
+            --notes "Open this page on your Android phone, tap BuiltTracker.apk to download it, then open the file to install. Built from ${GITHUB_SHA::7}."

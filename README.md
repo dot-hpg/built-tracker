@@ -28,3 +28,11 @@ It works on phones (the tables turn into cards) and follows the device's light o
 | `data/learning.json` | YouTube courses and playlists: `watched` of `total` videos. A course shows as Completed once every video is watched. |
 | `data/meta.json` | When the data was last updated |
 | `scripts/update_tracker.py` | The updater the workflow runs |
+
+## Native app (parked)
+
+`app/` holds the Expo source for a native iPhone and Android version of the tracker. It is not built or published, because the home-screen web app covers phone use for free. Its build workflows live in `app/.github/workflows/` and only run if they are moved to a repository of their own.
+
+## Versions
+
+Each meaningful change to the site is tagged (`v1`, `v2`, ...). See the repository's tags for the history.

@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "Built Tracker",
+    "slug": "built-tracker",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "scheme": "builttracker",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#129a6b"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.dothpg.builttracker",
+      "buildNumber": "1",
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.dothpg.builttracker",
+      "adaptiveIcon": {
+        "backgroundColor": "#129a6b",
+        "foregroundImage": "./assets/android-icon-foreground.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "color": "#129a6b"
+        }
+      ],
+      "expo-font"
+    ]
+  }
+}
