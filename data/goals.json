@@ -10,7 +10,22 @@
    "status": "active",
    "done_date": null,
    "milestones": [
-    { "title": "Watch and finish the CampusX evals content", "done": false }
+    {
+     "title": "Watch and finish the CampusX evals content (19 videos)",
+     "done": false
+    }
+   ],
+   "progress": {
+    "value": 5,
+    "target": 19,
+    "unit": "videos"
+   },
+   "metrics": [
+    {
+     "label": "Videos done",
+     "value": 5,
+     "target": 19
+    }
    ]
   },
   {
@@ -23,21 +38,63 @@
    "status": "active",
    "done_date": null,
    "metrics": [
-    { "label": "Interview videos", "source": "learning:ai-engineer-interviews" },
-    { "label": "Applications sent", "value": 0 },
-    { "label": "Interviews", "value": 0 },
-    { "label": "Offers", "value": 0 }
+    {
+     "label": "Interview videos",
+     "source": "learning:ai-engineer-interviews"
+    },
+    {
+     "label": "Applications sent",
+     "value": 0
+    },
+    {
+     "label": "Interviews",
+     "value": 0
+    },
+    {
+     "label": "Offers",
+     "value": 0
+    }
    ],
    "milestones": [
-    { "title": "Resume tailored for AI engineer roles", "done": false },
-    { "title": "Portfolio and GitHub show the best 3 projects", "done": false },
-    { "title": "LinkedIn updated and open to work", "done": false },
-    { "title": "Finish CampusX evals", "done": false, "goal": "campusx-evals" },
-    { "title": "Watch 30 AI engineer interview videos", "done": false, "source": "learning:ai-engineer-interviews", "target": 30 },
-    { "title": "Send 50 applications", "done": false },
-    { "title": "Do 5 mock interviews", "done": false },
-    { "title": "Get the first interview call", "done": false },
-    { "title": "Get an offer", "done": false }
+    {
+     "title": "Resume tailored for AI engineer roles",
+     "done": false
+    },
+    {
+     "title": "Portfolio and GitHub show the best 3 projects",
+     "done": false
+    },
+    {
+     "title": "LinkedIn updated and open to work",
+     "done": false
+    },
+    {
+     "title": "Finish CampusX evals",
+     "done": false,
+     "goal": "campusx-evals"
+    },
+    {
+     "title": "Watch 30 AI engineer interview videos",
+     "done": false,
+     "source": "learning:ai-engineer-interviews",
+     "target": 30
+    },
+    {
+     "title": "Send 50 applications",
+     "done": false
+    },
+    {
+     "title": "Do 5 mock interviews",
+     "done": false
+    },
+    {
+     "title": "Get the first interview call",
+     "done": false
+    },
+    {
+     "title": "Get an offer",
+     "done": false
+    }
    ]
   }
  ]

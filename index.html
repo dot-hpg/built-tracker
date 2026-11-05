@@ -1239,6 +1239,7 @@ svg { flex: 0 0 auto; }
   };
   const pctOf = (g, all) => {
     if (g.status === 'done') return 100;
+    if (g.progress && Number(g.progress.target)) return Math.min(100, Math.round(100 * Number(g.progress.value) / Number(g.progress.target)));
     const ms = g.milestones || [];
     return ms.length ? Math.round(100 * ms.filter((m) => msDone(m, all)).length / ms.length) : 0;
   };
@@ -1297,7 +1298,7 @@ svg { flex: 0 0 auto; }
       const used = Math.min(span, Math.max(0, Math.round((today() - day(g.start)) / DAY) + 1));
       const tpct = g.status === 'done' ? 100 : Math.round(100 * used / span);
       const bars = mk('div', 'bt-goal-bars');
-      [['Progress', pct + '%', pct, 'bt-fill-main'], ['Time used', g.start === g.deadline ? 'Today' : `Day ${used} of ${span}`, tpct, 'bt-fill-time']].forEach(([k, v, w, cls]) => {
+      [['Progress', g.progress ? `${g.progress.value}/${g.progress.target} ${g.progress.unit || ''} · ${pct}%`.replace(' ·', ' ·') : pct + '%', pct, 'bt-fill-main'], ['Time used', g.start === g.deadline ? 'Today' : `Day ${used} of ${span}`, tpct, 'bt-fill-time']].forEach(([k, v, w, cls]) => {
         const row = mk('div', 'bt-goal-bar');
         const lab = mk('div', 'bt-row'); lab.append(mk('span', 'bt-small', k), mk('span', 'bt-small bt-strong', v));
         const tr = mk('div', 'bt-big-prog'); const fill = mk('div', cls); fill.style.width = w + '%'; tr.appendChild(fill);
