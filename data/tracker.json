@@ -135,12 +135,14 @@
    "day": 12,
    "date": "2026-11-05",
    "week": 2,
-   "project": "LLM Eval Harness",
+   "project": "Aura",
    "category": "AI agents & LLM apps",
-   "focus": "Reusable evaluation framework: golden sets, LLM-as-judge, regression runs in CI",
+   "focus": "v7: Add Meet the founder section with cut-out photo; v6: Centre the hero animation as a full-width centrepiece; v5: Cinematic smart-home hero run from the AURA phone app",
    "level": "Expert",
    "status": "Today",
-   "commits": 0
+   "commits": 6,
+   "plan_project": "LLM Eval Harness",
+   "plan_focus": "Reusable evaluation framework: golden sets, LLM-as-judge, regression runs in CI"
   },
   {
    "day": 13,
