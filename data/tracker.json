@@ -152,7 +152,7 @@
    "category": "Web & product",
    "focus": "Write-ups, LinkedIn posts and portfolio case studies for the week's work",
    "level": "Intermediate",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -163,8 +163,8 @@
    "category": "NLP & deep learning",
    "focus": "QLoRA fine-tune of a small open LLM on a domain dataset; compare against prompting",
    "level": "Expert",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 15,
