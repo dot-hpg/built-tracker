@@ -7,7 +7,7 @@
    "category": "Learning",
    "start": "2026-11-05",
    "deadline": "2026-11-05",
-   "status": "active",
+   "status": "archived",
    "done_date": null,
    "milestones": [
     {
@@ -26,7 +26,8 @@
      "value": 5,
      "target": 19
     }
-   ]
+   ],
+   "archived_date": "2026-11-06"
   },
   {
    "id": "ai-engineer-job",
@@ -35,7 +36,7 @@
    "category": "Career",
    "start": "2026-11-05",
    "deadline": "2026-12-05",
-   "status": "active",
+   "status": "archived",
    "done_date": null,
    "metrics": [
     {
@@ -99,7 +100,8 @@
      "title": "Get an offer",
      "done": false
     }
-   ]
+   ],
+   "archived_date": "2026-11-06"
   }
  ]
 }

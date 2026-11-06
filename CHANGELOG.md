@@ -2,6 +2,16 @@
 
 Each version is frozen on a `release/vN` branch. `main` is the live site, and the automatic activity logs and new videos land there between versions.
 
+## v3.1 (2026-11-06)
+
+Goals now have three states.
+
+- A Current / Archived / Completed switcher at the top of Goals, with live counts and a sliding highlight. It remembers the last tab you opened and works with the arrow keys.
+- Every goal card has actions: Mark complete and Archive on current goals, Restore and Mark complete on archived ones, and Move to current and Delete on completed ones. Delete asks for confirmation first, and every action can be undone from the toast that follows.
+- Archived goals keep their progress, show it in a paused ring, and fold their milestones away. Completed goals show a green ring and the day they were finished.
+- These changes are saved on the device; `status` in `data/goals.json` (`active`, `archived` or `done`) makes them permanent everywhere.
+- "Complete CampusX evals" and "Get an AI engineer job" are moved to Archived.
+
 ## v3 (2026-11-05)
 
 A full redesign into a platform-style app called Built.
