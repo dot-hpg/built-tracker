@@ -163,7 +163,7 @@
    "category": "NLP & deep learning",
    "focus": "QLoRA fine-tune of a small open LLM on a domain dataset; compare against prompting",
    "level": "Expert",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -174,8 +174,8 @@
    "category": "MLOps & infra",
    "focus": "Quantize and serve the fine-tuned model with vLLM and llama.cpp; benchmark latency and throughput",
    "level": "Expert",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 16,
