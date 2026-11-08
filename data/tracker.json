@@ -174,7 +174,7 @@
    "category": "MLOps & infra",
    "focus": "Quantize and serve the fine-tuned model with vLLM and llama.cpp; benchmark latency and throughput",
    "level": "Expert",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -185,8 +185,8 @@
    "category": "AI agents & LLM apps",
    "focus": "Structured extraction of invoices into validated JSON with Pydantic, wired into BillBahi",
    "level": "Advanced",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 17,
