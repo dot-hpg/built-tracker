@@ -2,6 +2,15 @@
 
 Each version is frozen on a `release/vN` branch. `main` is the live site, and the automatic activity logs and new videos land there between versions.
 
+## v5 (2026-11-10)
+
+Log progress straight from the site.
+
+- Every tracker card has its own button: "Log a book", "Log a film", or "Mark today's reading done" for Hanuman Chalisa, which saves in one tap. A floating "Log progress" button sits on every Trackers page.
+- The log sheet shows the bar moving before you save (for example 47 → 48 books, 9.4% → 9.6%) and says when an entry hits a milestone. It suggests authors, directors and categories you've used before, and warns before logging the same title twice.
+- Saving sets off confetti, animates the bar and count to the new value, and shows a toast with the new numbers and an Undo button. Milestones and finishing a tracker get a bigger celebration.
+- Entries save directly to `data/trackers.json` on GitHub using a fine-grained token that is kept only in your browser. Connect once per device; visitors cannot add entries. If you're offline, entries are kept on the device and sync when you're back online.
+
 ## v4 (2026-11-10)
 
 A new Trackers tab for long-running personal goals.

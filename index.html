@@ -544,7 +544,7 @@ svg { flex: 0 0 auto; }
 .tk-card > * { position: relative; z-index: 1; }
 .tk-card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--a1) 45%, transparent); box-shadow: var(--bt-shadow), 0 18px 50px -22px var(--a1); }
 .tk-card:hover::after { opacity: 1; }
-.tk-card:focus-visible, .tk-back:focus-visible, .tk-jump:focus-visible { outline: 2px solid var(--a1, var(--c0)); outline-offset: 3px; }
+.tk-card-link:focus-visible, .tk-go:focus-visible, .tk-back:focus-visible, .tk-jump:focus-visible { outline: 2px solid var(--a1, var(--c0)); outline-offset: 3px; }
 .tk-card-top { display: flex; gap: 16px; align-items: center; }
 .tk-ic { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; flex: 0 0 auto; background: linear-gradient(135deg, var(--a1), var(--a2)); box-shadow: 0 10px 26px -10px var(--a1), inset 0 1px 0 rgba(255, 255, 255, .3); }
 .tk-ic svg { width: 26px; height: 26px; fill: none; stroke: #fff; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
@@ -691,6 +691,119 @@ svg { flex: 0 0 auto; }
   .dock-item { font-size: .58rem !important; }
 }
 @media (prefers-reduced-motion: reduce) { .tk-fill::after, .tk-bead.is-next { animation: none; } .tk-reveal.tk-wait { opacity: 1; transform: none; } }
+/* ===== v5: logging from the site ===== */
+.tk-card-link { display: grid; gap: 18px; color: inherit; text-decoration: none; border-radius: 14px; }
+.tk-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding-top: 14px; margin-top: -2px; border-top: 1px solid var(--line-soft); }
+.tk-actions .tk-go { margin-left: auto; text-decoration: none; }
+.tk-logbtn { appearance: none; font: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px 9px 12px; border-radius: 999px; border: 0; color: #fff; font-size: .84rem; font-weight: 650; letter-spacing: -.01em; background: linear-gradient(135deg, var(--a1), var(--a2)); box-shadow: 0 8px 22px -10px var(--a1), inset 0 1px 0 rgba(255, 255, 255, .25); transition: transform .18s var(--cds-ease-out), box-shadow .2s, filter .2s; white-space: nowrap; }
+.tk-logbtn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.tk-logbtn:hover { transform: translateY(-1px); box-shadow: 0 12px 28px -10px var(--a1), inset 0 1px 0 rgba(255, 255, 255, .25); filter: saturate(1.15); }
+.tk-logbtn:active { transform: scale(.96); }
+.tk-logbtn:focus-visible, .tk-fab:focus-visible, .lg-btn:focus-visible, .lg-pick:focus-visible, .lg-x:focus-visible { outline: 2px solid var(--a1, var(--c0)); outline-offset: 3px; }
+.tk-logbtn.is-done { color: var(--ink); background: color-mix(in srgb, var(--a1) 14%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--a1) 40%, transparent); }
+.tk-logbtn.is-big { margin-top: 14px; padding: 11px 20px 11px 15px; font-size: .92rem; }
+.tk-fab { --a1: #6d5efc; --a2: #b07cff; position: fixed; right: max(24px, env(safe-area-inset-right, 0px)); bottom: 28px; z-index: 40; appearance: none; border: 0; cursor: pointer; font: inherit; display: inline-flex; align-items: center; gap: 10px; padding: 15px 22px 15px 18px; border-radius: 999px; color: #fff; font-weight: 700; font-size: .95rem; letter-spacing: -.01em; background: linear-gradient(135deg, var(--a1), var(--a2)); box-shadow: 0 18px 40px -14px var(--a1), 0 0 0 1px rgba(255, 255, 255, .12) inset; transition: transform .2s var(--cds-ease-out), box-shadow .2s; }
+.tk-fab[hidden] { display: none; }
+.tk-fab.is-anim { animation: lg-fab-in .6s var(--cds-ease-out) .3s both; }
+.tk-fab svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; }
+.tk-fab:hover { transform: translateY(-2px) scale(1.02); }
+.tk-fab:active { transform: scale(.96); }
+@keyframes lg-fab-in { from { opacity: 0; transform: translateY(20px) scale(.9); } }
+.tk-owner { display: inline-flex; align-items: center; gap: 8px; font-size: .76rem; color: var(--color-fg-muted); }
+.tk-owner button { appearance: none; border: 0; background: none; font: inherit; color: inherit; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; padding: 0; }
+.tk-pop { animation: lg-pop .7s var(--cds-ease-out); display: inline-block; }
+@keyframes lg-pop { 30% { transform: scale(1.18); color: var(--ink); } }
+/* sheet */
+.lg-scrim { position: fixed; inset: 0; z-index: 90; background: rgba(6, 7, 12, .55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); display: grid; place-items: center; padding: 20px; animation: lg-fade .25s ease both; }
+.lg-scrim.is-out { animation: lg-fade .2s ease reverse both; }
+@keyframes lg-fade { from { opacity: 0; } }
+.lg-sheet { box-sizing: border-box; position: relative; width: min(560px, 100%); max-height: min(88vh, 820px); overflow: auto; border-radius: 26px; background: var(--color-panel); border: 1px solid var(--line-soft); box-shadow: 0 40px 100px -30px rgba(0, 0, 0, .6); padding: 26px; display: grid; gap: 18px; animation: lg-rise .45s cubic-bezier(.16, 1, .3, 1) both; }
+.lg-sheet::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: linear-gradient(90deg, var(--a1, #6d5efc), var(--a2, #b07cff)); }
+@keyframes lg-rise { from { opacity: 0; transform: translateY(30px) scale(.97); } }
+.lg-head { display: flex; align-items: center; gap: 14px; }
+.lg-head .tk-ic { width: 46px; height: 46px; border-radius: 14px; }
+.lg-head .tk-ic svg { width: 23px; height: 23px; }
+.lg-head h2 { margin: 0; font-size: 1.35rem; font-weight: 700; letter-spacing: -.03em; line-height: 1.15; }
+.lg-head p { margin: 2px 0 0; font-size: .84rem; color: var(--color-fg-muted); }
+.lg-x { appearance: none; margin-left: auto; align-self: flex-start; width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--line-soft); background: var(--hover); color: var(--color-fg-muted); cursor: pointer; font-size: 18px; line-height: 1; flex: 0 0 auto; }
+.lg-picks { display: grid; gap: 10px; }
+.lg-pick { appearance: none; font: inherit; color: inherit; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 18px; border: 1px solid var(--line-soft); background: color-mix(in srgb, var(--color-bg) 50%, transparent); transition: border-color .2s, transform .2s var(--cds-ease-out), background .2s; }
+.lg-pick:hover { border-color: color-mix(in srgb, var(--a1) 55%, transparent); background: color-mix(in srgb, var(--a1) 8%, transparent); transform: translateY(-2px); }
+.lg-pick .tk-ic { width: 44px; height: 44px; border-radius: 13px; }
+.lg-pick .tk-ic svg { width: 22px; height: 22px; }
+.lg-pick .w { flex: 1; min-width: 0; display: grid; gap: 6px; }
+.lg-pick b { font-size: 1rem; font-weight: 650; letter-spacing: -.015em; }
+.lg-pick .tk-track { height: 6px; }
+.lg-pick .tk-fill { min-width: 6px; box-shadow: none; }
+.lg-pick .tk-fill::after { display: none; }
+.lg-pick .n { font-family: var(--font-mono); font-size: .76rem; color: var(--color-fg-muted); text-align: right; white-space: nowrap; }
+.lg-pick .n em { display: block; font-style: normal; color: var(--ink); font-weight: 600; }
+.lg-form { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+.lg-f { display: grid; gap: 6px; grid-column: span 6; min-width: 0; }
+.lg-f.half { grid-column: span 3; }
+.lg-f.third { grid-column: span 2; }
+.lg-f label { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; color: var(--color-fg-muted); }
+.lg-f label i { font-style: normal; color: var(--ink); }
+.lg-f input { font: inherit; font-size: 1rem; width: 100%; box-sizing: border-box; padding: 11px 13px; border-radius: 12px; border: 1px solid var(--line-soft); background: color-mix(in srgb, var(--color-bg) 70%, transparent); color: var(--color-fg); transition: border-color .15s, box-shadow .15s; min-width: 0; }
+.lg-f input:focus { outline: none; border-color: var(--a1); box-shadow: 0 0 0 4px color-mix(in srgb, var(--a1) 20%, transparent); }
+.lg-f input.is-main { font-size: 1.2rem; font-weight: 600; padding: 13px 15px; }
+.lg-warn { grid-column: span 6; margin: -4px 0 0; font-size: .8rem; color: var(--color-warn); }
+.lg-prev { border-radius: 18px; padding: 16px; background: color-mix(in srgb, var(--a1) 8%, transparent); border: 1px solid color-mix(in srgb, var(--a1) 25%, transparent); display: grid; gap: 10px; }
+.lg-prev-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.lg-prev-top b { font-size: 1.5rem; font-weight: 750; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.lg-prev-top b span { color: var(--ink); }
+.lg-prev-top small { font-family: var(--font-mono); font-size: .74rem; color: var(--color-fg-muted); }
+.lg-prev .tk-track { height: 12px; }
+.lg-prev .ghost { position: absolute; inset: 0 auto 0 0; border-radius: inherit; background: repeating-linear-gradient(45deg, var(--a2), var(--a2) 4px, color-mix(in srgb, var(--a2) 55%, transparent) 4px, color-mix(in srgb, var(--a2) 55%, transparent) 8px); opacity: .9; animation: lg-glow 1.4s ease-in-out infinite; min-width: 4px; }
+@keyframes lg-glow { 50% { opacity: .45; } }
+.lg-prev p { margin: 0; font-size: .84rem; color: var(--color-fg-muted); }
+.lg-prev p b { color: var(--color-fg); }
+.lg-prev p.is-mile { color: var(--ink); font-weight: 650; }
+.lg-foot { display: flex; gap: 10px; align-items: center; justify-content: flex-end; flex-wrap: wrap; }
+.lg-foot .bt-note { margin-right: auto; }
+.lg-btn { appearance: none; font: inherit; cursor: pointer; border-radius: 14px; padding: 13px 20px; font-weight: 650; font-size: .95rem; border: 1px solid var(--line-soft); background: var(--hover); color: var(--color-fg); display: inline-flex; align-items: center; gap: 9px; transition: transform .15s, filter .15s; }
+.lg-btn.primary { border: 0; color: #fff; background: linear-gradient(135deg, var(--a1, #6d5efc), var(--a2, #b07cff)); box-shadow: 0 12px 28px -12px var(--a1, #6d5efc); min-width: 10rem; justify-content: center; }
+.lg-btn.primary:hover { filter: saturate(1.15) brightness(1.05); }
+.lg-btn:active { transform: scale(.97); }
+.lg-btn[disabled] { opacity: .55; cursor: progress; }
+.lg-btn .spin { width: 16px; height: 16px; border-radius: 50%; border: 2.5px solid rgba(255, 255, 255, .35); border-top-color: #fff; animation: lg-spin .7s linear infinite; }
+@keyframes lg-spin { to { transform: rotate(360deg); } }
+.lg-err { margin: 0; padding: 10px 12px; border-radius: 12px; font-size: .84rem; color: var(--color-bad); background: color-mix(in srgb, var(--color-bad) 10%, transparent); }
+.lg-steps { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 10px; }
+.lg-steps li { counter-increment: s; display: grid; grid-template-columns: 28px 1fr; gap: 10px; font-size: .9rem; line-height: 1.5; }
+.lg-steps li::before { content: counter(s); width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: .74rem; font-weight: 700; color: var(--ink, var(--c0)); background: color-mix(in srgb, var(--a1, var(--c0)) 14%, transparent); }
+.lg-steps a { color: var(--ink, var(--c0)); font-weight: 600; }
+.lg-steps code { font-family: var(--font-mono); font-size: .84em; padding: 1px 6px; border-radius: 6px; background: var(--hover); }
+.lg-lock { display: flex; gap: 10px; align-items: flex-start; font-size: .8rem; color: var(--color-fg-muted); line-height: 1.5; padding: 12px 14px; border-radius: 14px; background: var(--hover); }
+.lg-lock svg { width: 18px; height: 18px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; margin-top: 1px; }
+/* toast + confetti */
+.lg-toast { position: fixed; left: 50%; bottom: 32px; z-index: 95; transform: translateX(-50%); width: max-content; max-width: calc(100vw - 32px); box-sizing: border-box; display: flex; align-items: center; gap: 14px; padding: 12px 12px 12px 14px; border-radius: 18px; background: color-mix(in srgb, var(--color-panel) 92%, transparent); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); border: 1px solid color-mix(in srgb, var(--a1, #6d5efc) 40%, var(--line-soft)); box-shadow: 0 24px 60px -20px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, .03) inset; animation: lg-toast-in .5s cubic-bezier(.16, 1, .3, 1) both; }
+.lg-toast.is-out { animation: lg-toast-out .3s ease both; }
+@keyframes lg-toast-in { from { opacity: 0; transform: translate(-50%, 24px) scale(.96); } }
+@keyframes lg-toast-out { to { opacity: 0; transform: translate(-50%, 16px); } }
+.lg-toast .tk-ic { width: 40px; height: 40px; border-radius: 12px; }
+.lg-toast .tk-ic svg { width: 20px; height: 20px; }
+.lg-toast .w { display: grid; gap: 2px; min-width: 0; }
+.lg-toast b { font-size: .95rem; font-weight: 700; letter-spacing: -.015em; }
+.lg-toast span { font-size: .8rem; color: var(--color-fg-muted); }
+.lg-toast .lg-btn { padding: 8px 14px; font-size: .82rem; border-radius: 11px; }
+.lg-toast.is-mile { padding: 16px 16px 16px 18px; }
+.lg-toast.is-mile b { font-size: 1.15rem; background: linear-gradient(90deg, var(--a1), var(--a2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lg-confetti { position: fixed; inset: 0; z-index: 99; pointer-events: none; width: 100vw; height: 100vh; }
+@media (max-width: 960px) { .tk-fab { bottom: calc(96px + env(safe-area-inset-bottom, 0px)); right: 16px; padding: 14px 18px 14px 15px; } .lg-toast { bottom: calc(100px + env(safe-area-inset-bottom, 0px)); } }
+@media (max-width: 560px) {
+  .tk-fab span { display: none; }
+  .tk-fab { padding: 16px; }
+  .lg-scrim { place-items: end center; padding: 0; }
+  .lg-sheet { width: 100%; border-radius: 26px 26px 0 0; max-height: 92vh; padding: 22px 16px calc(18px + env(safe-area-inset-bottom, 0px)); animation-name: lg-up; }
+  @keyframes lg-up { from { transform: translateY(100%); } }
+  .lg-f.half, .lg-f.third { grid-column: span 3; }
+  .lg-foot .lg-btn { flex: 1; justify-content: center; }
+  .lg-foot .bt-note { flex-basis: 100%; }
+  .tk-actions .tk-logbtn { flex: 1; justify-content: center; }
+  .tk-actions .tk-go { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .lg-sheet, .lg-scrim, .lg-toast, .tk-fab { animation: none; } .lg-prev .ghost { animation: none; } }
 </style>
 
 <div class="bt">
@@ -1624,6 +1737,21 @@ dash.draw('updated', (el) => {
   const int = (n) => Number(n).toLocaleString('en-US');
   const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
   const S = window.btT = { id: null, q: '', sort: 'new', last: '' };
+  const PLUS = '<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
+  const CHECK = '<svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
+  const logBtn = (t, big) => {
+    const b = mk('button', 'tk-logbtn' + (big ? ' is-big' : '')); b.type = 'button'; b.dataset.tkLog = t.id;
+    const last = t.entries[t.entries.length - 1];
+    if (t.kind === 'readings') {
+      const doneToday = last && last.date === iso(new Date());
+      b.dataset.tkMode = doneToday ? 'form' : 'quick';
+      if (doneToday) b.classList.add('is-done');
+      b.innerHTML = doneToday ? CHECK : CHECK;
+      b.append(document.createTextNode(doneToday ? 'Done today' : `Mark today's reading done`));
+      if (doneToday) b.title = 'Today is logged. Click to log another reading.';
+    } else { b.dataset.tkMode = 'form'; b.innerHTML = PLUS; b.append(document.createTextNode(`Log a ${String(t.item || 'entry').toLowerCase()}`)); }
+    return b;
+  };
 
   const all = () => { const r = dash.data('trackers'); return r.status === 'ok' && r.data && Array.isArray(r.data.trackers) ? r.data.trackers : null; };
   const stats = (t) => {
@@ -1735,7 +1863,8 @@ dash.draw('updated', (el) => {
     const cards = mk('div', 'tk-cards');
     list.forEach((t) => {
       const s = stats(t);
-      const a = mk('a', 'tk-card tk-reveal tk-' + (t.accent || 'violet')); a.href = '#trackers/' + t.id; a.dataset.tkOpen = t.id;
+      const wrap = mk('div', 'tk-card tk-reveal tk-' + (t.accent || 'violet')); wrap.dataset.tkId = t.id;
+      const a = mk('a', 'tk-card-link'); a.href = '#trackers/' + t.id; a.dataset.tkOpen = t.id;
       const top = mk('div', 'tk-card-top'), w = mk('div', 'tk-words');
       w.append(mk('p', 'tk-k', `${t.unit} ${t.verb}`), mk('h3', '', t.title), mk('p', 'tk-sub', t.subtitle || ''));
       const num = mk('div', 'tk-num'), b = mk('b'); count(b, s.n, anim);
@@ -1748,9 +1877,12 @@ dash.draw('updated', (el) => {
       foot.append(pill('To go', int(s.left)));
       if (s.next) foot.append(pill('Next milestone', `${int(s.next)} (${s.next - s.n} away)`));
       if (s.last) foot.append(pill('Latest', t.kind === 'readings' ? `#${s.n} · ${s.last.date ? fd(s.last.date, { month: 'short', day: 'numeric' }) : ''}` : nameOf(t, s.last, s.n - 1)));
-      const go = mk('span', 'tk-go'); go.innerHTML = 'Open tracker ' + ARROW; foot.append(go);
       a.append(top, bar(t, s, false), foot);
-      cards.append(a);
+      const acts = mk('div', 'tk-actions');
+      const go = mk('a', 'tk-go'); go.href = '#trackers/' + t.id; go.dataset.tkOpen = t.id; go.innerHTML = 'Open tracker ' + ARROW;
+      acts.append(logBtn(t), go);
+      wrap.append(a, acts);
+      cards.append(wrap);
     });
     root.append(cards);
   };
@@ -1856,7 +1988,7 @@ dash.draw('updated', (el) => {
 
   const detail = (root, t, list, anim) => {
     const s = stats(t), acc = 'tk-' + (t.accent || 'violet');
-    root.classList.add(acc);
+    root.classList.add(acc); root.dataset.tkId = t.id;
     const back = mk('a', 'tk-back'); back.href = '#trackers'; back.dataset.tkOpen = ''; back.innerHTML = BACK; back.append(document.createTextNode('All trackers'));
     root.append(back);
 
@@ -1868,7 +2000,7 @@ dash.draw('updated', (el) => {
     const num = mk('div', 'tk-dnum'), b = mk('b'), bn = mk('span'); count(bn, s.n, anim);
     b.append(bn, mk('small', '', '/ ' + int(s.target)));
     const pl = mk('span'); count(pl, s.p, anim, (v) => `${fmtPct(v)} complete`);
-    num.append(b, pl);
+    num.append(b, pl, logBtn(t, true));
     top.append(tt, num);
     hero.append(top, bar(t, s, true));
     root.append(hero);
@@ -1933,10 +2065,16 @@ dash.draw('updated', (el) => {
     const key = S.id || 'home', anim = key !== S.last;
     S.last = key;
     if (t) detail(el, t, list, anim); else home(el, list, anim);
+    // One floating button on <body>, so no blurred card can trap its fixed position.
+    let fab = document.getElementById('tk-fab');
+    if (!fab) { fab = mk('button', 'tk-fab is-anim'); fab.id = 'tk-fab'; fab.type = 'button'; fab.dataset.tkMode = 'form'; fab.innerHTML = PLUS; fab.append(mk('span', '', 'Log progress')); fab.setAttribute('aria-label', 'Log progress'); document.body.append(fab); }
+    fab.dataset.tkLog = t ? t.id : ''; fab.hidden = false;
+    if (window.btTkAfterDraw) window.btTkAfterDraw(el);
     const title = document.getElementById('page-title'); if (title) title.textContent = t ? t.title : 'Trackers';
     grow(el, anim); reveal(el, anim);
   });
 
+  window.btTk = { stats, all, fmtPct, int, pd, fd, iso, ic, nameOf, S, mk };
   const open = (id, push) => {
     S.id = id || null; S.q = ''; S.sort = 'new';
     if (push) { try { history.pushState(null, '', '#trackers' + (id ? '/' + id : '')); } catch (e) {} }
@@ -1946,7 +2084,9 @@ dash.draw('updated', (el) => {
   document.addEventListener('click', (e) => {
     const a = e.target.closest('[data-tk-open]');
     if (a) { if (e.metaKey || e.ctrlKey || e.shiftKey) return; e.preventDefault(); open(a.dataset.tkOpen, true); return; }
-    const tab = e.target.closest('.bt-tab'); if (tab && tab.dataset.tab === 'trackers') { S.id = null; S.last = ''; }
+    const tab = e.target.closest('.bt-tab');
+    if (tab) { const f = document.getElementById('tk-fab'); if (f) f.hidden = tab.dataset.tab !== 'trackers'; }
+    if (tab && tab.dataset.tab === 'trackers') { S.id = null; S.last = ''; }
     else if (tab) S.last = '';
   });
   const fromHash = () => {
@@ -1961,8 +2101,409 @@ dash.draw('updated', (el) => {
   window.addEventListener('popstate', () => {
     if (fromHash()) return;
     const base = location.hash.slice(1);
-    if (['goals', 'overview', 'projects', 'plan', 'learning'].includes(base)) { window.btShow(base); dash.redrawAll(); }
+    if (['goals', 'overview', 'projects', 'plan', 'learning'].includes(base)) { const f = document.getElementById('tk-fab'); if (f) f.hidden = true; window.btShow(base); dash.redrawAll(); }
   });
+})();
+</script>
+<script>
+(() => {
+  // Logging new tracker entries from the site. Saves straight into data/trackers.json on GitHub
+  // with a fine-grained token that stays in this browser's localStorage.
+  const GH = { owner: 'dot-hpg', repo: 'built-tracker', path: 'data/trackers.json', branch: 'main' };
+  const TK = 'bt-gh-token', QK = 'bt-tk-queue';
+  const K = () => window.btTk;
+  const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+  const ls = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} } };
+  const token = () => ls.get(TK);
+  const queue = () => { try { return JSON.parse(ls.get(QK) || '[]'); } catch (e) { return []; } };
+  const setQueue = (q) => ls.set(QK, q.length ? JSON.stringify(q) : null);
+  const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const today = () => K().iso(new Date());
+  const store = () => dash.data('trackers');
+  const trackers = () => K().all() || [];
+  const byId = (id) => trackers().find((t) => t.id === id);
+  const LOCK = '<svg viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>';
+
+  // ---------- GitHub ----------
+  const b64dec = (s) => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\s/g, '')), (c) => c.charCodeAt(0)));
+  const b64enc = (str) => { const b = new TextEncoder().encode(str); let s = ''; for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(s); };
+  const j1 = (v, k) => {
+    if (Array.isArray(v)) return '[' + v.map((x) => j1(x)).join(', ') + ']';
+    if (v && typeof v === 'object') return '{' + Object.keys(v).map((x) => JSON.stringify(x) + ': ' + j1(v[x], x)).join(', ') + '}';
+    if (k === 'imdb' && typeof v === 'number' && Number.isInteger(v)) return v.toFixed(1);
+    return JSON.stringify(v);
+  };
+  // Same layout as the file in the repo: one tracker field per line, one entry per line.
+  const serialize = (d) => {
+    const out = ['{'];
+    const top = Object.keys(d).filter((k) => k !== 'trackers');
+    top.forEach((k) => out.push(` ${JSON.stringify(k)}: ${j1(d[k], k)},`));
+    out.push(' "trackers": [');
+    d.trackers.forEach((t, i) => {
+      out.push('  {');
+      Object.keys(t).filter((k) => k !== 'entries').forEach((k) => out.push(`   ${JSON.stringify(k)}: ${j1(t[k], k)},`));
+      out.push('   "entries": [');
+      out.push(t.entries.map((e) => '    ' + j1(e)).join(',\n'));
+      out.push('   ]');
+      out.push('  }' + (i < d.trackers.length - 1 ? ',' : ''));
+    });
+    out.push(' ]', '}');
+    return out.join('\n') + '\n';
+  };
+  const api = (path, opt = {}) => fetch('https://api.github.com' + path, Object.assign({}, opt, {
+    cache: 'no-store',
+    headers: Object.assign({ Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', Authorization: 'Bearer ' + (opt.token || token()) }, opt.body ? { 'Content-Type': 'application/json' } : {})
+  }));
+  const fail = (code, msg) => { const e = new Error(msg); e.code = code; return e; };
+  const read = async (tok) => {
+    let r;
+    try { r = await api(`/repos/${GH.owner}/${GH.repo}/contents/${GH.path}?ref=${GH.branch}`, { token: tok }); } catch (e) { throw fail('offline', 'No connection.'); }
+    if (r.status === 401) throw fail('auth', 'GitHub did not accept this key. It may have expired.');
+    if (r.status === 403 || r.status === 404) throw fail('perm', 'This key cannot open the built-tracker repository.');
+    if (!r.ok) throw fail('http', `GitHub answered ${r.status}.`);
+    const j = await r.json();
+    return { sha: j.sha, data: JSON.parse(b64dec(j.content)) };
+  };
+  const commit = async (mutate, message) => {
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const { sha, data } = await read();
+      mutate(data);
+      data.updated = today();
+      let r;
+      try {
+        r = await api(`/repos/${GH.owner}/${GH.repo}/contents/${GH.path}`, { method: 'PUT', body: JSON.stringify({ message, content: b64enc(serialize(data)), sha, branch: GH.branch }) });
+      } catch (e) { throw fail('offline', 'No connection.'); }
+      if (r.ok) return data;
+      if (r.status === 409 || r.status === 422) continue;
+      if (r.status === 401) throw fail('auth', 'GitHub did not accept this key. It may have expired.');
+      if (r.status === 403 || r.status === 404) throw fail('perm', 'This key can read but not save. Give it "Contents: Read and write" for built-tracker.');
+      throw fail('http', `GitHub answered ${r.status}.`);
+    }
+    throw fail('http', 'The file kept changing while saving. Try again.');
+  };
+  const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+  const appendTo = (d, id, entry) => { const t = d.trackers.find((x) => x.id === id); if (!t) throw fail('http', 'That tracker no longer exists.'); t.entries.push(entry); };
+
+  // ---------- local state ----------
+  const setData = (d) => { const r = store(); r.status = 'ok'; r.data = d; };
+  const clone = () => JSON.parse(JSON.stringify(store().data));
+  const redraw = (gain) => {
+    const y = window.scrollY;
+    dash.draw('trackers'); dash.draw('navbadge');
+    window.scrollTo(0, y);
+    if (!gain) return;
+    document.querySelectorAll(`[data-tk-id="${gain.id}"]`).forEach((box) => {
+      box.querySelectorAll('.tk-fill, .tk-head').forEach((f) => {
+        const prop = f.classList.contains('tk-head') ? 'left' : 'width';
+        f.style.transition = 'none'; f.style[prop] = gain.from + '%'; void f.offsetWidth;
+        f.style.transition = ''; requestAnimationFrame(() => { f.style[prop] = gain.to + '%'; });
+      });
+      box.querySelectorAll('.tk-num b, .tk-dnum b > span, .tk-pct').forEach((n) => { n.classList.remove('tk-pop'); void n.offsetWidth; n.classList.add('tk-pop'); });
+    });
+  };
+
+  // ---------- celebration ----------
+  const confetti = (x, y, colors, big) => {
+    if (reduce()) return;
+    const c = mk('canvas', 'lg-confetti'), dpr = Math.min(2, devicePixelRatio || 1);
+    c.width = innerWidth * dpr; c.height = innerHeight * dpr; document.body.append(c);
+    const g = c.getContext('2d'); g.scale(dpr, dpr);
+    const N = big ? 220 : 110, ps = [];
+    for (let i = 0; i < N; i++) {
+      const a = -Math.PI / 2 + (Math.random() - .5) * (big ? 2.4 : 1.6), v = (big ? 9 : 7) + Math.random() * (big ? 9 : 6);
+      ps.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, r: Math.random() * 6.28, vr: (Math.random() - .5) * .4, w: 5 + Math.random() * 6, h: 3 + Math.random() * 4, c: colors[i % colors.length], o: 1 });
+    }
+    const t0 = performance.now();
+    const tick = (t) => {
+      const k = (t - t0) / 1000; g.clearRect(0, 0, innerWidth, innerHeight);
+      ps.forEach((p) => { p.vy += .32; p.vx *= .985; p.vy *= .985; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.o = Math.max(0, 1 - Math.max(0, k - 1.1) / .9);
+        g.save(); g.globalAlpha = p.o; g.translate(p.x, p.y); g.rotate(p.r); g.fillStyle = p.c; g.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); g.restore(); });
+      if (k < 2.1) requestAnimationFrame(tick); else c.remove();
+    };
+    requestAnimationFrame(tick);
+  };
+  const accentColors = (el) => { const cs = getComputedStyle(el); return [cs.getPropertyValue('--a1').trim() || '#6d5efc', cs.getPropertyValue('--a2').trim() || '#b07cff', '#ffffff', '#ffd166']; };
+  let toastEl = null, toastTimer = 0;
+  const toast = (t, title, sub, opts = {}) => {
+    if (toastEl) toastEl.remove(); clearTimeout(toastTimer);
+    const el = mk('div', 'lg-toast tk-' + (t ? t.accent || 'violet' : 'violet') + (opts.mile ? ' is-mile' : ''));
+    el.setAttribute('role', 'status');
+    if (t) el.append(K().ic(t.kind));
+    const w = mk('div', 'w'); w.append(mk('b', '', title)); if (sub) w.append(mk('span', '', sub)); el.append(w);
+    if (opts.action) { const b = mk('button', 'lg-btn', opts.action.label); b.type = 'button'; b.addEventListener('click', () => { hide(); opts.action.fn(); }); el.append(b); }
+    document.body.append(el); toastEl = el;
+    const hide = () => { el.classList.add('is-out'); setTimeout(() => el.remove(), 300); if (toastEl === el) toastEl = null; };
+    if (!opts.sticky) toastTimer = setTimeout(hide, opts.ms || 6500);
+    return hide;
+  };
+  const celebrate = (t, entry, before, after, from) => {
+    const st = K().stats, sa = st(after), mile = (after.milestones || []).includes(sa.n), done = sa.n >= sa.target;
+    const box = document.querySelector(`[data-tk-id="${t.id}"] .tk-fill`) || from;
+    const r = (box || document.body).getBoundingClientRect();
+    const host = document.querySelector(`[data-tk-id="${t.id}"]`) || document.body;
+    const cols = accentColors(host.classList.contains('tk-' + (t.accent || 'violet')) ? host : document.querySelector('.tk-' + (t.accent || 'violet')) || host);
+    const inView = box && r.top > 60 && r.bottom < innerHeight - 60;
+    setTimeout(() => confetti(inView ? r.left + r.width : innerWidth / 2, inView ? r.top + r.height / 2 : innerHeight - 110, cols, mile || done), 350);
+    try { navigator.vibrate && navigator.vibrate(mile ? [30, 60, 30] : 25); } catch (e) {}
+    const name = t.kind === 'readings' ? `Reading #${sa.n} done` : `“${entry.title}” logged`;
+    const sub = `${t.item} #${sa.n} · ${K().fmtPct(sa.p)} of ${K().int(sa.target)}` + (sa.next ? ` · ${sa.next - sa.n} to ${K().int(sa.next)}` : '');
+    const undo = { label: 'Undo', fn: () => undoLast(t.id, entry) };
+    if (done) toast(after, `${after.title} complete!`, `All ${K().int(sa.target)} ${after.unit}. Incredible.`, { mile: true, ms: 10000, action: undo });
+    else if (mile) toast(after, `Milestone: ${K().int(sa.n)} ${after.unit}!`, sub, { mile: true, ms: 9000, action: undo });
+    else toast(after, name, sub, { action: undo, ms: 8000 });
+  };
+
+  const undoLast = async (id, entry) => {
+    const before = byId(id); if (!before) return;
+    const p0 = K().stats(before).p;
+    const hide = toast(before, 'Removing…', null, { sticky: true });
+    try {
+      const d = await commit((x) => { const t = x.trackers.find((y) => y.id === id); if (t && same(t.entries[t.entries.length - 1], entry)) t.entries.pop(); }, `Undo last entry in ${before.title}`);
+      setData(d); hide(); const t = byId(id); redraw({ id, from: p0, to: K().stats(t).p });
+      toast(t, 'Removed', `Back to ${K().stats(t).n} ${t.unit}.`);
+    } catch (e) { hide(); toast(before, 'Could not undo', e.message); }
+  };
+
+  // ---------- save ----------
+  const save = async (t, entry, btn) => {
+    const before = JSON.parse(JSON.stringify(t)), p0 = K().stats(t).p;
+    const label = t.kind === 'readings' ? `Log ${t.title} reading #${t.entries.length + 1}` : `Log ${t.item.toLowerCase()} #${t.entries.length + 1}: ${entry.title}`;
+    try {
+      const d = await commit((x) => appendTo(x, t.id, entry), label);
+      setData(d);
+    } catch (e) {
+      if (e.code !== 'offline') throw e;
+      setQueue(queue().concat([{ id: t.id, entry, at: Date.now() }]));
+      const d = clone(); appendTo(d, t.id, entry); setData(d);
+      const after = byId(t.id); redraw({ id: t.id, from: p0, to: K().stats(after).p });
+      toast(after, 'Saved on this device', 'No connection right now. It will sync to GitHub when you are back online.', { ms: 8000 });
+      return;
+    }
+    const after = byId(t.id);
+    redraw({ id: t.id, from: p0, to: K().stats(after).p });
+    celebrate(t, entry, before, after, btn);
+  };
+  const flush = async () => {
+    const q = queue(); if (!q.length || !token() || !navigator.onLine) return;
+    try {
+      const d = await commit((x) => q.forEach((it) => appendTo(x, it.id, it.entry)), `Sync ${q.length} tracker entr${q.length > 1 ? 'ies' : 'y'} logged offline`);
+      setQueue([]); setData(d); redraw();
+      toast(null, 'Synced', `${q.length} offline entr${q.length > 1 ? 'ies' : 'y'} saved to GitHub.`);
+    } catch (e) {}
+  };
+
+  // ---------- sheet ----------
+  let open = null;
+  const sheet = (accent, build) => {
+    if (open) open.close(true);
+    const prev = document.activeElement;
+    const scrim = mk('div', 'lg-scrim'), sh = mk('div', 'lg-sheet' + (accent ? ' tk-' + accent : ''));
+    sh.setAttribute('role', 'dialog'); sh.setAttribute('aria-modal', 'true');
+    scrim.append(sh); document.body.append(scrim);
+    document.documentElement.style.overflow = 'hidden';
+    const close = (fast) => {
+      if (!scrim.isConnected) return;
+      document.documentElement.style.overflow = '';
+      document.removeEventListener('keydown', onKey);
+      if (fast) scrim.remove(); else { scrim.classList.add('is-out'); setTimeout(() => scrim.remove(), 200); }
+      if (open && open.scrim === scrim) open = null;
+      if (prev && prev.focus && !fast) prev.focus({ preventScroll: true });
+    };
+    const onKey = (e) => {
+      if (e.key === 'Escape') close();
+      if (e.key === 'Tab') { const f = [...sh.querySelectorAll('button, input, a[href]')].filter((x) => !x.disabled); if (!f.length) return; const a = f[0], z = f[f.length - 1]; if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); } }
+    };
+    document.addEventListener('keydown', onKey);
+    scrim.addEventListener('mousedown', (e) => { if (e.target === scrim) close(); });
+    open = { scrim, close };
+    build(sh, close);
+    const first = sh.querySelector('input, .lg-pick, .lg-btn.primary'); if (first) setTimeout(() => first.focus({ preventScroll: true }), 60);
+    return close;
+  };
+  const head = (sh, t, title, sub, close) => {
+    const h = mk('div', 'lg-head'); if (t) h.append(K().ic(t.kind));
+    const w = mk('div'); w.append(mk('h2', '', title)); if (sub) w.append(mk('p', '', sub)); h.append(w);
+    const x = mk('button', 'lg-x', '×'); x.type = 'button'; x.setAttribute('aria-label', 'Close'); x.addEventListener('click', () => close()); h.append(x);
+    sh.append(h);
+  };
+
+  const pickView = () => sheet(null, (sh, close) => {
+    head(sh, null, 'What did you finish?', 'Pick a tracker. It takes five seconds.', close);
+    const box = mk('div', 'lg-picks');
+    trackers().forEach((t) => {
+      const s = K().stats(t), b = mk('button', 'lg-pick tk-' + (t.accent || 'violet')); b.type = 'button';
+      const w = mk('span', 'w'), tr = mk('span', 'tk-track'), f = mk('span', 'tk-fill'); f.style.width = s.p + '%'; tr.append(f);
+      w.append(mk('b', '', t.kind === 'readings' ? `${t.title} reading` : `A ${t.item.toLowerCase()} · ${t.title}`), tr);
+      const n = mk('span', 'n'); n.append(mk('em', '', `#${s.n + 1}`), document.createTextNode(`${s.n}/${s.target}`));
+      b.append(K().ic(t.kind), w, n);
+      b.addEventListener('click', () => formView(t));
+      box.append(b);
+    });
+    sh.append(box);
+  });
+
+  const field = (form, key, label, opts = {}) => {
+    const f = mk('div', 'lg-f' + (opts.size ? ' ' + opts.size : '')), id = 'lg-' + key, l = mk('label', '', label);
+    l.htmlFor = id; if (opts.req) { l.append(' '); l.append(mk('i', '', '*')); }
+    const i = mk('input' + ''); i.id = id; i.name = key; i.type = opts.type || 'text'; i.autocomplete = 'off';
+    if (opts.main) i.className = 'is-main';
+    ['placeholder', 'min', 'max', 'step', 'inputMode', 'value'].forEach((k) => { if (opts[k] != null) i[k] = opts[k]; });
+    if (opts.list && opts.list.length) { const dl = mk('datalist'); dl.id = id + '-list'; [...new Set(opts.list)].sort().forEach((v) => { const o = mk('option'); o.value = v; dl.append(o); }); f.append(dl); i.setAttribute('list', dl.id); }
+    f.prepend(l); f.append(i); form.append(f); return i;
+  };
+
+  const formView = (t, preset) => sheet(t.accent || 'violet', (sh, close) => {
+    const s = K().stats(t), E = t.entries, item = t.item.toLowerCase();
+    const ttl = t.kind === 'books' ? 'Log a book you finished' : t.kind === 'movies' ? 'Log a film you watched' : `Log ${t.title} reading #${s.n + 1}`;
+    head(sh, t, ttl, t.kind === 'readings' ? 'Readings are counted, not days in a row.' : `This becomes ${t.item} #${s.n + 1} in ${t.title}.`, close);
+    const form = mk('form', 'lg-form'); form.noValidate = true;
+    const vals = (k) => E.map((e) => e[k]).filter(Boolean);
+    const I = {};
+    if (t.kind === 'books') {
+      I.title = field(form, 'title', 'Title', { req: true, main: true, placeholder: 'e.g. Sapiens' });
+      I.author = field(form, 'author', 'Author', { size: 'half', list: vals('author'), placeholder: 'Who wrote it' });
+      I.genre = field(form, 'genre', 'Category', { size: 'half', list: vals('genre'), placeholder: 'Optional' });
+      I.year = field(form, 'year', 'Published', { size: 'half', type: 'number', inputMode: 'numeric', placeholder: 'Year', max: new Date().getFullYear() });
+      I.date = field(form, 'date', 'Finished on', { size: 'half', type: 'date', value: today(), max: today() });
+    } else if (t.kind === 'movies') {
+      I.title = field(form, 'title', 'Film', { req: true, main: true, placeholder: 'e.g. Drishyam' });
+      I.director = field(form, 'director', 'Director', { size: 'half', list: vals('director'), placeholder: 'Who directed it' });
+      I.year = field(form, 'year', 'Year', { size: 'half', type: 'number', inputMode: 'numeric', placeholder: 'Release year', max: new Date().getFullYear() + 1 });
+      I.genre = field(form, 'genre', 'Genre', { size: 'third', list: vals('genre').flatMap((g) => String(g).split(/,\s*/)), placeholder: 'Optional' });
+      I.runtime = field(form, 'runtime', 'Minutes', { size: 'third', type: 'number', inputMode: 'numeric', placeholder: 'Optional' });
+      I.imdb = field(form, 'imdb', 'IMDb', { size: 'third', type: 'number', inputMode: 'decimal', step: '0.1', min: 0, max: 10, placeholder: '8.1' });
+      I.date = field(form, 'date', 'Watched on', { type: 'date', value: today(), max: today() });
+    } else {
+      I.date = field(form, 'date', 'Completed on', { type: 'date', value: (preset && preset.date) || today(), max: today(), main: true });
+      I.note = field(form, 'note', 'Note', { placeholder: 'Optional, e.g. read at the temple' });
+    }
+    const warn = mk('p', 'lg-warn'); warn.hidden = true; form.append(warn);
+    sh.append(form);
+
+    // live preview of the bar moving
+    const prev = mk('div', 'lg-prev'), pt = mk('div', 'lg-prev-top'), big = mk('b');
+    const p1 = Math.min(100, 100 * (s.n + 1) / s.target);
+    big.append(document.createTextNode(`${s.n} → `), mk('span', '', String(s.n + 1)), document.createTextNode(` ${t.unit}`));
+    pt.append(big, mk('small', '', `${K().fmtPct(s.p)} → ${K().fmtPct(p1)}`));
+    const tr = mk('div', 'tk-track'), f = mk('div', 'tk-fill'), gh = mk('div', 'ghost');
+    gh.style.width = p1 + '%'; f.style.width = s.p + '%'; f.style.transition = 'none'; tr.append(gh, f);
+    const msg = mk('p'); const nn = s.n + 1;
+    if (nn >= s.target) { msg.className = 'is-mile'; msg.textContent = `This one completes ${t.title}.`; }
+    else if ((t.milestones || []).includes(nn)) { msg.className = 'is-mile'; msg.textContent = `This one hits the ${K().int(nn)} milestone.`; }
+    else if (s.next) msg.append(document.createTextNode('After this, '), mk('b', '', `${s.next - nn} more`), document.createTextNode(` to reach ${K().int(s.next)}.`));
+    prev.append(pt, tr, msg); sh.append(prev);
+
+    const err = mk('p', 'lg-err'); err.hidden = true; sh.append(err);
+    const foot = mk('div', 'lg-foot');
+    const note = mk('span', 'bt-note', token() ? 'Saves to your site on GitHub.' : 'You will connect GitHub once, then it saves.');
+    const back = mk('button', 'lg-btn', 'Back'); back.type = 'button'; back.addEventListener('click', () => pickView());
+    const go = mk('button', 'lg-btn primary', t.kind === 'readings' ? 'Mark done' : `Add ${item}`); go.type = 'submit';
+    foot.append(note, back, go); sh.append(foot);
+    go.type = 'button'; go.addEventListener('click', (e) => { e.preventDefault(); submit(); });
+    form.addEventListener('submit', (e) => { e.preventDefault(); submit(); });
+    form.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); if (!go.disabled) submit(); } });
+    let confirmDup = false;
+    if (I.title) I.title.addEventListener('input', () => { confirmDup = false; warn.hidden = true; });
+    const submit = async () => {
+      err.hidden = true;
+      const v = (k) => (I[k] ? I[k].value.trim() : '');
+      const entry = {};
+      if (t.kind !== 'readings') {
+        if (!v('title')) { err.textContent = `Add the ${item}'s title first.`; err.hidden = false; I.title.focus(); return; }
+        entry.title = v('title');
+        const dup = E.findIndex((e) => String(e.title || '').toLowerCase() === entry.title.toLowerCase());
+        if (dup >= 0 && !confirmDup) { warn.textContent = `Already logged as #${dup + 1}. Press ${go.textContent} again to log it a second time.`; warn.hidden = false; confirmDup = true; return; }
+      }
+      if (t.kind === 'books') { if (v('author')) entry.author = v('author'); if (v('genre')) entry.genre = v('genre'); if (v('year')) entry.year = Number(v('year')); }
+      if (t.kind === 'movies') { if (v('year')) entry.year = Number(v('year')); if (v('director')) entry.director = v('director'); if (v('genre')) entry.genre = v('genre'); if (v('runtime')) entry.runtime = Number(v('runtime')); if (v('imdb')) entry.imdb = Number(v('imdb')); }
+      const d = v('date');
+      if (d) { if (d > today()) { err.textContent = 'That date is in the future.'; err.hidden = false; return; } entry.date = d; }
+      else if (t.kind === 'readings') { err.textContent = 'Pick the date of the reading.'; err.hidden = false; return; }
+      if (t.kind === 'readings' && v('note')) entry.note = v('note');
+      if (!token()) { connectView(() => run(entry)); return; }
+      run(entry);
+    };
+    const run = async (entry) => {
+      go.disabled = true; back.disabled = true; go.replaceChildren(mk('span', 'spin'), document.createTextNode('Saving…'));
+      try { await save(byId(t.id) || t, entry, go); close(); }
+      catch (e) {
+        go.disabled = false; back.disabled = false; go.textContent = t.kind === 'readings' ? 'Mark done' : `Add ${item}`;
+        if (e.code === 'auth' || e.code === 'perm') { ls.set(TK, null); err.textContent = e.message + ' Connect again to save.'; err.hidden = false; setTimeout(() => connectView(() => formView(t)), 1400); return; }
+        err.textContent = e.message; err.hidden = false;
+      }
+    };
+    requestAnimationFrame(() => { f.style.transition = ''; });
+  });
+
+  const connectView = (after) => sheet('violet', (sh, close) => {
+    head(sh, null, 'Connect your GitHub once', 'Entries save straight into your site, so they show up on every device.', close);
+    const ol = mk('ol', 'lg-steps');
+    const li1 = mk('li'); const a = mk('a', '', 'Open GitHub’s new token page'); a.href = 'https://github.com/settings/personal-access-tokens/new'; a.target = '_blank'; a.rel = 'noopener'; li1.append(a, document.createTextNode(' (signed in as dot-hpg).'));
+    const li2 = mk('li'); li2.append(document.createTextNode('Name it '), mk('code', '', 'Built tracker'), document.createTextNode(', set an expiry, and under Repository access pick '), mk('b', '', 'Only select repositories'), document.createTextNode(' → '), mk('code', '', 'built-tracker'), document.createTextNode('.'));
+    const li3 = mk('li'); li3.append(document.createTextNode('Under Permissions → Repository, set '), mk('b', '', 'Contents'), document.createTextNode(' to '), mk('b', '', 'Read and write'), document.createTextNode('. Generate it and copy the token.'));
+    const li4 = mk('li', '', 'Paste it below.');
+    [li1, li2, li3, li4].forEach((li) => { const w = mk('span'); w.append(...li.childNodes); li.append(w); });
+    ol.append(li1, li2, li3, li4); sh.append(ol);
+    const form = mk('form', 'lg-form');
+    const inp = field(form, 'token', 'Token', { type: 'password', placeholder: 'github_pat_…', main: true });
+    sh.append(form);
+    const lock = mk('div', 'lg-lock'); lock.innerHTML = LOCK; lock.append(mk('span', '', 'The token stays in this browser only. It is never put on the site, and visitors cannot add entries. Do this once on your phone and once on your laptop. You can disconnect at any time from the Trackers page.'));
+    sh.append(lock);
+    const err = mk('p', 'lg-err'); err.hidden = true; sh.append(err);
+    const foot = mk('div', 'lg-foot'), go = mk('button', 'lg-btn primary', 'Connect and save'); go.type = 'button';
+    foot.append(go); sh.append(foot);
+    const run = async () => {
+      const tok = inp.value.trim(); if (!tok) { inp.focus(); return; }
+      go.disabled = true; go.replaceChildren(mk('span', 'spin'), document.createTextNode('Checking…')); err.hidden = true;
+      try { await read(tok); ls.set(TK, tok); close(true); if (after) after(); else toast(null, 'Connected', 'You can log entries from this device now.'); dash.draw('trackers'); flush(); }
+      catch (e) { go.disabled = false; go.textContent = 'Connect and save'; err.textContent = e.message; err.hidden = false; }
+    };
+    go.addEventListener('click', run);
+    form.addEventListener('submit', (e) => { e.preventDefault(); run(); });
+  });
+
+  const quickDone = async (t, btn) => {
+    const entry = { date: today() };
+    if (!token()) { connectView(() => quickDone(byId(t.id) || t, null)); return; }
+    btn && (btn.disabled = true);
+    const hide = toast(t, 'Saving…', `${t.title} reading #${t.entries.length + 1}`, { sticky: true });
+    try { await save(t, entry, btn); if (toastEl && toastEl.textContent.startsWith('Saving')) hide(); }
+    catch (e) { hide(); btn && (btn.disabled = false); if (e.code === 'auth' || e.code === 'perm') { ls.set(TK, null); connectView(() => quickDone(byId(t.id) || t, null)); } toast(t, 'Could not save', e.message); }
+  };
+
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-tk-log]'); if (!b) return;
+    e.preventDefault(); e.stopPropagation();
+    const t = b.dataset.tkLog ? byId(b.dataset.tkLog) : null;
+    if (!t) { pickView(); return; }
+    if (b.dataset.tkMode === 'quick') quickDone(t, b); else formView(t);
+  }, true);
+
+  // Owner line on the overview
+  window.btTkAfterDraw = (el) => {
+    const h = el.querySelector('.tk-list-h'); if (!h || !token()) return;
+    const o = mk('span', 'tk-owner'); o.append(mk('span', 'live-dot'), document.createTextNode('Logging is on for this device · '));
+    const d = mk('button', '', 'Disconnect'); d.type = 'button';
+    d.addEventListener('click', () => { if (confirm('Remove the GitHub token from this browser? You can connect again any time.')) { ls.set(TK, null); dash.draw('trackers'); toast(null, 'Disconnected', 'This browser can no longer save entries.'); } });
+    o.append(d); h.querySelector('.bt-note') ? h.querySelector('.bt-note').replaceWith(o) : h.append(o);
+  };
+
+  // After load: apply anything logged offline, and on the owner's device pull the freshest data
+  // straight from GitHub (the public site can lag a minute behind a commit).
+  const whenLoaded = (fn, n = 0) => { const r = store(); if (r.status === 'ok' && window.btTk) fn(); else if (r.status !== 'error' && n < 200) setTimeout(() => whenLoaded(fn, n + 1), 100); };
+  window.addEventListener('DOMContentLoaded', () => whenLoaded(async () => {
+    const q = queue();
+    if (q.length) { const d = clone(); q.forEach((it) => { try { appendTo(d, it.id, it.entry); } catch (e) {} }); setData(d); redraw(); }
+    if (!token()) return;
+    try {
+      const { data } = await read();
+      const cnt = (d) => d.trackers.reduce((a, t) => a + t.entries.length, 0);
+      if (!queue().length && serialize(data) !== serialize(store().data)) { setData(data); redraw(); }
+      else if (queue().length && cnt(data) >= cnt(store().data)) { /* flush below */ }
+    } catch (e) { if (e.code === 'auth') ls.set(TK, null); }
+    flush();
+  }));
+  window.addEventListener('online', flush);
 })();
 </script>
 <script>
