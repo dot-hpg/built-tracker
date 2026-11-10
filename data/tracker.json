@@ -196,7 +196,7 @@
    "category": "AI agents & LLM apps",
    "focus": "Speech-to-text, LLM and text-to-speech loop under 800 ms with barge-in",
    "level": "Expert",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -207,8 +207,8 @@
    "category": "AI agents & LLM apps",
    "focus": "Knowledge graph over research papers in Neo4j with graph plus vector retrieval",
    "level": "Expert",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 19,
