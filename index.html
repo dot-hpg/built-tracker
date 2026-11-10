@@ -127,7 +127,7 @@ a.bt-vtitle:hover { color: var(--bt-c0); }
     .then((j) => { store[id] = { status: 'ok', data: Array.isArray(j) ? j : (j.rows || j) }; })
     .catch(() => { store[id] = { status: 'error', data: [] }; });
   window.addEventListener('DOMContentLoaded', () => {
-    Promise.all([load('projects', 'data/projects.json'), load('tracker', 'data/tracker.json'), load('meta', 'data/meta.json'), load('learning', 'data/learning.json'), load('goals', 'data/goals.json')])
+    Promise.all([load('projects', 'data/projects.json'), load('tracker', 'data/tracker.json'), load('meta', 'data/meta.json'), load('learning', 'data/learning.json'), load('goals', 'data/goals.json'), load('trackers', 'data/trackers.json')])
       .then(() => {
         dash.redrawAll();
         let w = window.innerWidth;
@@ -149,6 +149,7 @@ a.bt-vtitle:hover { color: var(--bt-c0); }
       <button class="bt-tab nav-item" role="tab" data-tab="projects" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg></span><span class="nav-label">Projects</span><span class="nav-badge" data-draw="navbadge" data-field="projects"></span></button>
       <button class="bt-tab nav-item" role="tab" data-tab="plan" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h2M12 14h2M8 17h2"/></svg></span><span class="nav-label">48-day plan</span><span class="nav-badge" data-draw="navbadge" data-field="plan"></span></button>
       <button class="bt-tab nav-item" role="tab" data-tab="learning" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10.5 9.5v5l4-2.5z" fill="currentColor"/></svg></span><span class="nav-label">Learning</span><span class="nav-badge" data-draw="navbadge" data-field="learning"></span></button>
+      <button class="bt-tab nav-item" role="tab" data-tab="trackers" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><path d="M4 6.5h9M4 12h16M4 17.5h6"/><circle cx="16.5" cy="6.5" r="1.6" fill="currentColor"/><circle cx="13.5" cy="17.5" r="1.6" fill="currentColor"/></svg></span><span class="nav-label">Trackers</span><span class="nav-badge" data-draw="navbadge" data-field="trackers"></span></button>
     </nav>
     <div class="sprint" data-draw="sprintcard">
       <div class="sprint-ring"><svg viewBox="0 0 64 64"><circle class="trk" cx="32" cy="32" r="27"/><circle class="arc" cx="32" cy="32" r="27" pathLength="100"/></svg><b class="sprint-pct">—</b></div>
@@ -508,6 +509,188 @@ svg { flex: 0 0 auto; }
   .bt-anim { animation: bt-rise var(--cds-dur-slow) var(--cds-ease-out) both; }
   @keyframes bt-rise { from { opacity: .35; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 }
+/* ===== v4: personal trackers ===== */
+.tk-violet { --a1: #6d5efc; --a2: #b07cff; --ink: #5a4be6; }
+.tk-cyan { --a1: #06b6d4; --a2: #3b82f6; --ink: #0e7490; }
+.tk-saffron { --a1: #ff8a00; --a2: #e8341c; --ink: #c2410c; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tk-violet { --ink: #a99fff; } :root:not([data-theme="light"]) .tk-cyan { --ink: #5fd8ee; } :root:not([data-theme="light"]) .tk-saffron { --ink: #ffa45c; } }
+:root[data-theme="dark"] .tk-violet { --ink: #a99fff; } :root[data-theme="dark"] .tk-cyan { --ink: #5fd8ee; } :root[data-theme="dark"] .tk-saffron { --ink: #ffa45c; }
+.tk-root { display: grid; gap: 22px; }
+.tk-mono { font-family: var(--font-mono); }
+.tk-hero { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+.tk-next { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.tk-next span { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line-soft); background: color-mix(in srgb, var(--color-bg) 55%, transparent); font-size: .8rem; color: var(--color-fg-muted); }
+.tk-next span b { color: var(--color-fg); font-weight: 600; }
+.tk-next i { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--a1), var(--a2)); }
+.tk-rings { display: flex; align-items: center; gap: 22px; justify-content: center; flex-wrap: wrap; }
+.tk-rings svg { width: 190px; height: 190px; flex: 0 0 auto; overflow: visible; }
+.tk-rings circle { fill: none; stroke-width: 13; }
+.tk-rings .trk { stroke: var(--track); }
+.tk-rings .arc { stroke-linecap: round; transition: stroke-dasharray 1.6s var(--cds-ease-out); filter: drop-shadow(0 0 6px color-mix(in srgb, var(--a1) 45%, transparent)); }
+.tk-rings text { fill: var(--color-fg); font-family: var(--font-anthropic-sans); text-anchor: middle; }
+.tk-rings .big { font-size: 30px; font-weight: 700; letter-spacing: -.04em; }
+.tk-rings .small { font-size: 8.5px; font-family: var(--font-mono); letter-spacing: .14em; fill: var(--color-fg-muted); }
+.tk-legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; min-width: 0; }
+.tk-legend li { display: grid; grid-template-columns: 10px auto; column-gap: 10px; align-items: center; }
+.tk-legend i { width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, var(--a1), var(--a2)); }
+.tk-legend b { font-weight: 600; font-size: .9rem; }
+.tk-legend span { grid-column: 2; font-family: var(--font-mono); font-size: .72rem; color: var(--color-fg-muted); }
+.tk-list-h { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin: 6px 2px -6px; }
+.tk-list-h h2 { margin: 0; font-size: 1.05rem; font-weight: 650; letter-spacing: -.015em; }
+.tk-cards { display: grid; gap: 16px; }
+.tk-card { position: relative; display: grid; gap: 18px; padding: 24px 26px 20px; border-radius: 22px; text-decoration: none; color: inherit; background: var(--glass); border: 1px solid var(--line-soft); box-shadow: var(--bt-shadow); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); overflow: hidden; transition: transform .25s var(--cds-ease-out), border-color .25s, box-shadow .25s; }
+.tk-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: linear-gradient(90deg, var(--a1), var(--a2)); }
+.tk-card::after { content: ""; position: absolute; inset: auto -20% -60% auto; width: 420px; height: 300px; background: radial-gradient(circle, color-mix(in srgb, var(--a1) 16%, transparent), transparent 65%); pointer-events: none; opacity: .7; transition: opacity .3s; }
+.tk-card > * { position: relative; z-index: 1; }
+.tk-card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--a1) 45%, transparent); box-shadow: var(--bt-shadow), 0 18px 50px -22px var(--a1); }
+.tk-card:hover::after { opacity: 1; }
+.tk-card:focus-visible, .tk-back:focus-visible, .tk-jump:focus-visible { outline: 2px solid var(--a1, var(--c0)); outline-offset: 3px; }
+.tk-card-top { display: flex; gap: 16px; align-items: center; }
+.tk-ic { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; flex: 0 0 auto; background: linear-gradient(135deg, var(--a1), var(--a2)); box-shadow: 0 10px 26px -10px var(--a1), inset 0 1px 0 rgba(255, 255, 255, .3); }
+.tk-ic svg { width: 26px; height: 26px; fill: none; stroke: #fff; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.tk-words { min-width: 0; flex: 1; display: grid; gap: 3px; }
+.tk-k { margin: 0; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
+.tk-words h3 { margin: 0; font-size: clamp(1.25rem, 2.2vw, 1.6rem); font-weight: 680; letter-spacing: -.03em; line-height: 1.1; }
+.tk-sub { margin: 0; font-size: .86rem; color: var(--color-fg-muted); }
+.tk-num { text-align: right; flex: 0 0 auto; display: grid; justify-items: end; }
+.tk-num b { font-size: clamp(2rem, 4vw, 2.9rem); font-weight: 700; letter-spacing: -.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+.tk-num span { font-family: var(--font-mono); font-size: .74rem; color: var(--color-fg-muted); margin-top: 4px; }
+.tk-bar { display: grid; gap: 7px; }
+.tk-track { position: relative; height: 14px; border-radius: 999px; background: var(--track); box-shadow: inset 0 1px 2px rgba(0, 0, 0, .12); }
+.tk-fill { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--a1), var(--a2)); box-shadow: 0 0 18px -2px color-mix(in srgb, var(--a1) 70%, transparent); transition: width 1.6s cubic-bezier(.16, 1, .3, 1); overflow: hidden; min-width: 14px; }
+.tk-fill::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, .38) 50%, transparent 80%); transform: translateX(-100%); animation: tk-shine 3.2s ease-in-out 1.4s infinite; }
+@keyframes tk-shine { 0% { transform: translateX(-100%); } 55%, 100% { transform: translateX(100%); } }
+.tk-head { position: absolute; top: 50%; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: var(--color-panel); border: 3px solid var(--a2); box-shadow: 0 0 0 5px color-mix(in srgb, var(--a2) 22%, transparent); left: 0; transition: left 1.6s cubic-bezier(.16, 1, .3, 1); z-index: 2; }
+.tk-notch { position: absolute; top: 3px; bottom: 3px; width: 2px; margin-left: -1px; border-radius: 2px; background: color-mix(in srgb, var(--color-fg) 22%, transparent); z-index: 1; }
+.tk-notch.is-hit { background: rgba(255, 255, 255, .7); }
+.tk-scale { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: .64rem; color: var(--color-fg-muted); letter-spacing: .04em; }
+.tk-foot { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tk-pct { font-size: 1.05rem; font-weight: 700; letter-spacing: -.02em; margin-right: 6px; font-variant-numeric: tabular-nums; color: var(--ink); }
+.tk-pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 999px; font-size: .76rem; color: var(--color-fg-muted); background: color-mix(in srgb, var(--color-bg) 55%, transparent); border: 1px solid var(--line-soft); max-width: 100%; min-width: 0; }
+.tk-pill b { color: var(--color-fg); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tk-go { margin-left: auto; font-size: .82rem; font-weight: 600; color: var(--ink); display: inline-flex; gap: 6px; align-items: center; white-space: nowrap; }
+.tk-go svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s; }
+.tk-card:hover .tk-go svg { transform: translateX(4px); }
+/* detail */
+.tk-back { justify-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px 7px 10px; border-radius: 999px; border: 1px solid var(--line-soft); background: var(--glass); color: var(--color-fg-muted); text-decoration: none; font-size: .82rem; font-weight: 500; transition: color .15s, border-color .15s; }
+.tk-back:hover { color: var(--color-fg); border-color: color-mix(in srgb, var(--a1) 45%, transparent); }
+.tk-back svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.tk-dhero { position: relative; overflow: hidden; border-radius: 26px; padding: clamp(22px, 3.2vw, 36px); display: grid; gap: 28px; background: var(--glass); border: 1px solid var(--line-soft); box-shadow: var(--bt-shadow); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+.tk-dhero::before { content: ""; position: absolute; inset: -50% -15% auto auto; width: 620px; height: 620px; background: radial-gradient(circle, color-mix(in srgb, var(--a1) 22%, transparent), transparent 62%); pointer-events: none; }
+.tk-dhero::after { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: linear-gradient(90deg, var(--a1), var(--a2)); }
+.tk-dhero > * { position: relative; }
+.tk-dtop { display: flex; justify-content: space-between; gap: 24px; align-items: flex-end; flex-wrap: wrap; }
+.tk-dtop .tk-ic { width: 60px; height: 60px; border-radius: 18px; }
+.tk-dtop .tk-ic svg { width: 30px; height: 30px; }
+.tk-dtitle { display: flex; gap: 18px; align-items: center; min-width: 0; }
+.tk-dtitle h2 { margin: 0; font-size: clamp(2rem, 4.4vw, 3.2rem); font-weight: 700; letter-spacing: -.045em; line-height: 1; }
+.tk-dtitle h2 span { background: linear-gradient(90deg, var(--a1), var(--a2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.tk-dtitle .tk-sub { font-size: .98rem; margin-top: 6px; }
+.tk-dnum { display: grid; justify-items: end; }
+.tk-dnum b { font-size: clamp(3.2rem, 8vw, 5.6rem); font-weight: 750; letter-spacing: -.06em; line-height: .9; font-variant-numeric: tabular-nums; }
+.tk-dnum b small { font-size: .34em; color: var(--color-fg-muted); font-weight: 600; letter-spacing: -.02em; margin-left: 6px; }
+.tk-dnum > span { font-family: var(--font-mono); font-size: .76rem; color: var(--color-fg-muted); letter-spacing: .04em; margin-top: 8px; }
+.tk-bar-big { gap: 10px; padding-top: 30px; }
+.tk-bar-big .tk-track { height: 24px; }
+.tk-bar-big .tk-head { width: 30px; height: 30px; margin: -15px 0 0 -15px; border-width: 4px; }
+.tk-bar-big .tk-scale { font-size: .7rem; }
+.tk-pins { position: absolute; left: 0; right: 0; top: 0; height: 26px; }
+.tk-pin { position: absolute; transform: translateX(-50%); display: grid; justify-items: center; gap: 2px; font-family: var(--font-mono); font-size: .66rem; color: var(--color-fg-muted); white-space: nowrap; }
+.tk-pin::after { content: ""; width: 1px; height: 8px; background: currentColor; opacity: .5; }
+.tk-pin.is-hit { color: var(--ink); font-weight: 600; }
+.tk-pin.is-hit::before { content: "✓ "; }
+.tk-pin.is-end { transform: translateX(-100%); justify-items: end; }
+.tk-pin.is-end::after { margin-right: 0; }
+.tk-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.tk-tile { border-radius: 18px; padding: 18px; display: grid; gap: 4px; align-content: start; background: var(--glass); border: 1px solid var(--line-soft); box-shadow: var(--bt-shadow); position: relative; overflow: hidden; }
+.tk-tile::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 2px; background: linear-gradient(90deg, var(--a1), var(--a2)); opacity: .85; }
+.tk-tile p { margin: 0; }
+.tk-tl { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; color: var(--color-fg-muted); }
+.tk-tn { font-size: clamp(1.7rem, 2.6vw, 2.2rem); font-weight: 700; letter-spacing: -.04em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.tk-tt { font-size: .78rem; color: var(--color-fg-muted); }
+.tk-ins { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 18px; align-items: start; }
+.tk-hb { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 10px; }
+.tk-hb li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; font-size: .84rem; }
+.tk-hb .l { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tk-hb .v { font-family: var(--font-mono); font-size: .76rem; color: var(--color-fg-muted); }
+.tk-hb .t { grid-column: 1 / -1; height: 8px; border-radius: 99px; background: var(--track); overflow: hidden; }
+.tk-hb .t i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--a1), var(--a2)); transition: width 1.2s cubic-bezier(.16, 1, .3, 1); }
+.tk-vb { display: flex; align-items: flex-end; gap: 6px; height: 170px; margin-top: 10px; padding-top: 18px; }
+.tk-vb > div { flex: 1; min-width: 0; height: 100%; display: grid; grid-template-rows: 1fr auto; gap: 6px; }
+.tk-vb .c { position: relative; display: flex; align-items: flex-end; }
+.tk-vb .c i { width: 100%; height: 0; border-radius: 8px 8px 3px 3px; background: linear-gradient(180deg, var(--a2), var(--a1)); transition: height 1.2s cubic-bezier(.16, 1, .3, 1); min-height: 3px; }
+.tk-vb .c b { position: absolute; left: 0; right: 0; text-align: center; font-family: var(--font-mono); font-size: .68rem; font-weight: 600; transform: translateY(-120%); bottom: var(--h, 0%); transition: bottom 1.2s cubic-bezier(.16, 1, .3, 1); }
+.tk-vb .x { font-family: var(--font-mono); font-size: .56rem; letter-spacing: -.03em; color: var(--color-fg-muted); text-align: center; white-space: nowrap; overflow: hidden; }
+.tk-mala { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 7px; margin-top: 8px; }
+.tk-bead { aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: .58rem; color: var(--color-fg-muted); background: var(--track); border: 1px solid var(--line-soft); transition: transform .2s; }
+.tk-bead.is-done { color: #fff; font-weight: 700; background: radial-gradient(circle at 35% 30%, var(--a1), var(--a2)); border-color: transparent; box-shadow: 0 4px 14px -4px var(--a2); }
+.tk-bead.is-next { border: 2px dashed var(--a1); color: var(--ink); font-weight: 700; animation: tk-breathe 2.4s ease-in-out infinite; }
+.tk-bead.is-mile:not(.is-done) { border-color: color-mix(in srgb, var(--a1) 55%, transparent); }
+.tk-bead:hover { transform: scale(1.15); }
+@keyframes tk-breathe { 50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--a1) 18%, transparent); } }
+.tk-cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; margin-top: 8px; max-width: 300px; }
+.tk-cal .h { font-family: var(--font-mono); font-size: .6rem; color: var(--color-fg-muted); text-align: center; }
+.tk-day { aspect-ratio: 1; border-radius: 9px; display: grid; place-items: center; font-size: .72rem; font-variant-numeric: tabular-nums; color: var(--color-fg-muted); background: color-mix(in srgb, var(--track) 60%, transparent); }
+.tk-day.is-on { background: linear-gradient(135deg, var(--a1), var(--a2)); color: #fff; font-weight: 700; box-shadow: 0 4px 12px -5px var(--a2); }
+.tk-day.is-today { outline: 2px solid var(--color-fg); outline-offset: -2px; }
+.tk-day.is-blank { background: none; }
+.tk-pace { margin: 6px 0 0; font-size: 1rem; line-height: 1.55; }
+.tk-pace b { color: var(--ink); }
+.tk-recent { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 10px; }
+.tk-recent li { display: flex; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--line-soft); background: color-mix(in srgb, var(--color-bg) 50%, transparent); min-width: 0; }
+.tk-recent li.is-latest { border-color: color-mix(in srgb, var(--a1) 40%, transparent); background: color-mix(in srgb, var(--a1) 8%, transparent); }
+.tk-n { flex: 0 0 auto; min-width: 3.2em; text-align: center; font-family: var(--font-mono); font-size: .72rem; font-weight: 700; padding: 5px 8px; border-radius: 999px; color: var(--ink); background: color-mix(in srgb, var(--a1) 14%, transparent); }
+.tk-rw { min-width: 0; flex: 1; display: grid; gap: 2px; }
+.tk-rw b { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tk-rw span { font-size: .78rem; color: var(--color-fg-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tk-tag { flex: 0 0 auto; font-family: var(--font-mono); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; color: #fff; background: linear-gradient(90deg, var(--a1), var(--a2)); }
+.tk-side { flex: 0 0 auto; font-family: var(--font-mono); font-size: .74rem; color: var(--color-fg-muted); text-align: right; }
+.tk-star { color: var(--ink); font-weight: 600; }
+.tk-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.tk-tools .bt-search { flex: 1 1 14rem; max-width: 24rem; }
+.tk-tools .bt-chip[aria-pressed="true"] { background: linear-gradient(90deg, var(--a1), var(--a2)); border-color: transparent; color: #fff; }
+.tk-count { margin-left: auto; font-family: var(--font-mono); font-size: .72rem; color: var(--color-fg-muted); }
+.tk-all { list-style: none; margin: 4px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); gap: 8px; max-height: 640px; overflow-y: auto; padding-right: 2px; scrollbar-width: thin; }
+.tk-all li { display: flex; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line-soft); background: color-mix(in srgb, var(--color-bg) 40%, transparent); min-width: 0; transition: border-color .15s, background .15s; }
+.tk-all li:hover { border-color: color-mix(in srgb, var(--a1) 40%, transparent); background: color-mix(in srgb, var(--a1) 6%, transparent); }
+.tk-all mark { background: color-mix(in srgb, var(--a1) 30%, transparent); color: inherit; border-radius: 3px; padding: 0 1px; }
+.tk-jumps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 12px; }
+.tk-jump { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 16px; border: 1px solid var(--line-soft); background: var(--glass); color: inherit; text-decoration: none; transition: border-color .2s, transform .2s var(--cds-ease-out); }
+.tk-jump:hover { border-color: color-mix(in srgb, var(--a1) 45%, transparent); transform: translateY(-2px); }
+.tk-jump .tk-ic { width: 38px; height: 38px; border-radius: 12px; }
+.tk-jump .tk-ic svg { width: 19px; height: 19px; }
+.tk-jump .mini { flex: 1; min-width: 0; display: grid; gap: 6px; }
+.tk-jump .mini b { font-size: .9rem; }
+.tk-jump .mini .tk-track { height: 6px; }
+.tk-jump .mini .tk-fill { min-width: 6px; box-shadow: none; }
+.tk-jump .mini .tk-fill::after { display: none; }
+.tk-jump .pc { font-family: var(--font-mono); font-size: .78rem; font-weight: 600; color: var(--ink); }
+.tk-notes { display: grid; gap: 4px; }
+.tk-notes p { margin: 0; font-size: .78rem; color: var(--color-fg-muted); line-height: 1.5; }
+.tk-reveal { transition: opacity .7s var(--cds-ease-out), transform .7s var(--cds-ease-out); }
+.tk-reveal.tk-wait { opacity: 0; transform: translateY(18px); }
+.tk-root.tk-still * { transition: none !important; }
+@media (max-width: 960px) { .dock { grid-template-columns: repeat(6, 1fr) !important; } .tk-hero { grid-template-columns: 1fr; } }
+@media (max-width: 720px) { .tk-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
+@media (max-width: 560px) {
+  .tk-card { padding: 20px 16px 16px; border-radius: 18px; gap: 16px; }
+  .tk-card-top { flex-wrap: wrap; gap: 12px; }
+  .tk-ic { width: 44px; height: 44px; border-radius: 13px; }
+  .tk-ic svg { width: 22px; height: 22px; }
+  .tk-num { flex-basis: 100%; justify-items: start; text-align: left; grid-auto-flow: column; align-items: baseline; justify-content: start; gap: 8px; }
+  .tk-go { margin-left: 0; }
+  .tk-dhero { border-radius: 20px; padding: 20px 16px; }
+  .tk-dtop { align-items: flex-start; }
+  .tk-dnum { justify-items: start; }
+  .tk-dtop .tk-ic { width: 48px; height: 48px; }
+  .tk-tile { padding: 14px; }
+  .tk-rings svg { width: 160px; height: 160px; }
+  .tk-mala { gap: 5px; }
+  .tk-bead { font-size: .5rem; }
+  .tk-all { max-height: 560px; }
+  .dock-item { font-size: .58rem !important; }
+}
+@media (prefers-reduced-motion: reduce) { .tk-fill::after, .tk-bead.is-next { animation: none; } .tk-reveal.tk-wait { opacity: 1; transform: none; } }
 </style>
 
 <div class="bt">
@@ -710,6 +893,10 @@ svg { flex: 0 0 auto; }
     </div>
   </section>
 
+  <section class="bt-section" id="panel-trackers" data-panel="trackers" hidden>
+    <div data-draw="trackers"></div>
+  </section>
+
 </div>
 
 <script>
@@ -777,7 +964,7 @@ svg { flex: 0 0 auto; }
   };
 
   // Tabs
-  const TITLES = { goals: 'Goals', overview: 'Dashboard', projects: 'Projects', plan: '48-day plan', learning: 'Learning' };
+  const TITLES = { goals: 'Goals', overview: 'Dashboard', projects: 'Projects', plan: '48-day plan', learning: 'Learning', trackers: 'Trackers' };
   const show = (name) => {
     document.querySelectorAll('.bt-tab').forEach((t) => t.setAttribute('aria-selected', String(t.dataset.tab === name)));
     ['page-title', 'crumb-now'].forEach((id) => { const e = document.getElementById(id); if (e) e.textContent = TITLES[name] || ''; });
@@ -790,8 +977,8 @@ svg { flex: 0 0 auto; }
     window.scrollTo(0, 0);
     setTimeout(() => dash.redrawAll(), 0);
   });
-  const h = location.hash.slice(1);
-  if (['goals', 'overview', 'projects', 'plan', 'learning'].includes(h)) { show(h); requestAnimationFrame(() => window.scrollTo(0, 0)); }
+  const h = location.hash.slice(1).split('/')[0];
+  if (['goals', 'overview', 'projects', 'plan', 'learning', 'trackers'].includes(h)) { show(h); requestAnimationFrame(() => window.scrollTo(0, 0)); }
 
   // Generic value
   dash.draw('val', (el) => {
@@ -1091,6 +1278,7 @@ svg { flex: 0 0 auto; }
   <button class="bt-tab dock-item" role="tab" data-tab="projects" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg></span><span>Projects</span></button>
   <button class="bt-tab dock-item" role="tab" data-tab="plan" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h2M12 14h2M8 17h2"/></svg></span><span>Plan</span></button>
   <button class="bt-tab dock-item" role="tab" data-tab="learning" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10.5 9.5v5l4-2.5z" fill="currentColor"/></svg></span><span>Learning</span></button>
+  <button class="bt-tab dock-item" role="tab" data-tab="trackers" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><path d="M4 6.5h9M4 12h16M4 17.5h6"/><circle cx="16.5" cy="6.5" r="1.6" fill="currentColor"/><circle cx="13.5" cy="17.5" r="1.6" fill="currentColor"/></svg></span><span>Trackers</span></button>
 </nav>
 <script>
 (() => {
@@ -1382,6 +1570,10 @@ dash.draw('updated', (el) => {
       const r = dash.data('learning');
       if (r.status === 'ok') t = String(r.data.reduce((s, c) => s + (Array.isArray(c.videos) ? c.videos.filter((v) => !v.partial).length : Number(c.watched) || 0), 0));
     }
+    else if (f === 'trackers') {
+      const r = dash.data('trackers');
+      if (r.status === 'ok' && r.data && Array.isArray(r.data.trackers)) t = String(r.data.trackers.reduce((s, x) => s + x.entries.length, 0));
+    }
     el.textContent = t; el.classList.toggle('is-empty', !t);
   });
   dash.draw('sprintcard', (el) => {
@@ -1410,6 +1602,366 @@ dash.draw('updated', (el) => {
       el.appendChild(item);
       if (open) el.appendChild(mk('p', 'focus-n', 'Next step: ' + open.title));
     });
+  });
+})();
+</script>
+<script>
+(() => {
+  // Personal trackers: books, films, Hanuman Chalisa readings. Data: data/trackers.json.
+  const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+  const ICONS = {
+    books: '<svg viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg>',
+    movies: '<svg viewBox="0 0 24 24"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9M12.4 3.4l3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>',
+    readings: '<svg viewBox="0 0 24 24"><path d="M12 3c2.6 3 4.5 5.4 4.5 8.2A4.5 4.5 0 0 1 12 15.7a4.5 4.5 0 0 1-4.5-4.5C7.5 8.4 9.4 6 12 3z"/><path d="M3 15.5c2.5 0 3.6 1.4 4.6 2.6 1 1.1 2.2 1.9 4.4 1.9s3.4-.8 4.4-1.9c1-1.2 2.1-2.6 4.6-2.6"/><path d="M12 11v2"/></svg>'
+  };
+  const ARROW = '<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  const BACK = '<svg viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>';
+  const ic = (kind) => { const s = mk('span', 'tk-ic'); s.innerHTML = ICONS[kind] || ICONS.books; return s; };
+  const pd = (s) => { const [y, m, d] = String(s).slice(0, 10).split('-').map(Number); return new Date(y, m - 1, d); };
+  const fd = (s, o) => pd(s).toLocaleDateString('en-US', o || { month: 'short', day: 'numeric', year: 'numeric' });
+  const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  const fmtPct = (p) => (p >= 100 ? '100' : p < 10 ? p.toFixed(1) : p.toFixed(1).replace(/\.0$/, '')) + '%';
+  const int = (n) => Number(n).toLocaleString('en-US');
+  const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const S = window.btT = { id: null, q: '', sort: 'new', last: '' };
+
+  const all = () => { const r = dash.data('trackers'); return r.status === 'ok' && r.data && Array.isArray(r.data.trackers) ? r.data.trackers : null; };
+  const stats = (t) => {
+    const n = t.entries.length, target = Number(t.target) || 1, p = Math.min(100, 100 * n / target);
+    const ms = (t.milestones || []).map(Number);
+    const next = ms.find((m) => m > n);
+    return { n, target, p, left: Math.max(0, target - n), next: next == null ? null : next, last: t.entries[n - 1] };
+  };
+  const nameOf = (t, e, i) => (e && e.title) || `${t.item || 'Entry'} ${i + 1}`;
+  const metaOf = (t, e) => {
+    if (t.kind === 'readings') return e.date ? fd(e.date, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' }) : 'Date not recorded';
+    const bits = t.kind === 'movies' ? [e.director, e.year, e.genre, e.runtime ? e.runtime + ' min' : null] : [e.author, e.year, e.genre];
+    return bits.filter((x) => x != null && x !== '').join(' · ') || 'Details not recorded';
+  };
+
+  // Count-up numbers
+  const count = (el, to, anim, fmt) => {
+    fmt = fmt || int;
+    if (!anim || reduce()) { el.textContent = fmt(to); return; }
+    const t0 = performance.now(), dur = 1300;
+    const step = (t) => { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 4); el.textContent = fmt(to * e); if (k < 1) requestAnimationFrame(step); };
+    el.textContent = fmt(0); requestAnimationFrame(step);
+  };
+
+  // The 0-100% bar
+  const bar = (t, s, big) => {
+    const w = mk('div', 'tk-bar' + (big ? ' tk-bar-big' : ''));
+    w.setAttribute('role', 'progressbar'); w.setAttribute('aria-valuemin', '0'); w.setAttribute('aria-valuemax', '100');
+    w.setAttribute('aria-valuenow', s.p.toFixed(1)); w.setAttribute('aria-label', `${t.title}: ${s.n} of ${s.target} ${t.unit}`);
+    const track = mk('div', 'tk-track'), fill = mk('div', 'tk-fill'), head = mk('span', 'tk-head');
+    fill.dataset.w = s.p; head.dataset.l = s.p;
+    track.append(fill);
+    (t.milestones || []).forEach((m) => { if (m >= s.target) return; const k = mk('span', 'tk-notch' + (m <= s.n ? ' is-hit' : '')); k.style.left = (100 * m / s.target) + '%'; k.title = `${m} ${t.unit}`; track.append(k); });
+    track.append(head);
+    if (big) {
+      const pins = mk('div', 'tk-pins');
+      (t.milestones || []).forEach((m) => {
+        const x = 100 * m / s.target, pin = mk('span', 'tk-pin' + (m <= s.n ? ' is-hit' : '') + (x >= 99 ? ' is-end' : ''), int(m));
+        pin.style.left = x + '%'; pin.title = m <= s.n ? `Reached ${m} ${t.unit}` : `${m - s.n} more to reach ${m}`; pins.append(pin);
+      });
+      w.append(pins);
+    }
+    const scale = mk('div', 'tk-scale');
+    [0, 25, 50, 75, 100].forEach((x) => scale.append(mk('span', '', x + '%')));
+    w.append(track, scale);
+    w.style.position = 'relative';
+    return w;
+  };
+  const grow = (root, anim) => {
+    const set = () => {
+      root.querySelectorAll('.tk-fill').forEach((f) => { f.style.width = f.dataset.w + '%'; });
+      root.querySelectorAll('.tk-head').forEach((h) => { h.style.left = h.dataset.l + '%'; });
+      root.querySelectorAll('[data-hw]').forEach((i) => { i.style.width = i.dataset.hw + '%'; });
+      root.querySelectorAll('[data-vh]').forEach((i) => { i.style.height = i.dataset.vh + '%'; i.parentNode.style.setProperty('--h', i.dataset.vh + '%'); });
+      root.querySelectorAll('.arc[data-p]').forEach((a) => a.setAttribute('stroke-dasharray', `${a.dataset.p} 100`));
+    };
+    if (!anim || reduce()) { root.classList.add('tk-still'); set(); requestAnimationFrame(() => root.classList.remove('tk-still')); return; }
+    requestAnimationFrame(() => requestAnimationFrame(set));
+  };
+  const reveal = (root, anim) => {
+    const els = root.querySelectorAll('.tk-reveal');
+    if (!anim || reduce() || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((xs) => xs.forEach((x) => { if (x.isIntersecting) { x.target.classList.remove('tk-wait'); io.unobserve(x.target); } }), { rootMargin: '0px 0px -8% 0px' });
+    els.forEach((e, i) => { if (e.getBoundingClientRect().top > innerHeight * .92) { e.classList.add('tk-wait'); io.observe(e); } });
+  };
+
+  // Overview
+  const ringSvg = (list, total) => {
+    const NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 200 200'); svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', list.map((t) => `${t.title} ${fmtPct(stats(t).p)}`).join(', '));
+    list.slice(0, 4).forEach((t, i) => {
+      const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'tk-' + (t.accent || 'violet'));
+      const id = 'tkg-' + t.id;
+      g.innerHTML = `<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--a1)"/><stop offset="1" style="stop-color:var(--a2)"/></linearGradient></defs>`;
+      const r = 88 - i * 18;
+      const c1 = document.createElementNS(NS, 'circle'), c2 = document.createElementNS(NS, 'circle');
+      [c1, c2].forEach((c) => { c.setAttribute('cx', 100); c.setAttribute('cy', 100); c.setAttribute('r', r); });
+      c1.setAttribute('class', 'trk');
+      c2.setAttribute('class', 'arc'); c2.setAttribute('pathLength', '100'); c2.setAttribute('stroke', `url(#${id})`);
+      c2.setAttribute('stroke-dasharray', '0 100'); c2.setAttribute('transform', 'rotate(-90 100 100)'); c2.dataset.p = Math.max(1.5, stats(t).p);
+      g.append(c1, c2); svg.append(g);
+    });
+    const t1 = document.createElementNS(NS, 'text'); t1.setAttribute('x', 100); t1.setAttribute('y', 104); t1.setAttribute('class', 'big'); t1.textContent = int(total);
+    const t2 = document.createElementNS(NS, 'text'); t2.setAttribute('x', 100); t2.setAttribute('y', 120); t2.setAttribute('class', 'small'); t2.textContent = 'FINISHED';
+    svg.append(t1, t2);
+    return svg;
+  };
+  const home = (root, list, anim) => {
+    const total = list.reduce((a, t) => a + t.entries.length, 0);
+    const hero = mk('div', 'hero tk-hero');
+    const L = mk('div');
+    L.append(mk('p', 'hero-k', 'Personal trackers'));
+    const h = mk('h2', 'hero-title'); h.append(document.createTextNode('Every book, film and reading, '), mk('span', '', 'counted.'));
+    L.append(h, mk('p', 'hero-sub', `${int(total)} finished across ${list.length} long-haul commitments. Each bar runs from 0 to 100%, and every new one you finish moves it forward. Open a tracker to see its full history.`));
+    const nx = mk('div', 'tk-next');
+    list.forEach((t) => { const s = stats(t); if (s.left <= 0) return; const c = mk('span', 'tk-' + (t.accent || 'violet')); c.append(mk('i'), document.createTextNode('Up next: '), mk('b', '', `${t.item || 'Entry'} #${s.n + 1}`)); nx.append(c); });
+    L.append(nx);
+    const R = mk('div', 'tk-rings');
+    R.append(ringSvg(list, total));
+    const lg = mk('ul', 'tk-legend');
+    list.forEach((t) => { const s = stats(t), li = mk('li', 'tk-' + (t.accent || 'violet')); li.append(mk('i'), mk('b', '', t.title), mk('span', '', `${fmtPct(s.p)} · ${s.n}/${s.target}`)); lg.append(li); });
+    R.append(lg);
+    hero.append(L, R);
+    root.append(hero);
+
+    const lh = mk('div', 'tk-list-h'); lh.append(mk('h2', '', 'Your trackers'), mk('span', 'bt-note', 'Tap any bar for every entry, stats and milestones.'));
+    root.append(lh);
+    const cards = mk('div', 'tk-cards');
+    list.forEach((t) => {
+      const s = stats(t);
+      const a = mk('a', 'tk-card tk-reveal tk-' + (t.accent || 'violet')); a.href = '#trackers/' + t.id; a.dataset.tkOpen = t.id;
+      const top = mk('div', 'tk-card-top'), w = mk('div', 'tk-words');
+      w.append(mk('p', 'tk-k', `${t.unit} ${t.verb}`), mk('h3', '', t.title), mk('p', 'tk-sub', t.subtitle || ''));
+      const num = mk('div', 'tk-num'), b = mk('b'); count(b, s.n, anim);
+      num.append(b, mk('span', '', `of ${int(s.target)} ${t.unit}`));
+      top.append(ic(t.kind), w, num);
+      const foot = mk('div', 'tk-foot');
+      const pc = mk('span', 'tk-pct'); count(pc, s.p, anim, fmtPct);
+      foot.append(pc);
+      const pill = (k, v) => { const p = mk('span', 'tk-pill'); p.append(document.createTextNode(k + ' '), mk('b', '', v)); return p; };
+      foot.append(pill('To go', int(s.left)));
+      if (s.next) foot.append(pill('Next milestone', `${int(s.next)} (${s.next - s.n} away)`));
+      if (s.last) foot.append(pill('Latest', t.kind === 'readings' ? `#${s.n} · ${s.last.date ? fd(s.last.date, { month: 'short', day: 'numeric' }) : ''}` : nameOf(t, s.last, s.n - 1)));
+      const go = mk('span', 'tk-go'); go.innerHTML = 'Open tracker ' + ARROW; foot.append(go);
+      a.append(top, bar(t, s, false), foot);
+      cards.append(a);
+    });
+    root.append(cards);
+  };
+
+  // Detail helpers
+  const card = (title, note) => { const c = mk('div', 'bt-card tk-reveal'); c.append(mk('h2', '', title)); if (note) c.append(mk('p', 'bt-note', note)); return c; };
+  const hbars = (items) => {
+    const ul = mk('ul', 'tk-hb'), max = Math.max(1, ...items.map((x) => x.v));
+    items.forEach((x) => { const li = mk('li'); li.append(mk('span', 'l', x.l), mk('span', 'v', String(x.v))); const t = mk('span', 't'), i = mk('i'); i.dataset.hw = 100 * x.v / max; t.append(i); li.append(t); li.title = `${x.l}: ${x.v}`; ul.append(li); });
+    return ul;
+  };
+  const vbars = (items) => {
+    const box = mk('div', 'tk-vb'), max = Math.max(1, ...items.map((x) => x.v));
+    items.forEach((x) => { const col = mk('div'), c = mk('div', 'c'), i = mk('i'); i.dataset.vh = 100 * x.v / max; c.append(i, mk('b', '', x.v ? String(x.v) : '')); col.append(c, mk('span', 'x', x.l)); col.title = `${x.l}: ${x.v}`; box.append(col); });
+    return box;
+  };
+  const tally = (arr, key) => { const m = new Map(); arr.forEach((e, i) => { const k = key(e); if (!k) return; const o = m.get(k) || { l: k, v: 0, i }; o.v++; m.set(k, o); }); return [...m.values()].sort((a, b) => b.v - a.v || a.i - b.i); };
+  const yr = (e) => { const y = parseInt(String(e.year).replace(/\D+/g, ''), 10); return Number.isFinite(y) ? y : null; };
+
+  const insights = (t, s) => {
+    const out = [], E = t.entries;
+    if (t.kind === 'movies') {
+      const ys = E.map(yr).filter(Boolean), lo = Math.floor(Math.min(...ys) / 10) * 10, hi = Math.floor(Math.max(...ys) / 10) * 10, dec = [];
+      for (let d = lo; d <= hi; d += 10) dec.push({ l: String(d), v: ys.filter((y) => y >= d && y < d + 10).length });
+      const c1 = card('Films by decade', `From ${Math.min(...ys)} to ${Math.max(...ys)}. Bars show how many films from each decade you have watched.`); c1.append(vbars(dec)); out.push(c1);
+      const dirs = tally(E, (e) => e.director).slice(0, 8);
+      const c2 = card('Most-watched directors', `${tally(E, (e) => e.director).length} different directors so far.`); c2.append(hbars(dirs)); out.push(c2);
+      const rated = E.map((e, i) => ({ e, i })).filter((x) => x.e.imdb).sort((a, b) => b.e.imdb - a.e.imdb).slice(0, 5);
+      if (rated.length) { const c3 = card('Highest rated', 'IMDb ratings, where logged.'); const ul = mk('ul', 'tk-recent'); rated.forEach((x) => ul.append(row(t, x.e, x.i, false))); c3.append(ul); out.push(c3); }
+    } else if (t.kind === 'books') {
+      const bins = [['Pre-1900', -1e9, 1900], ['1900–49', 1900, 1950], ['1950–79', 1950, 1980], ['1980–99', 1980, 2000], ['2000s', 2000, 2010], ['2010s', 2010, 2020], ['2020s', 2020, 3000]];
+      const ys = E.map(yr).filter(Boolean);
+      const c1 = card('When your books were written', `From Meditations to last year: publication years across ${ys.length} books.`);
+      c1.append(vbars(bins.map(([l, a, b]) => ({ l, v: ys.filter((y) => y >= a && y < b).length })))); out.push(c1);
+      const au = tally(E, (e) => e.author);
+      const c2 = card('Most-read authors', `${au.length} different authors so far.`); c2.append(hbars(au.slice(0, 7))); out.push(c2);
+      const dated = E.filter((e) => e.date);
+      if (dated.length) {
+        const m = tally(dated, (e) => e.date.slice(0, 7)).sort((a, b) => a.l.localeCompare(b.l)).map((x) => ({ l: pd(x.l + '-01').toLocaleDateString('en-US', { month: 'short' }), v: x.v }));
+        const c3 = card('Finished by month', `${dated.length} of ${E.length} books have a recorded finish date.`); c3.append(vbars(m)); out.push(c3);
+      }
+    } else {
+      const c1 = card(`The ${s.target} readings`, 'Each bead is one reading. Filled beads are done, the dashed one is next, and every 24th is a milestone.');
+      const g = mk('div', 'tk-mala');
+      for (let i = 0; i < s.target; i++) {
+        const e = E[i], b = mk('span', 'tk-bead' + (e ? ' is-done' : '') + (i === s.n ? ' is-next' : '') + ((i + 1) % 24 === 0 ? ' is-mile' : ''), String(i + 1));
+        b.title = e ? `Reading ${i + 1} · ${e.date ? fd(e.date) : 'date not recorded'}` : (i === s.n ? `Reading ${i + 1} is next` : `Reading ${i + 1}`);
+        g.append(b);
+      }
+      c1.append(g); out.push(c1);
+      const start = t.start || (E[0] && E[0].date);
+      if (start) {
+        const today = new Date(); today.setHours(0, 0, 0, 0);
+        const days = Math.max(1, Math.round((today - pd(start)) / 864e5) + 1), rate = s.n / days;
+        const c2 = card('Pace', 'Readings are counted, not days in a row. A missed day never resets anything.');
+        const p = mk('p', 'tk-pace');
+        const finish = rate > 0 ? new Date(today.getTime() + Math.ceil(s.left / rate) * 864e5) : null;
+        p.append(document.createTextNode(`Started ${fd(start)}. That is `), mk('b', '', `${s.n} readings in ${days} days`), document.createTextNode(`, about `), mk('b', '', `${(rate * 7).toFixed(1)} a week`), document.createTextNode('.'));
+        if (finish && s.left) p.append(document.createTextNode(` At this pace reading #${s.target} lands around `), mk('b', '', fd(iso(finish))), document.createTextNode('.'));
+        c2.append(p);
+        const on = new Map(); E.forEach((e) => { if (e.date) on.set(e.date, (on.get(e.date) || 0) + 1); });
+        const cal = mk('div', 'tk-cal'); ['M', 'T', 'W', 'T', 'F', 'S', 'S'].forEach((d) => cal.append(mk('span', 'h', d)));
+        const s0 = pd(start), lead = (s0.getDay() + 6) % 7;
+        for (let i = 0; i < lead; i++) cal.append(mk('span', 'tk-day is-blank'));
+        for (let d = new Date(s0); d <= today; d.setDate(d.getDate() + 1)) {
+          const k = iso(d), n = on.get(k) || 0, c = mk('span', 'tk-day' + (n ? ' is-on' : '') + (k === iso(today) ? ' is-today' : ''), String(d.getDate()));
+          c.title = `${fd(k, { weekday: 'short', month: 'short', day: 'numeric' })}${n ? ` · ${n} reading${n > 1 ? 's' : ''}` : ''}`; cal.append(c);
+        }
+        c2.append(mk('p', 'tk-tl', 'Reading days since the start'), cal); out.push(c2);
+      }
+    }
+    return out;
+  };
+  const row = (t, e, i, latest) => {
+    const li = mk('li');
+    li.append(mk('span', 'tk-n', '#' + (i + 1)));
+    const w = mk('span', 'tk-rw'); w.append(mk('b', '', nameOf(t, e, i)), mk('span', '', metaOf(t, e)));
+    li.append(w);
+    if (latest) { li.classList.add('is-latest'); li.append(mk('span', 'tk-tag', 'Latest')); }
+    else if (e.imdb) li.append(mk('span', 'tk-side tk-star', '★ ' + Number(e.imdb).toFixed(1)));
+    else if (e.date && t.kind !== 'readings') li.append(mk('span', 'tk-side', fd(e.date, { month: 'short', day: 'numeric' })));
+    return li;
+  };
+  const hl = (el, text, q) => {
+    if (!q) { el.textContent = text; return; }
+    const i = text.toLowerCase().indexOf(q);
+    if (i < 0) { el.textContent = text; return; }
+    el.replaceChildren(document.createTextNode(text.slice(0, i)), mk('mark', '', text.slice(i, i + q.length)), document.createTextNode(text.slice(i + q.length)));
+  };
+  const fillList = (ul, cnt, t) => {
+    const q = S.q.trim().toLowerCase();
+    let xs = t.entries.map((e, i) => ({ e, i, name: nameOf(t, e, i), meta: metaOf(t, e) }));
+    if (q) xs = xs.filter((x) => (x.name + ' ' + x.meta).toLowerCase().includes(q));
+    if (S.sort === 'new') xs.reverse();
+    else if (S.sort === 'az') xs.sort((a, b) => a.name.localeCompare(b.name));
+    else if (S.sort === 'year') xs.sort((a, b) => (yr(a.e) ?? 1e9) - (yr(b.e) ?? 1e9));
+    else if (S.sort === 'rating') xs.sort((a, b) => (b.e.imdb || 0) - (a.e.imdb || 0));
+    ul.replaceChildren();
+    xs.forEach((x) => { const li = row(t, x.e, x.i, false); hl(li.querySelector('.tk-rw b'), x.name, q); hl(li.querySelector('.tk-rw span'), x.meta, q); ul.append(li); });
+    if (!xs.length) ul.append(mk('li', 'bt-empty', `Nothing matches "${S.q}".`));
+    cnt.textContent = q ? `${xs.length} of ${t.entries.length}` : `${t.entries.length} ${t.unit}`;
+  };
+
+  const detail = (root, t, list, anim) => {
+    const s = stats(t), acc = 'tk-' + (t.accent || 'violet');
+    root.classList.add(acc);
+    const back = mk('a', 'tk-back'); back.href = '#trackers'; back.dataset.tkOpen = ''; back.innerHTML = BACK; back.append(document.createTextNode('All trackers'));
+    root.append(back);
+
+    const hero = mk('div', 'tk-dhero'), top = mk('div', 'tk-dtop'), tt = mk('div', 'tk-dtitle'), tw = mk('div');
+    tw.append(mk('p', 'tk-k', `${t.unit} ${t.verb}`));
+    const h = mk('h2'); const words = t.title.split(' '); h.append(document.createTextNode(words.length > 1 ? words.slice(0, -1).join(' ') + ' ' : ''), mk('span', '', words[words.length - 1]));
+    tw.append(h, mk('p', 'tk-sub', t.subtitle || ''));
+    tt.append(ic(t.kind), tw);
+    const num = mk('div', 'tk-dnum'), b = mk('b'), bn = mk('span'); count(bn, s.n, anim);
+    b.append(bn, mk('small', '', '/ ' + int(s.target)));
+    const pl = mk('span'); count(pl, s.p, anim, (v) => `${fmtPct(v)} complete`);
+    num.append(b, pl);
+    top.append(tt, num);
+    hero.append(top, bar(t, s, true));
+    root.append(hero);
+
+    const tiles = mk('div', 'tk-tiles tk-reveal');
+    const tile = (l, v, note, fmt) => { const d = mk('div', 'tk-tile'), n = mk('p', 'tk-tn'); if (typeof v === 'number') count(n, v, anim, fmt); else n.textContent = v; d.append(mk('p', 'tk-tl', l), n, mk('p', 'tk-tt', note)); tiles.append(d); };
+    tile(t.verb, s.n, `${t.unit} so far`);
+    tile('To go', s.left, s.left ? `to reach ${int(s.target)}` : 'Tracker complete');
+    if (s.next) tile('Next milestone', s.next, `${s.next - s.n} more ${t.unit}`); else tile('Milestones', 'All', 'every milestone reached');
+    if (t.kind === 'movies') tile('Directors', tally(t.entries, (e) => e.director).length, 'different filmmakers');
+    else if (t.kind === 'books') tile('Authors', tally(t.entries, (e) => e.author).length, 'different writers');
+    else { const st = pd(t.start || (t.entries[0] && t.entries[0].date) || iso(new Date())); const days = Math.max(1, Math.round((new Date().setHours(0, 0, 0, 0) - st) / 864e5) + 1); tile('Per week', s.n * 7 / days, 'average since the start', (v) => v.toFixed(1)); }
+    root.append(tiles);
+
+    const ins = mk('div', 'tk-ins'); insights(t, s).forEach((c) => ins.append(c)); root.append(ins);
+
+    if (t.kind !== 'readings') {
+    const rc = card('Recently added', t.kind === 'readings' ? 'Your latest confirmed readings.' : 'The newest entries, latest first.');
+    const ul = mk('ul', 'tk-recent');
+    t.entries.slice(-5).map((e, k, arr) => ({ e, i: s.n - arr.length + k })).reverse().forEach((x, k) => ul.append(row(t, x.e, x.i, k === 0)));
+    if (!s.n) ul.append(mk('li', 'bt-empty', 'Nothing logged yet.'));
+    rc.append(ul); root.append(rc);
+    }
+
+    const lc = card(t.kind === 'readings' ? 'Full reading log' : `Every ${String(t.item || 'entry').toLowerCase()}, numbered`);
+    const tools = mk('div', 'tk-tools');
+    let search = null;
+    if (t.kind !== 'readings') { search = mk('input', 'bt-search'); search.type = 'search'; search.placeholder = t.kind === 'movies' ? 'Search films, directors, years' : 'Search books, authors, categories'; search.value = S.q; search.setAttribute('aria-label', 'Search ' + t.title); tools.append(search); }
+    const sorts = [['new', 'Newest'], ['old', 'Oldest']].concat(t.kind === 'readings' ? [] : [['az', 'A–Z'], ['year', 'Year']]).concat(t.kind === 'movies' && t.entries.some((e) => e.imdb) ? [['rating', 'Rating']] : []);
+    sorts.forEach(([k, l]) => { const c = mk('button', 'bt-chip', l); c.type = 'button'; c.dataset.tkSort = k; c.setAttribute('aria-pressed', String(S.sort === k)); tools.append(c); });
+    const cnt = mk('span', 'tk-count'); tools.append(cnt);
+    const all = mk('ul', 'tk-all');
+    lc.append(tools, all); root.append(lc);
+    fillList(all, cnt, t);
+    if (search) search.addEventListener('input', () => { S.q = search.value; fillList(all, cnt, t); });
+    tools.addEventListener('click', (e) => { const c = e.target.closest('[data-tk-sort]'); if (!c) return; S.sort = c.dataset.tkSort; tools.querySelectorAll('[data-tk-sort]').forEach((x) => x.setAttribute('aria-pressed', String(x === c))); fillList(all, cnt, t); });
+
+    if (t.notes && t.notes.length) { const n = mk('div', 'tk-notes'); t.notes.forEach((x) => n.append(mk('p', '', x))); root.append(n); }
+
+    const others = list.filter((x) => x.id !== t.id);
+    if (others.length) {
+      const jh = mk('div', 'tk-list-h'); jh.append(mk('h2', '', 'Keep exploring')); root.append(jh);
+      const j = mk('div', 'tk-jumps');
+      others.forEach((o) => {
+        const os = stats(o), a = mk('a', 'tk-jump tk-reveal tk-' + (o.accent || 'violet')); a.href = '#trackers/' + o.id; a.dataset.tkOpen = o.id;
+        const m = mk('span', 'mini'), tr = mk('span', 'tk-track'), f = mk('span', 'tk-fill'); f.dataset.w = os.p; tr.append(f);
+        m.append(mk('b', '', o.title), tr);
+        a.append(ic(o.kind), m, mk('span', 'pc', fmtPct(os.p)));
+        j.append(a);
+      });
+      root.append(j);
+    }
+  };
+
+  dash.draw('trackers', (el) => {
+    const list = all();
+    el.replaceChildren(); el.className = 'tk-root';
+    const r = dash.data('trackers');
+    if (!list) { el.append(mk('p', 'bt-empty', r.status === 'error' ? 'Could not load trackers.' : 'Loading…')); return; }
+    const t = S.id ? list.find((x) => x.id === S.id) : null;
+    if (S.id && !t) S.id = null;
+    const key = S.id || 'home', anim = key !== S.last;
+    S.last = key;
+    if (t) detail(el, t, list, anim); else home(el, list, anim);
+    const title = document.getElementById('page-title'); if (title) title.textContent = t ? t.title : 'Trackers';
+    grow(el, anim); reveal(el, anim);
+  });
+
+  const open = (id, push) => {
+    S.id = id || null; S.q = ''; S.sort = 'new';
+    if (push) { try { history.pushState(null, '', '#trackers' + (id ? '/' + id : '')); } catch (e) {} }
+    dash.draw('trackers');
+    window.scrollTo({ top: 0, behavior: reduce() ? 'auto' : 'smooth' });
+  };
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('[data-tk-open]');
+    if (a) { if (e.metaKey || e.ctrlKey || e.shiftKey) return; e.preventDefault(); open(a.dataset.tkOpen, true); return; }
+    const tab = e.target.closest('.bt-tab'); if (tab && tab.dataset.tab === 'trackers') { S.id = null; S.last = ''; }
+    else if (tab) S.last = '';
+  });
+  const fromHash = () => {
+    const h = location.hash.slice(1), [base, id] = h.split('/');
+    if (base === 'trackers') { window.btShow('trackers'); S.id = id || null; dash.draw('trackers'); return true; }
+    return false;
+  };
+  const h0 = location.hash.slice(1).split('/');
+  if (h0[0] === 'trackers') S.id = h0[1] || null;
+  // The bottom dock is parsed after the tab script runs, so sync its selected state here.
+  if (['goals', 'overview', 'projects', 'plan', 'learning', 'trackers'].includes(h0[0])) window.btShow(h0[0]);
+  window.addEventListener('popstate', () => {
+    if (fromHash()) return;
+    const base = location.hash.slice(1);
+    if (['goals', 'overview', 'projects', 'plan', 'learning'].includes(base)) { window.btShow(base); dash.redrawAll(); }
   });
 })();
 </script>
