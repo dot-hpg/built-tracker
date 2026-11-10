@@ -2,6 +2,16 @@
 
 Each version is frozen on a `release/vN` branch. `main` is the live site, and the automatic activity logs and new videos land there between versions.
 
+## v7 (2026-11-10)
+
+New tracker: 48-Day Gym.
+
+- Added from your workout log: 31 of 48 workout days done (64.6%), with 160 exercise variations across eight muscle groups.
+- The detail page shows variations per muscle group (and points out that legs haven't been trained yet), variations for each day, your pace and projected finish, a calendar of workout days, and the full log of every day.
+- Log today's workout in a few taps: tap each muscle group once per variation (a − button undoes a tap). A live counter shows when you've reached the 3-variation goal, and you're warned before saving fewer than 3 or a second workout on the same date. Confetti and Undo work as on the other trackers.
+- The overview rings, the "Up next" chips and the hero now cover all four trackers. `#log/gym-48` opens the workout sheet straight away.
+- Fixed: "Logging is on for this device" now shows only on the overview, and bar charts with many days hide their labels so they stay readable.
+
 ## v6 (2026-11-10)
 
 Type a title and the rest fills itself.
