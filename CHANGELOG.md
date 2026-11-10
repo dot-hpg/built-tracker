@@ -2,6 +2,17 @@
 
 Each version is frozen on a `release/vN` branch. `main` is the live site, and the automatic activity logs and new videos land there between versions.
 
+## v4 (2026-11-10)
+
+A new Trackers tab for long-running personal goals.
+
+- Trackers sits in the sidebar and the phone dock, with a live count of everything finished.
+- Three trackers, each a card with a 0 to 100% progress bar, milestone markers and what is next: 500 Books (47 read), 250 Films (176 watched) and the Hanuman Chalisa 96-reading commitment (10 done).
+- An overview with activity-style rings for all three and the next book, film and reading up.
+- Each tracker opens a full page: a large progress bar with milestones, stat tiles, charts (films by decade and top directors; books by era, top authors and finishes by month; a 96-bead reading grid, pace and a calendar of reading days), the latest entries, and a searchable, sortable list of every entry.
+- Data lives in `data/trackers.json`; logging a new book, film or reading is one line added to its `entries` list.
+- Fixed the phone dock not highlighting the right tab when a page is opened from a link.
+
 ## v3 (2026-11-05)
 
 A full redesign into a platform-style app called Built.
