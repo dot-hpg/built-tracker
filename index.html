@@ -512,9 +512,10 @@ svg { flex: 0 0 auto; }
 /* ===== v4: personal trackers ===== */
 .tk-violet { --a1: #6d5efc; --a2: #b07cff; --ink: #5a4be6; }
 .tk-cyan { --a1: #06b6d4; --a2: #3b82f6; --ink: #0e7490; }
+.tk-emerald { --a1: #10b981; --a2: #84cc16; --ink: #047857; }
 .tk-saffron { --a1: #ff8a00; --a2: #e8341c; --ink: #c2410c; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tk-violet { --ink: #a99fff; } :root:not([data-theme="light"]) .tk-cyan { --ink: #5fd8ee; } :root:not([data-theme="light"]) .tk-saffron { --ink: #ffa45c; } }
-:root[data-theme="dark"] .tk-violet { --ink: #a99fff; } :root[data-theme="dark"] .tk-cyan { --ink: #5fd8ee; } :root[data-theme="dark"] .tk-saffron { --ink: #ffa45c; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tk-violet { --ink: #a99fff; } :root:not([data-theme="light"]) .tk-cyan { --ink: #5fd8ee; } :root:not([data-theme="light"]) .tk-saffron { --ink: #ffa45c; } :root:not([data-theme="light"]) .tk-emerald { --ink: #4ade80; } }
+:root[data-theme="dark"] .tk-violet { --ink: #a99fff; } :root[data-theme="dark"] .tk-cyan { --ink: #5fd8ee; } :root[data-theme="dark"] .tk-saffron { --ink: #ffa45c; } :root[data-theme="dark"] .tk-emerald { --ink: #4ade80; }
 .tk-root { display: grid; gap: 22px; }
 .tk-mono { font-family: var(--font-mono); }
 .tk-hero { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
@@ -620,6 +621,10 @@ svg { flex: 0 0 auto; }
 .tk-vb .c { position: relative; display: flex; align-items: flex-end; }
 .tk-vb .c i { width: 100%; height: 0; border-radius: 8px 8px 3px 3px; background: linear-gradient(180deg, var(--a2), var(--a1)); transition: height 1.2s cubic-bezier(.16, 1, .3, 1); min-height: 3px; }
 .tk-vb .c b { position: absolute; left: 0; right: 0; text-align: center; font-family: var(--font-mono); font-size: .68rem; font-weight: 600; transform: translateY(-120%); bottom: var(--h, 0%); transition: bottom 1.2s cubic-bezier(.16, 1, .3, 1); }
+.tk-vb.dense { gap: 3px; }
+.tk-vb.dense .c b { display: none; }
+.tk-vb.dense > div:not(:nth-child(5n + 1)) .x { visibility: hidden; }
+.tk-vb.dense .c i { border-radius: 4px 4px 2px 2px; }
 .tk-vb .x { font-family: var(--font-mono); font-size: .56rem; letter-spacing: -.03em; color: var(--color-fg-muted); text-align: center; white-space: nowrap; overflow: hidden; }
 .tk-mala { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 7px; margin-top: 8px; }
 .tk-bead { aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: .58rem; color: var(--color-fg-muted); background: var(--track); border: 1px solid var(--line-soft); transition: transform .2s; }
@@ -803,6 +808,23 @@ svg { flex: 0 0 auto; }
   .tk-actions .tk-logbtn { flex: 1; justify-content: center; }
   .tk-actions .tk-go { margin-left: 0; }
 }
+.lg-mus { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.lg-m { position: relative; }
+.lg-m-add { appearance: none; width: 100%; font: inherit; color: inherit; cursor: pointer; display: grid; gap: 4px; justify-items: center; padding: 12px 6px 10px; border-radius: 14px; border: 1px solid var(--line-soft); background: color-mix(in srgb, var(--color-bg) 60%, transparent); transition: border-color .15s, background .15s, transform .12s; }
+.lg-m-add span { font-size: .8rem; font-weight: 600; }
+.lg-m-add b { font-size: 1.5rem; font-weight: 750; letter-spacing: -.04em; line-height: 1; color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+.lg-m-add:hover { border-color: color-mix(in srgb, var(--a1) 50%, transparent); }
+.lg-m-add:active { transform: scale(.95); }
+.lg-m.is-on .lg-m-add { border-color: transparent; background: linear-gradient(135deg, color-mix(in srgb, var(--a1) 30%, transparent), color-mix(in srgb, var(--a2) 18%, transparent)); box-shadow: inset 0 0 0 1.5px var(--a1); }
+.lg-m.is-on .lg-m-add b { color: var(--ink); }
+.lg-m.bump .lg-m-add b { animation: lg-pop .45s var(--cds-ease-out); }
+.lg-m-sub { appearance: none; position: absolute; top: -7px; right: -7px; width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--line-soft); background: var(--color-panel); color: var(--color-fg); font: inherit; font-weight: 700; line-height: 1; cursor: pointer; box-shadow: 0 4px 10px -4px rgba(0, 0, 0, .5); }
+.lg-m-sub[hidden] { display: none; }
+.lg-m-add:focus-visible, .lg-m-sub:focus-visible { outline: 2px solid var(--a1); outline-offset: 2px; }
+.lg-mus-sum { margin: 4px 0 0; font-size: .86rem; color: var(--color-fg-muted); }
+.lg-mus-sum b { font-size: 1.1rem; color: var(--color-fg); }
+.lg-mus-sum .ok { color: var(--ink); font-weight: 600; }
+@media (max-width: 560px) { .lg-m-add { padding: 10px 4px 8px; } .lg-m-add span { font-size: .72rem; } }
 .lg-ac { position: relative; }
 .lg-status { margin: 2px 0 0; font-size: .78rem; color: var(--color-fg-muted); min-height: 1.2em; display: flex; align-items: center; gap: 8px; }
 .lg-status.is-busy::before { content: ""; width: 12px; height: 12px; border-radius: 50%; border: 2px solid color-mix(in srgb, var(--a1) 30%, transparent); border-top-color: var(--a1); animation: lg-spin .7s linear infinite; flex: 0 0 auto; }
@@ -1756,6 +1778,7 @@ dash.draw('updated', (el) => {
   const ICONS = {
     books: '<svg viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg>',
     movies: '<svg viewBox="0 0 24 24"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9M12.4 3.4l3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>',
+    workouts: '<svg viewBox="0 0 24 24"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>',
     readings: '<svg viewBox="0 0 24 24"><path d="M12 3c2.6 3 4.5 5.4 4.5 8.2A4.5 4.5 0 0 1 12 15.7a4.5 4.5 0 0 1-4.5-4.5C7.5 8.4 9.4 6 12 3z"/><path d="M3 15.5c2.5 0 3.6 1.4 4.6 2.6 1 1.1 2.2 1.9 4.4 1.9s3.4-.8 4.4-1.9c1-1.2 2.1-2.6 4.6-2.6"/><path d="M12 11v2"/></svg>'
   };
   const ARROW = '<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
@@ -1780,6 +1803,11 @@ dash.draw('updated', (el) => {
       b.innerHTML = doneToday ? CHECK : CHECK;
       b.append(document.createTextNode(doneToday ? 'Done today' : `Mark today's reading done`));
       if (doneToday) b.title = 'Today is logged. Click to log another reading.';
+    } else if (t.kind === 'workouts') {
+      const doneToday = t.entries.some((e) => e.date === iso(new Date()));
+      b.dataset.tkMode = 'form'; if (doneToday) b.classList.add('is-done');
+      b.innerHTML = doneToday ? CHECK : PLUS; b.append(document.createTextNode(doneToday ? 'Worked out today' : `Log today's workout`));
+      if (doneToday) b.title = 'Today is logged. Click to log another session.';
     } else { b.dataset.tkMode = 'form'; b.innerHTML = PLUS; b.append(document.createTextNode(`Log a ${String(t.item || 'entry').toLowerCase()}`)); }
     return b;
   };
@@ -1792,7 +1820,13 @@ dash.draw('updated', (el) => {
     return { n, target, p, left: Math.max(0, target - n), next: next == null ? null : next, last: t.entries[n - 1] };
   };
   const nameOf = (t, e, i) => (e && e.title) || `${t.item || 'Entry'} ${i + 1}`;
+  const cap = (x) => String(x).charAt(0).toUpperCase() + String(x).slice(1);
+  const vars = (e) => Object.values((e && e.muscles) || {}).reduce((a, x) => a + (Number(x) || 0), 0);
   const metaOf = (t, e) => {
+    if (t.kind === 'workouts') {
+      const m = Object.entries(e.muscles || {}).filter(([, v]) => v > 0).map(([k, v]) => `${cap(k)} ${v}`).join(', ');
+      return [e.date ? fd(e.date, { weekday: 'short', month: 'short', day: 'numeric' }) : null, m].filter(Boolean).join(' · ') || 'Details not recorded';
+    }
     if (t.kind === 'readings') return e.date ? fd(e.date, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' }) : 'Date not recorded';
     const bits = t.kind === 'movies' ? [e.director, e.year, e.genre, e.runtime ? e.runtime + ' min' : null] : [e.author, e.year, e.genre];
     return bits.filter((x) => x != null && x !== '').join(' · ') || 'Details not recorded';
@@ -1858,12 +1892,13 @@ dash.draw('updated', (el) => {
       const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'tk-' + (t.accent || 'violet'));
       const id = 'tkg-' + t.id;
       g.innerHTML = `<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--a1)"/><stop offset="1" style="stop-color:var(--a2)"/></linearGradient></defs>`;
-      const r = 88 - i * 18;
+      const step = list.length > 3 ? 14 : 18, r = 90 - i * step;
       const c1 = document.createElementNS(NS, 'circle'), c2 = document.createElementNS(NS, 'circle');
       [c1, c2].forEach((c) => { c.setAttribute('cx', 100); c.setAttribute('cy', 100); c.setAttribute('r', r); });
       c1.setAttribute('class', 'trk');
       c2.setAttribute('class', 'arc'); c2.setAttribute('pathLength', '100'); c2.setAttribute('stroke', `url(#${id})`);
       c2.setAttribute('stroke-dasharray', '0 100'); c2.setAttribute('transform', 'rotate(-90 100 100)'); c2.dataset.p = Math.max(1.5, stats(t).p);
+      if (list.length > 3) { c1.style.strokeWidth = '10.5'; c2.style.strokeWidth = '10.5'; }
       g.append(c1, c2); svg.append(g);
     });
     const t1 = document.createElementNS(NS, 'text'); t1.setAttribute('x', 100); t1.setAttribute('y', 104); t1.setAttribute('class', 'big'); t1.textContent = int(total);
@@ -1876,7 +1911,7 @@ dash.draw('updated', (el) => {
     const hero = mk('div', 'hero tk-hero');
     const L = mk('div');
     L.append(mk('p', 'hero-k', 'Personal trackers'));
-    const h = mk('h2', 'hero-title'); h.append(document.createTextNode('Every book, film and reading, '), mk('span', '', 'counted.'));
+    const h = mk('h2', 'hero-title'); h.append(document.createTextNode('Every book, film, reading and rep, '), mk('span', '', 'counted.'));
     L.append(h, mk('p', 'hero-sub', `${int(total)} finished across ${list.length} long-haul commitments. Each bar runs from 0 to 100%, and every new one you finish moves it forward. Open a tracker to see its full history.`));
     const nx = mk('div', 'tk-next');
     list.forEach((t) => { const s = stats(t); if (s.left <= 0) return; const c = mk('span', 'tk-' + (t.accent || 'violet')); c.append(mk('i'), document.createTextNode('Up next: '), mk('b', '', `${t.item || 'Entry'} #${s.n + 1}`)); nx.append(c); });
@@ -1907,7 +1942,7 @@ dash.draw('updated', (el) => {
       const pill = (k, v) => { const p = mk('span', 'tk-pill'); p.append(document.createTextNode(k + ' '), mk('b', '', v)); return p; };
       foot.append(pill('To go', int(s.left)));
       if (s.next) foot.append(pill('Next milestone', `${int(s.next)} (${s.next - s.n} away)`));
-      if (s.last) foot.append(pill('Latest', t.kind === 'readings' ? `#${s.n} · ${s.last.date ? fd(s.last.date, { month: 'short', day: 'numeric' }) : ''}` : nameOf(t, s.last, s.n - 1)));
+      if (s.last) foot.append(pill('Latest', t.kind === 'readings' ? `#${s.n} · ${s.last.date ? fd(s.last.date, { month: 'short', day: 'numeric' }) : ''}` : t.kind === 'workouts' ? `Day ${s.n} · ${vars(s.last)} variations` : nameOf(t, s.last, s.n - 1)));
       a.append(top, bar(t, s, false), foot);
       const acts = mk('div', 'tk-actions');
       const go = mk('a', 'tk-go'); go.href = '#trackers/' + t.id; go.dataset.tkOpen = t.id; go.innerHTML = 'Open tracker ' + ARROW;
@@ -1926,7 +1961,7 @@ dash.draw('updated', (el) => {
     return ul;
   };
   const vbars = (items) => {
-    const box = mk('div', 'tk-vb'), max = Math.max(1, ...items.map((x) => x.v));
+    const box = mk('div', 'tk-vb' + (items.length > 16 ? ' dense' : '')), max = Math.max(1, ...items.map((x) => x.v));
     items.forEach((x) => { const col = mk('div'), c = mk('div', 'c'), i = mk('i'); i.dataset.vh = 100 * x.v / max; c.append(i, mk('b', '', x.v ? String(x.v) : '')); col.append(c, mk('span', 'x', x.l)); col.title = `${x.l}: ${x.v}`; box.append(col); });
     return box;
   };
@@ -1955,6 +1990,15 @@ dash.draw('updated', (el) => {
         const m = tally(dated, (e) => e.date.slice(0, 7)).sort((a, b) => a.l.localeCompare(b.l)).map((x) => ({ l: pd(x.l + '-01').toLocaleDateString('en-US', { month: 'short' }), v: x.v }));
         const c3 = card('Finished by month', `${dated.length} of ${E.length} books have a recorded finish date.`); c3.append(vbars(m)); out.push(c3);
       }
+    } else if (t.kind === 'workouts') {
+      const ms = t.muscles || [...new Set(E.flatMap((e) => Object.keys(e.muscles || {})))];
+      const tot = ms.map((m) => ({ l: cap(m), v: E.reduce((a, e) => a + (Number((e.muscles || {})[m]) || 0), 0) })).sort((a, b) => b.v - a.v);
+      const zero = tot.filter((x) => !x.v).map((x) => x.l);
+      const c1 = card('Muscle groups', `Exercise variations per muscle group across all ${s.n} days.` + (zero.length ? ` ${zero.join(' and ')} ${zero.length > 1 ? 'have' : 'has'} not been trained yet.` : ''));
+      c1.append(hbars(tot)); out.push(c1);
+      const c2 = card('Variations per day', `${E.reduce((a, e) => a + vars(e), 0)} variations in total, ${(E.reduce((a, e) => a + vars(e), 0) / Math.max(1, s.n)).toFixed(1)} a day on average. The goal is at least ${t.min_per_day || 3} each day.`);
+      c2.append(vbars(E.map((e, i) => ({ l: String(i + 1), v: vars(e) })))); out.push(c2);
+      out.push(...paceCal(t, s, E, 'workout days', 'workout'));
     } else {
       const c1 = card(`The ${s.target} readings`, 'Each bead is one reading. Filled beads are done, the dashed one is next, and every 24th is a milestone.');
       const g = mk('div', 'tk-mala');
@@ -1964,15 +2008,22 @@ dash.draw('updated', (el) => {
         g.append(b);
       }
       c1.append(g); out.push(c1);
+      out.push(...paceCal(t, s, E, 'readings', 'reading'));
+    }
+    return out;
+  };
+  const paceCal = (t, s, E, noun, one) => {
+    const out = [];
+    {
       const start = t.start || (E[0] && E[0].date);
       if (start) {
         const today = new Date(); today.setHours(0, 0, 0, 0);
         const days = Math.max(1, Math.round((today - pd(start)) / 864e5) + 1), rate = s.n / days;
-        const c2 = card('Pace', 'Readings are counted, not days in a row. A missed day never resets anything.');
+        const c2 = card('Pace', t.kind === 'readings' ? 'Readings are counted, not days in a row. A missed day never resets anything.' : 'Workout days are counted, not days in a row. Rest days never reset anything.');
         const p = mk('p', 'tk-pace');
         const finish = rate > 0 ? new Date(today.getTime() + Math.ceil(s.left / rate) * 864e5) : null;
-        p.append(document.createTextNode(`Started ${fd(start)}. That is `), mk('b', '', `${s.n} readings in ${days} days`), document.createTextNode(`, about `), mk('b', '', `${(rate * 7).toFixed(1)} a week`), document.createTextNode('.'));
-        if (finish && s.left) p.append(document.createTextNode(` At this pace reading #${s.target} lands around `), mk('b', '', fd(iso(finish))), document.createTextNode('.'));
+        p.append(document.createTextNode(`Started ${fd(start)}. That is `), mk('b', '', `${s.n} ${noun} in ${days} days`), document.createTextNode(`, about `), mk('b', '', `${(rate * 7).toFixed(1)} a week`), document.createTextNode('.'));
+        if (finish && s.left) p.append(document.createTextNode(` At this pace ${one} #${s.target} lands around `), mk('b', '', fd(iso(finish))), document.createTextNode('.'));
         c2.append(p);
         const on = new Map(); E.forEach((e) => { if (e.date) on.set(e.date, (on.get(e.date) || 0) + 1); });
         const cal = mk('div', 'tk-cal'); ['M', 'T', 'W', 'T', 'F', 'S', 'S'].forEach((d) => cal.append(mk('span', 'h', d)));
@@ -1980,9 +2031,9 @@ dash.draw('updated', (el) => {
         for (let i = 0; i < lead; i++) cal.append(mk('span', 'tk-day is-blank'));
         for (let d = new Date(s0); d <= today; d.setDate(d.getDate() + 1)) {
           const k = iso(d), n = on.get(k) || 0, c = mk('span', 'tk-day' + (n ? ' is-on' : '') + (k === iso(today) ? ' is-today' : ''), String(d.getDate()));
-          c.title = `${fd(k, { weekday: 'short', month: 'short', day: 'numeric' })}${n ? ` · ${n} reading${n > 1 ? 's' : ''}` : ''}`; cal.append(c);
+          c.title = `${fd(k, { weekday: 'short', month: 'short', day: 'numeric' })}${n ? ` · ${n} ${one}${n > 1 ? 's' : ''}` : ''}`; cal.append(c);
         }
-        c2.append(mk('p', 'tk-tl', 'Reading days since the start'), cal); out.push(c2);
+        c2.append(mk('p', 'tk-tl', `${cap(one)} days since the start`), cal); out.push(c2);
       }
     }
     return out;
@@ -1994,6 +2045,7 @@ dash.draw('updated', (el) => {
     li.append(w);
     if (latest) { li.classList.add('is-latest'); li.append(mk('span', 'tk-tag', 'Latest')); }
     else if (e.imdb) li.append(mk('span', 'tk-side tk-star', '★ ' + Number(e.imdb).toFixed(1)));
+    else if (t.kind === 'workouts') li.append(mk('span', 'tk-side tk-star', `${vars(e)} var.`));
     else if (e.date && t.kind !== 'readings') li.append(mk('span', 'tk-side', fd(e.date, { month: 'short', day: 'numeric' })));
     return li;
   };
@@ -2043,6 +2095,7 @@ dash.draw('updated', (el) => {
     if (s.next) tile('Next milestone', s.next, `${s.next - s.n} more ${t.unit}`); else tile('Milestones', 'All', 'every milestone reached');
     if (t.kind === 'movies') tile('Directors', tally(t.entries, (e) => e.director).length, 'different filmmakers');
     else if (t.kind === 'books') tile('Authors', tally(t.entries, (e) => e.author).length, 'different writers');
+    else if (t.kind === 'workouts') tile('Variations', t.entries.reduce((a, e) => a + vars(e), 0), 'exercise variations in total');
     else { const st = pd(t.start || (t.entries[0] && t.entries[0].date) || iso(new Date())); const days = Math.max(1, Math.round((new Date().setHours(0, 0, 0, 0) - st) / 864e5) + 1); tile('Per week', s.n * 7 / days, 'average since the start', (v) => v.toFixed(1)); }
     root.append(tiles);
 
@@ -2056,11 +2109,12 @@ dash.draw('updated', (el) => {
     rc.append(ul); root.append(rc);
     }
 
-    const lc = card(t.kind === 'readings' ? 'Full reading log' : `Every ${String(t.item || 'entry').toLowerCase()}, numbered`);
+    const dated = t.kind === 'readings' || t.kind === 'workouts';
+    const lc = card(t.kind === 'readings' ? 'Full reading log' : t.kind === 'workouts' ? 'Every workout day' : `Every ${String(t.item || 'entry').toLowerCase()}, numbered`);
     const tools = mk('div', 'tk-tools');
     let search = null;
-    if (t.kind !== 'readings') { search = mk('input', 'bt-search'); search.type = 'search'; search.placeholder = t.kind === 'movies' ? 'Search films, directors, years' : 'Search books, authors, categories'; search.value = S.q; search.setAttribute('aria-label', 'Search ' + t.title); tools.append(search); }
-    const sorts = [['new', 'Newest'], ['old', 'Oldest']].concat(t.kind === 'readings' ? [] : [['az', 'A–Z'], ['year', 'Year']]).concat(t.kind === 'movies' && t.entries.some((e) => e.imdb) ? [['rating', 'Rating']] : []);
+    if (!dated) { search = mk('input', 'bt-search'); search.type = 'search'; search.placeholder = t.kind === 'movies' ? 'Search films, directors, years' : 'Search books, authors, categories'; search.value = S.q; search.setAttribute('aria-label', 'Search ' + t.title); tools.append(search); }
+    const sorts = [['new', 'Newest'], ['old', 'Oldest']].concat(dated ? [] : [['az', 'A–Z'], ['year', 'Year']]).concat(t.kind === 'movies' && t.entries.some((e) => e.imdb) ? [['rating', 'Rating']] : []);
     sorts.forEach(([k, l]) => { const c = mk('button', 'bt-chip', l); c.type = 'button'; c.dataset.tkSort = k; c.setAttribute('aria-pressed', String(S.sort === k)); tools.append(c); });
     const cnt = mk('span', 'tk-count'); tools.append(cnt);
     const all = mk('ul', 'tk-all');
@@ -2105,7 +2159,7 @@ dash.draw('updated', (el) => {
     grow(el, anim); reveal(el, anim);
   });
 
-  window.btTk = { stats, all, fmtPct, int, pd, fd, iso, ic, nameOf, S, mk };
+  window.btTk = { stats, all, fmtPct, int, pd, fd, iso, ic, nameOf, S, mk, vars, cap };
   const open = (id, push) => {
     S.id = id || null; S.q = ''; S.sort = 'new';
     if (push) { try { history.pushState(null, '', '#trackers' + (id ? '/' + id : '')); } catch (e) {} }
@@ -2276,7 +2330,7 @@ dash.draw('updated', (el) => {
     const inView = box && r.top > 60 && r.bottom < innerHeight - 60;
     setTimeout(() => confetti(inView ? r.left + r.width : innerWidth / 2, inView ? r.top + r.height / 2 : innerHeight - 110, cols, mile || done), 350);
     try { navigator.vibrate && navigator.vibrate(mile ? [30, 60, 30] : 25); } catch (e) {}
-    const name = t.kind === 'readings' ? `Reading #${sa.n} done` : `“${entry.title}” logged`;
+    const name = t.kind === 'readings' ? `Reading #${sa.n} done` : t.kind === 'workouts' ? `Day ${sa.n} done · ${K().vars(entry)} variations` : `“${entry.title}” logged`;
     const sub = `${t.item} #${sa.n} · ${K().fmtPct(sa.p)} of ${K().int(sa.target)}` + (sa.next ? ` · ${sa.next - sa.n} to ${K().int(sa.next)}` : '');
     const undo = { label: 'Undo', fn: () => undoLast(t.id, entry) };
     if (done) toast(after, `${after.title} complete!`, `All ${K().int(sa.target)} ${after.unit}. Incredible.`, { mile: true, ms: 10000, action: undo });
@@ -2298,7 +2352,7 @@ dash.draw('updated', (el) => {
   // ---------- save ----------
   const save = async (t, entry, btn) => {
     const before = JSON.parse(JSON.stringify(t)), p0 = K().stats(t).p;
-    const label = t.kind === 'readings' ? `Log ${t.title} reading #${t.entries.length + 1}` : `Log ${t.item.toLowerCase()} #${t.entries.length + 1}: ${entry.title}`;
+    const label = t.kind === 'readings' ? `Log ${t.title} reading #${t.entries.length + 1}` : t.kind === 'workouts' ? `Log ${t.title} day ${t.entries.length + 1} (${K().vars(entry)} variations)` : `Log ${t.item.toLowerCase()} #${t.entries.length + 1}: ${entry.title}`;
     try {
       const d = await commit((x) => appendTo(x, t.id, entry), label);
       setData(d);
@@ -2364,7 +2418,7 @@ dash.draw('updated', (el) => {
     trackers().forEach((t) => {
       const s = K().stats(t), b = mk('button', 'lg-pick tk-' + (t.accent || 'violet')); b.type = 'button';
       const w = mk('span', 'w'), tr = mk('span', 'tk-track'), f = mk('span', 'tk-fill'); f.style.width = s.p + '%'; tr.append(f);
-      w.append(mk('b', '', t.kind === 'readings' ? `${t.title} reading` : `A ${t.item.toLowerCase()} · ${t.title}`), tr);
+      w.append(mk('b', '', t.kind === 'readings' ? `${t.title} reading` : t.kind === 'workouts' ? `A workout · ${t.title}` : `A ${t.item.toLowerCase()} · ${t.title}`), tr);
       const n = mk('span', 'n'); n.append(mk('em', '', `#${s.n + 1}`), document.createTextNode(`${s.n}/${s.target}`));
       b.append(K().ic(t.kind), w, n);
       b.addEventListener('click', () => formView(t));
@@ -2518,8 +2572,8 @@ dash.draw('updated', (el) => {
 
   const formView = (t, preset) => sheet(t.accent || 'violet', (sh, close) => {
     const s = K().stats(t), E = t.entries, item = t.item.toLowerCase();
-    const ttl = t.kind === 'books' ? 'Log a book you finished' : t.kind === 'movies' ? 'Log a film you watched' : `Log ${t.title} reading #${s.n + 1}`;
-    head(sh, t, ttl, t.kind === 'readings' ? 'Readings are counted, not days in a row.' : `This becomes ${t.item} #${s.n + 1} in ${t.title}.`, close);
+    const ttl = t.kind === 'books' ? 'Log a book you finished' : t.kind === 'movies' ? 'Log a film you watched' : t.kind === 'workouts' ? `Log workout day ${s.n + 1}` : `Log ${t.title} reading #${s.n + 1}`;
+    head(sh, t, ttl, t.kind === 'readings' ? 'Readings are counted, not days in a row.' : t.kind === 'workouts' ? 'Tap a muscle group once for each exercise variation you did.' : `This becomes ${t.item} #${s.n + 1} in ${t.title}.`, close);
     const form = mk('form', 'lg-form'); form.noValidate = true;
     const vals = (k) => E.map((e) => e[k]).filter(Boolean);
     const I = {};
@@ -2537,6 +2591,26 @@ dash.draw('updated', (el) => {
       I.runtime = field(form, 'runtime', 'Minutes', { size: 'third', type: 'number', inputMode: 'numeric', placeholder: 'Optional' });
       I.imdb = field(form, 'imdb', 'IMDb', { size: 'third', type: 'number', inputMode: 'decimal', step: '0.1', min: 0, max: 10, placeholder: '8.1' });
       I.date = field(form, 'date', 'Watched on', { type: 'date', value: today(), max: today() });
+    } else if (t.kind === 'workouts') {
+      I.date = field(form, 'date', 'Workout date', { type: 'date', value: today(), max: today() });
+      I._m = {};
+      const ms = t.muscles || ['chest', 'back', 'shoulders', 'biceps', 'triceps', 'forearms', 'legs', 'abs'];
+      const grid = mk('div', 'lg-mus'); grid.setAttribute('role', 'group'); grid.setAttribute('aria-label', 'Exercise variations per muscle group');
+      const sum = mk('p', 'lg-mus-sum');
+      const upd = () => {
+        const tot = Object.values(I._m).reduce((a, x) => a + x, 0), min = t.min_per_day || 3;
+        sum.replaceChildren(mk('b', '', String(tot)), document.createTextNode(` variation${tot === 1 ? '' : 's'} `), mk('span', tot >= min ? 'ok' : 'low', tot >= min ? '✓ goal met' : `· goal is ${min}+`));
+      };
+      ms.forEach((m) => {
+        I._m[m] = 0;
+        const c = mk('div', 'lg-m'), add = mk('button', 'lg-m-add'), minus = mk('button', 'lg-m-sub', '−'), n = mk('b', '', '0');
+        add.type = 'button'; minus.type = 'button'; minus.setAttribute('aria-label', 'One fewer ' + m); minus.hidden = true;
+        add.append(mk('span', '', K().cap(m)), n); add.setAttribute('aria-label', 'Add a ' + m + ' variation');
+        const set = (v) => { I._m[m] = Math.max(0, v); n.textContent = String(I._m[m]); c.classList.toggle('is-on', I._m[m] > 0); minus.hidden = !I._m[m]; c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump'); upd(); warn.hidden = true; confirmDup = false; };
+        add.addEventListener('click', () => set(I._m[m] + 1)); minus.addEventListener('click', () => set(I._m[m] - 1));
+        c.append(add, minus); grid.append(c);
+      });
+      const f = mk('div', 'lg-f'); f.append(mk('label', '', 'Variations by muscle group'), grid, sum); form.append(f); upd();
     } else {
       I.date = field(form, 'date', 'Completed on', { type: 'date', value: (preset && preset.date) || today(), max: today(), main: true });
       I.note = field(form, 'note', 'Note', { placeholder: 'Optional, e.g. read at the temple' });
@@ -2562,7 +2636,8 @@ dash.draw('updated', (el) => {
     const foot = mk('div', 'lg-foot');
     const note = mk('span', 'bt-note', token() ? 'Saves to your site on GitHub.' : 'You will connect GitHub once, then it saves.');
     const back = mk('button', 'lg-btn', 'Back'); back.type = 'button'; back.addEventListener('click', () => pickView());
-    const go = mk('button', 'lg-btn primary', t.kind === 'readings' ? 'Mark done' : `Add ${item}`); go.type = 'submit';
+    const goLabel = t.kind === 'readings' ? 'Mark done' : t.kind === 'workouts' ? 'Log workout' : `Add ${item}`;
+    const go = mk('button', 'lg-btn primary', goLabel); go.type = 'submit';
     foot.append(note, back, go); sh.append(foot);
     go.type = 'button'; go.addEventListener('click', (e) => { e.preventDefault(); submit(); });
     form.addEventListener('submit', (e) => { e.preventDefault(); submit(); });
@@ -2573,7 +2648,17 @@ dash.draw('updated', (el) => {
       err.hidden = true;
       const v = (k) => (I[k] ? I[k].value.trim() : '');
       const entry = {};
-      if (t.kind !== 'readings') {
+      if (t.kind === 'workouts') {
+        const m = {}; Object.keys(I._m).forEach((k) => { if (I._m[k] > 0) m[k] = I._m[k]; });
+        const tot = Object.values(m).reduce((a, x) => a + x, 0);
+        if (!tot) { err.textContent = 'Tap the muscle groups you trained first.'; err.hidden = false; return; }
+        const dd = v('date'), same = E.findIndex((e) => e.date === dd);
+        if (!confirmDup && (tot < (t.min_per_day || 3) || same >= 0)) {
+          warn.textContent = (same >= 0 ? `You already logged a workout on this date (day ${same + 1}). ` : '') + (tot < (t.min_per_day || 3) ? `That's ${tot}, under your goal of ${t.min_per_day || 3}. ` : '') + 'Press Log workout again to save it anyway.';
+          warn.hidden = false; confirmDup = true; return;
+        }
+        entry.muscles = m;
+      } else if (t.kind !== 'readings') {
         if (!v('title')) { err.textContent = `Add the ${item}'s title first.`; err.hidden = false; I.title.focus(); return; }
         entry.title = v('title');
         const dup = E.findIndex((e) => String(e.title || '').toLowerCase() === entry.title.toLowerCase());
@@ -2583,7 +2668,7 @@ dash.draw('updated', (el) => {
       if (t.kind === 'movies') { if (v('year')) entry.year = Number(v('year')); if (v('director')) entry.director = v('director'); if (v('genre')) entry.genre = v('genre'); if (v('runtime')) entry.runtime = Number(v('runtime')); if (v('imdb')) entry.imdb = Number(v('imdb')); }
       if (I._extra && I._picked === I.title.value) Object.keys(I._extra).forEach((k) => { if (I._extra[k] != null && I._extra[k] !== '') entry[k] = I._extra[k]; });
       const d = v('date');
-      if (d) { if (d > today()) { err.textContent = 'That date is in the future.'; err.hidden = false; return; } entry.date = d; }
+      if (d) { if (d > today()) { err.textContent = 'That date is in the future.'; err.hidden = false; return; } entry.date = d; if (entry.muscles) { const mm = entry.muscles; delete entry.muscles; entry.muscles = mm; } }
       else if (t.kind === 'readings') { err.textContent = 'Pick the date of the reading.'; err.hidden = false; return; }
       if (t.kind === 'readings' && v('note')) entry.note = v('note');
       if (!token()) { connectView(() => run(entry)); return; }
@@ -2593,7 +2678,7 @@ dash.draw('updated', (el) => {
       go.disabled = true; back.disabled = true; go.replaceChildren(mk('span', 'spin'), document.createTextNode('Saving…'));
       try { await save(byId(t.id) || t, entry, go); close(); }
       catch (e) {
-        go.disabled = false; back.disabled = false; go.textContent = t.kind === 'readings' ? 'Mark done' : `Add ${item}`;
+        go.disabled = false; back.disabled = false; go.textContent = goLabel;
         if (e.code === 'auth' || e.code === 'perm') { ls.set(TK, null); err.textContent = e.message + ' Connect again to save.'; err.hidden = false; setTimeout(() => connectView(() => formView(t)), 1400); return; }
         err.textContent = e.message; err.hidden = false;
       }
@@ -2647,7 +2732,7 @@ dash.draw('updated', (el) => {
 
   // Owner line on the overview
   window.btTkAfterDraw = (el) => {
-    const h = el.querySelector('.tk-list-h'); if (!h || !token()) return;
+    const h = el.querySelector('.tk-list-h'); if (!h || !token() || window.btTk.S.id) return;
     const o = mk('span', 'tk-owner'); o.append(mk('span', 'live-dot'), document.createTextNode('Logging is on for this device · '));
     const d = mk('button', '', 'Disconnect'); d.type = 'button';
     d.addEventListener('click', () => { if (confirm('Remove the GitHub token from this browser? You can connect again any time.')) { ls.set(TK, null); dash.draw('trackers'); toast(null, 'Disconnected', 'This browser can no longer save entries.'); } });
