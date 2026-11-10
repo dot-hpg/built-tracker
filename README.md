@@ -34,6 +34,8 @@ It works on phones (the tables turn into cards) and follows the device's light o
 
 On the Trackers page, the log buttons save a new entry straight into `data/trackers.json` through the GitHub API. Each device connects once with a fine-grained personal access token limited to this repository with **Contents: Read and write**. The token is kept only in that browser's localStorage, so visitors cannot add entries. If a device is offline, entries are queued on it and committed when it reconnects.
 
+Typing a film or book title searches IMDb (via imdbapi.dev) or Open Library and fills in the other fields. Shortcut links: `#log/hanuman-chalisa` logs today's reading at once, and `#log/movies` or `#log/books` opens the log sheet.
+
 ## Native app (parked)
 
 `app/` holds the Expo source for a native iPhone and Android version of the tracker. It is not built or published, because the home-screen web app covers phone use for free. Its build workflows live in `app/.github/workflows/` and only run if they are moved to a repository of their own.

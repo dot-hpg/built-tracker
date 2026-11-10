@@ -2,6 +2,17 @@
 
 Each version is frozen on a `release/vN` branch. `main` is the live site, and the automatic activity logs and new videos land there between versions.
 
+## v6 (2026-11-10)
+
+Type a title and the rest fills itself.
+
+- In the film and book log sheets, results appear with posters and covers as you type. Pick one with a tap, or with ↑ ↓ and Enter.
+- Films are looked up on IMDb (through the free imdbapi.dev). Choosing a match fills in the year, director, genre, runtime and IMDb rating, the same details as the existing list, and keeps the IMDb id.
+- Books are looked up on Open Library. Choosing a match fills in the author, the year first published and a category where one can be worked out, and keeps the Open Library id.
+- A "Found on IMDb / Open Library" card shows what was matched, and the filled fields briefly glow. Everything stays editable, and if the lookup is unavailable the fields can still be filled in by hand.
+- Matches you have already logged are labelled in the results.
+- Shortcut links: `#log/hanuman-chalisa` marks today's reading done the moment it opens, so it works as a one-tap home-screen button. `#log/movies` and `#log/books` open the log sheet straight away.
+
 ## v5 (2026-11-10)
 
 Log progress straight from the site.
