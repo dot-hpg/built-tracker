@@ -444,8 +444,9 @@ svg { flex: 0 0 auto; }
 .focus-item { display: flex; align-items: center; gap: 10px; }
 .focus-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--c1); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c1) 20%, transparent); }
 .focus-t { font-weight: 650; font-size: 1.08rem; letter-spacing: -.015em; margin: 0; }
+.focus-n0 { margin-left: 0 !important; }
 .focus-n { margin: 0 0 0 19px; font-size: .8rem; color: var(--color-fg-muted); }
-.bt-goals { gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr)); }
+.bt-goals { gap: 20px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 28rem), 1fr)); }
 .bt-goal { border-radius: 22px; padding: 26px; gap: 20px; }
 .bt-goal::before { height: 3px; }
 .bt-goal-title { font-weight: 650; letter-spacing: -.035em; font-size: clamp(1.5rem, 2.4vw, 1.95rem); }
@@ -508,6 +509,104 @@ svg { flex: 0 0 auto; }
   .bt-anim { animation: bt-rise var(--cds-dur-slow) var(--cds-ease-out) both; }
   @keyframes bt-rise { from { opacity: .35; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 }
+/* ===== v3.1: goal states (Current, Archived, Completed) ===== */
+.gseg-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px 16px; flex-wrap: wrap; margin-bottom: -4px; }
+.gseg { position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 2px; padding: 4px; border-radius: 15px; border: 1px solid var(--line-soft); background: var(--glass); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); box-shadow: var(--bt-shadow); }
+.gseg-ind { position: absolute; top: 4px; bottom: 4px; left: 0; width: 0; border-radius: 11px; pointer-events: none; opacity: 0;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c0) 20%, var(--color-panel)), color-mix(in srgb, var(--c0) 11%, var(--color-panel)));
+  border: 1px solid color-mix(in srgb, var(--c0) 40%, transparent);
+  box-shadow: 0 8px 22px -10px var(--c0), inset 0 1px 0 rgba(255, 255, 255, .07); }
+.gseg.is-ready .gseg-ind { opacity: 1; transition: transform .42s var(--cds-ease-out), width .42s var(--cds-ease-out), opacity .2s; }
+.gseg-btn { position: relative; z-index: 1; appearance: none; border: 0; background: none; font: inherit; font-size: .86rem; font-weight: 550; letter-spacing: -.01em; color: var(--color-fg-muted); display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 9px 16px; border-radius: 11px; cursor: pointer; white-space: nowrap; transition: color .2s; }
+.gseg-btn:hover { color: var(--color-fg); }
+.gseg-btn[aria-selected="true"] { color: var(--color-fg); font-weight: 600; }
+.gseg-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; transition: color .2s; }
+.gseg-btn[aria-selected="true"] svg { color: var(--c0); }
+.gseg-n { font-family: var(--font-mono); font-size: .68rem; font-weight: 500; min-width: 1.5em; padding: 1px 6px; border-radius: 999px; background: var(--hover); border: 1px solid var(--line-soft); text-align: center; transition: background .2s, color .2s; }
+.gseg-btn[aria-selected="true"] .gseg-n { background: color-mix(in srgb, var(--c0) 24%, transparent); border-color: transparent; color: var(--color-fg); }
+.gseg-btn:focus-visible { outline: 2px solid var(--c0); outline-offset: 2px; }
+.gseg-hint { margin: 0; display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; color: var(--color-fg-muted); }
+.gseg-hint::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--c0); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c0) 20%, transparent); }
+.bt-goals.is-switching > * { animation: bt-enter .4s var(--cds-ease-out) both; }
+.bt-goals.is-switching > :nth-child(2) { animation-delay: .05s; }
+.bt-goals.is-switching > :nth-child(3) { animation-delay: .1s; }
+.bt-goal.is-leaving { animation: g-out .23s ease-in forwards; pointer-events: none; }
+@keyframes g-out { to { opacity: 0; transform: translateY(8px) scale(.975); } }
+
+/* Archived and completed cards */
+.bt-goal-arch::before { background: color-mix(in srgb, var(--color-fg-muted) 45%, transparent); }
+.bt-goal-arch .bt-clock { --ring: color-mix(in srgb, var(--color-fg-muted) 70%, transparent); box-shadow: none; }
+.bt-goal-arch .bt-goal-main, .bt-goal-arch .bt-goal-bars, .bt-goal-arch .bt-goal-mets, .bt-goal-arch .bt-ms { opacity: .74; filter: saturate(.45); transition: opacity .25s, filter .25s; }
+.bt-goal-arch:hover .bt-goal-main, .bt-goal-arch:hover .bt-goal-bars, .bt-goal-arch:hover .bt-goal-mets, .bt-goal-arch:hover .bt-ms { opacity: 1; filter: none; }
+.bt-goal-done .bt-fill-main { background: var(--color-ok) !important; }
+.bt-goal-done .bt-goal-title { color: var(--color-fg); }
+details.bt-ms > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 2px 0; border-radius: 6px; }
+details.bt-ms > summary::-webkit-details-marker { display: none; }
+details.bt-ms > summary::after { content: ""; width: 7px; height: 7px; margin-right: 5px; border-right: 1.6px solid currentColor; border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .2s var(--cds-ease-out); }
+details.bt-ms[open] > summary::after { transform: translateY(2px) rotate(-135deg); }
+details.bt-ms > summary:hover { color: var(--color-fg); }
+details.bt-ms > summary:focus-visible { outline: 2px solid var(--c0); outline-offset: 3px; }
+
+/* Card actions */
+.gact { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-top: 18px; border-top: 1px solid var(--line-soft); }
+.gact-sp { flex: 1; }
+.gbtn { appearance: none; font: inherit; font-size: .82rem; font-weight: 600; letter-spacing: -.005em; display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 36px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--line-soft); background: color-mix(in srgb, var(--color-bg) 55%, transparent); color: var(--color-fg); cursor: pointer; white-space: nowrap; transition: background .15s, border-color .15s, color .15s, transform .12s; }
+.gbtn:hover { background: var(--hover); border-color: color-mix(in srgb, var(--color-fg-muted) 40%, transparent); }
+.gbtn:active { transform: translateY(1px); }
+.gbtn:focus-visible { outline: 2px solid var(--c0); outline-offset: 2px; }
+.gbtn svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.gbtn-ok { color: var(--color-ok); background: color-mix(in srgb, var(--color-ok) 12%, transparent); border-color: color-mix(in srgb, var(--color-ok) 34%, transparent); }
+.gbtn-ok:hover { background: color-mix(in srgb, var(--color-ok) 20%, transparent); border-color: color-mix(in srgb, var(--color-ok) 58%, transparent); }
+.gbtn-acc { color: var(--c0); background: color-mix(in srgb, var(--c0) 12%, transparent); border-color: color-mix(in srgb, var(--c0) 34%, transparent); }
+.gbtn-acc:hover { background: color-mix(in srgb, var(--c0) 20%, transparent); border-color: color-mix(in srgb, var(--c0) 58%, transparent); }
+.gbtn-bad { color: var(--color-bad); }
+.gbtn-bad:hover { background: color-mix(in srgb, var(--color-bad) 12%, transparent); border-color: color-mix(in srgb, var(--color-bad) 45%, transparent); }
+.gbtn-danger { color: var(--color-bg); background: var(--color-bad); border-color: transparent; }
+.gbtn-danger:hover { background: color-mix(in srgb, var(--color-bad) 88%, var(--color-fg)); border-color: transparent; }
+
+/* Empty state */
+.gempty { grid-column: 1 / -1; display: grid; justify-items: center; text-align: center; gap: 10px; padding: clamp(40px, 7vw, 64px) 24px; border-radius: 22px; border: 1px dashed color-mix(in srgb, var(--color-fg-muted) 28%, transparent); background: color-mix(in srgb, var(--glass) 55%, transparent); }
+.gempty-ic { width: 54px; height: 54px; border-radius: 17px; display: grid; place-items: center; color: var(--c0); background: color-mix(in srgb, var(--c0) 13%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c0) 25%, transparent); }
+.gempty-ic svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.gempty h3 { margin: 6px 0 0; font-size: 1.16rem; font-weight: 650; letter-spacing: -.02em; }
+.gempty p { margin: 0 0 6px; max-width: 46ch; color: var(--color-fg-muted); line-height: 1.55; }
+
+/* Toast */
+.gtoast { position: fixed; left: 50%; bottom: max(24px, env(safe-area-inset-bottom, 0px)); z-index: 60; display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 14px; max-width: calc(100vw - 32px); box-sizing: border-box; border-radius: 14px; background: var(--color-panel); color: var(--color-fg); border: 1px solid var(--line-soft); box-shadow: 0 24px 60px -20px rgba(0, 0, 0, .55), 0 2px 6px rgba(0, 0, 0, .12); font-size: .86rem; opacity: 0; transform: translate(-50%, 14px); pointer-events: none; transition: opacity .22s, transform .3s var(--cds-ease-out); }
+.gtoast.is-on { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.gtoast-d { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto; background: var(--color-fg-muted); }
+.gtoast[data-kind="ok"] .gtoast-d { background: var(--color-ok); }
+.gtoast[data-kind="acc"] .gtoast-d { background: var(--c0); }
+.gtoast[data-kind="bad"] .gtoast-d { background: var(--color-bad); }
+.gtoast-m { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gtoast-u { appearance: none; border: 0; font: inherit; font-weight: 650; font-size: .82rem; color: var(--c0); background: color-mix(in srgb, var(--c0) 12%, transparent); padding: 6px 12px; border-radius: 9px; cursor: pointer; }
+.gtoast-u:hover { background: color-mix(in srgb, var(--c0) 20%, transparent); }
+.gtoast-x { appearance: none; border: 0; background: none; color: var(--color-fg-muted); width: 28px; height: 28px; border-radius: 8px; cursor: pointer; font-size: 1.1rem; line-height: 1; }
+.gtoast-x:hover { background: var(--hover); color: var(--color-fg); }
+
+/* Delete dialog */
+.gdlg { border: 1px solid var(--line-soft); border-radius: 20px; padding: 0; width: min(420px, calc(100vw - 32px)); box-sizing: border-box; background: var(--color-panel); color: var(--color-fg); box-shadow: 0 40px 90px -24px rgba(0, 0, 0, .6); }
+.gdlg::backdrop { background: rgba(6, 7, 11, .56); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+.gdlg[open] { animation: dlg-in .24s var(--cds-ease-out); }
+@keyframes dlg-in { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
+.gdlg-b { padding: 24px 24px 18px; display: grid; gap: 10px; }
+.gdlg-ic { width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center; color: var(--color-bad); background: color-mix(in srgb, var(--color-bad) 13%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-bad) 25%, transparent); margin-bottom: 4px; }
+.gdlg-ic svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.gdlg h3 { margin: 0; font-size: 1.12rem; font-weight: 650; letter-spacing: -.02em; }
+.gdlg p { margin: 0; color: var(--color-fg-muted); line-height: 1.55; font-size: .9rem; }
+.gdlg-name { color: var(--color-fg); font-weight: 600; }
+.gdlg-f { display: flex; justify-content: flex-end; gap: 8px; padding: 14px 24px 22px; }
+@media (max-width: 960px) { .gtoast { bottom: calc(92px + env(safe-area-inset-bottom, 0px)); } }
+@media (max-width: 560px) {
+  .gseg-bar { display: block; }
+  .gseg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; box-sizing: border-box; }
+  .gseg-btn { min-width: 0; padding: 9px 4px; font-size: .8rem; gap: 6px; }
+  .gseg-hint { display: none; }
+  .gact .gbtn { flex: 1 1 auto; }
+  .gact-sp { display: none; }
+}
+@media (max-width: 480px) { .gseg-btn svg { display: none; } }
+@media (prefers-reduced-motion: reduce) { .gseg.is-ready .gseg-ind { transition: none; } .gdlg[open] { animation: none; } .gtoast { transition: none; } }
 </style>
 
 <div class="bt">
@@ -517,12 +616,33 @@ svg { flex: 0 0 auto; }
       <div class="hero-words">
         <p class="hero-k" id="hero-date">—</p>
         <h2 class="hero-title"><span id="hero-greet">Hello</span>, Hariprasad.</h2>
-        <p class="hero-sub">Two goals, one month. Every video, application and commit you log moves these numbers.</p>
+        <p class="hero-sub" data-draw="herosub">Every video, application and commit you log moves these numbers.</p>
       </div>
       <div class="hero-focus" data-draw="focus"></div>
     </div>
-    <div class="bt-goals" data-draw="goals"></div>
-    <p class="bt-note">Goals, deadlines and milestones live in <code>data/goals.json</code>. Tell Claude when you tick something off and it updates here. The interview-video numbers come straight from the Learning tab.</p>
+    <div class="gseg-bar">
+      <div class="gseg" role="tablist" aria-label="Goal status" data-draw="goaltabs">
+        <span class="gseg-ind" aria-hidden="true"></span>
+        <button class="gseg-btn" type="button" role="tab" id="gseg-active" data-gtab="active" aria-selected="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg><span>Current</span><span class="gseg-n">·</span></button>
+        <button class="gseg-btn" type="button" role="tab" id="gseg-archived" data-gtab="archived" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="1.5"/><path d="M5 9v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9M10 13h4"/></svg><span>Archived</span><span class="gseg-n">·</span></button>
+        <button class="gseg-btn" type="button" role="tab" id="gseg-done" data-gtab="done" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.3l2.7 2.7L16 9.7"/></svg><span>Completed</span><span class="gseg-n">·</span></button>
+      </div>
+      <p class="gseg-hint">Changes save on this device</p>
+    </div>
+    <div class="bt-goals" role="tabpanel" data-draw="goals"></div>
+    <p class="bt-note">Goals, deadlines and milestones live in <code>data/goals.json</code>. Archive, restore, complete or delete a goal here and the change is kept on this device; tell Claude and it writes it into the file so it shows everywhere. The interview-video numbers come straight from the Learning tab.</p>
+    <dialog class="gdlg" id="gdlg" aria-labelledby="gdlg-h">
+      <div class="gdlg-b">
+        <span class="gdlg-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7"/></svg></span>
+        <h3 id="gdlg-h">Delete this goal?</h3>
+        <p><span class="gdlg-name"></span> will be removed from your completed goals, along with its milestones and numbers.</p>
+      </div>
+      <div class="gdlg-f">
+        <button class="gbtn" type="button" data-gdlg="cancel">Cancel</button>
+        <button class="gbtn gbtn-danger" type="button" data-gdlg="confirm"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7"/></svg><span>Delete goal</span></button>
+      </div>
+    </dialog>
+    <div class="gtoast" id="gtoast" role="status" aria-live="polite"><span class="gtoast-d"></span><span class="gtoast-m"></span><button class="gtoast-u" type="button" hidden>Undo</button><button class="gtoast-x" type="button" aria-label="Dismiss">×</button></div>
   </section>
 
   <section class="bt-section" id="panel-overview" data-panel="overview" hidden>
@@ -1206,139 +1326,339 @@ svg { flex: 0 0 auto; }
 </script>
 
 <script>
-// Goals: countdowns, milestone progress and live metrics from the learning tracker.
+// Goals: three states (current, archived, completed), countdowns, milestone progress and live metrics from the learning tracker.
+// data/goals.json is the source of truth. Archive, restore, complete and delete made on the page are kept on this device
+// as overrides on top of the file, and an override is dropped as soon as the file's own status for that goal changes.
 (() => {
   const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+  const svg = (paths) => { const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('aria-hidden', 'true'); s.innerHTML = paths; return s; };
+  const ICON = {
+    check: '<path d="M5 12.5l4.2 4.2L19 7"/>',
+    archive: '<rect x="3" y="4" width="18" height="5" rx="1.5"/><path d="M5 9v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9M10 13h4"/>',
+    restore: '<path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4v4.5H8"/>',
+    trash: '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7"/>',
+    target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/>',
+    trophy: '<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7M10 17h4"/>'
+  };
   const day = (s) => { const [y, m, d] = String(s).slice(0, 10).split('-').map(Number); return new Date(y, m - 1, d); };
   const today = () => { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); };
+  const isoToday = () => { const n = new Date(); return `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}-${String(n.getDate()).padStart(2, '0')}`; };
   const DAY = 864e5;
   const fmt = (s) => day(s).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Device-local state on top of data/goals.json.
+  const KEY = 'bt-goal-state', TKEY = 'bt-goal-tab';
+  const read = (k, f) => { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? f : v; } catch (e) { return f; } };
+  const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+  let local = read(KEY, {}); if (!local || typeof local !== 'object' || Array.isArray(local)) local = {};
+  const TABS = ['active', 'archived', 'done'];
+  let tab = read(TKEY, 'active'); if (!TABS.includes(tab)) tab = 'active';
+  const norm = (s) => (s === 'done' || s === 'completed') ? 'done' : s === 'archived' ? 'archived' : 'active';
+
+  dash.calc('goalview', {
+    inputs: ['goals'],
+    title: 'Goals with their current state',
+    description: 'Goals from data/goals.json with this device\'s archive, restore, complete and delete changes applied.',
+    fn: (goals) => {
+      let dirty = false; const out = [];
+      goals.forEach((g) => {
+        const base = norm(g.status); let s = base, at = null;
+        const o = local[g.id];
+        if (o) { if (o.base === base) { s = o.status; at = o.at; } else { delete local[g.id]; dirty = true; } }
+        if (s === 'deleted') return;
+        const v = Object.assign({}, g, { status: s, _s: s });
+        if (s === 'done') v.done_date = at || g.done_date || null;
+        if (s === 'archived') v.archived_date = at || g.archived_date || null;
+        out.push(v);
+      });
+      if (dirty) write(KEY, local);
+      return out;
+    }
+  });
+  const view = () => { const r = dash.data('goalview'); return r.status === 'ok' ? r.data : null; };
+  window.btGoals = { view, active: () => (view() || []).filter((g) => g._s === 'active') };
+
+  const baseOf = (id) => { const r = dash.data('goals'); const g = r.status === 'ok' ? r.data.find((x) => x.id === id) : null; return g ? norm(g.status) : 'active'; };
+  const setStatus = (id, s) => {
+    const base = baseOf(id);
+    if (s === base) delete local[id]; else local[id] = { status: s, at: isoToday(), base };
+    write(KEY, local);
+  };
+  const refresh = () => ['goals', 'goaltabs', 'herosub', 'focus', 'navbadge'].forEach((n) => dash.draw(n));
+
   const learnCount = (src) => {
     const id = String(src || '').replace(/^learning:/, '');
     const r = dash.data('learning'); if (r.status !== 'ok') return null;
     const c = r.data.find((x) => x.id === id); if (!c) return null;
     return Array.isArray(c.videos) ? c.videos.filter((v) => !v.partial).length : Number(c.watched) || 0;
   };
-  const goalsById = () => { const r = dash.data('goals'); return r.status === 'ok' ? Object.fromEntries(r.data.map((g) => [g.id, g])) : {}; };
+  const byId = () => Object.fromEntries((view() || []).map((g) => [g.id, g]));
   const msDone = (m, all) => {
     if (m.done) return true;
-    if (m.goal && all[m.goal] && all[m.goal].status === 'done') return true;
+    if (m.goal && all[m.goal] && all[m.goal]._s === 'done') return true;
     if (m.source && m.target) { const n = learnCount(m.source); return n != null && n >= m.target; }
     return false;
   };
-  const state = (g) => {
-    if (g.status === 'done') return { key: 'done', label: 'Done', big: '✓', unit: g.done_date ? 'Finished ' + fmt(g.done_date) : 'Finished' };
+  const state = (g, pct) => {
+    if (g._s === 'done') return { key: 'done', label: 'Completed', pill: 'ok', big: '✓', unit: 'Completed' };
+    if (g._s === 'archived') return { key: 'arch', label: 'Archived', pill: 'muted', big: pct + '%', unit: 'Paused' };
     const left = Math.round((day(g.deadline) - today()) / DAY);
-    if (left < 0) return { key: 'over', label: 'Overdue', big: String(-left), unit: (-left === 1 ? 'day' : 'days') + ' overdue' };
+    if (left < 0) return { key: 'over', label: 'Overdue', pill: 'bad', big: String(-left), unit: (-left === 1 ? 'day' : 'days') + ' overdue' };
     if (left === 0) {
       const n = new Date(), end = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1);
-      const h = Math.max(0, Math.floor((end - n) / 36e5));
-      return { key: 'today', label: 'Due today', big: h + 'h', unit: 'left today' };
+      return { key: 'today', label: 'Due today', pill: 'warn', big: Math.max(0, Math.floor((end - n) / 36e5)) + 'h', unit: 'left today' };
     }
-    return { key: 'on', label: 'On track', big: String(left), unit: (left === 1 ? 'day' : 'days') + ' left' };
+    return { key: 'on', label: 'On track', pill: 'ok', big: String(left), unit: (left === 1 ? 'day' : 'days') + ' left' };
   };
   const pctOf = (g, all) => {
-    if (g.status === 'done') return 100;
+    if (g._s === 'done') return 100;
     if (g.progress && Number(g.progress.target)) return Math.min(100, Math.round(100 * Number(g.progress.value) / Number(g.progress.target)));
     const ms = g.milestones || [];
     return ms.length ? Math.round(100 * ms.filter((m) => msDone(m, all)).length / ms.length) : 0;
   };
+  const openMs = new Set();
+  const counts = () => { const c = { active: 0, archived: 0, done: 0 }; (view() || []).forEach((g) => { c[g._s] = (c[g._s] || 0) + 1; }); return c; };
 
-  dash.draw('goalstat', (el) => {
-    const r = dash.data('goals');
-    if (r.status !== 'ok') { el.textContent = '—'; return; }
-    const all = goalsById(), act = r.data.filter((g) => g.status !== 'done');
-    const dueToday = act.filter((g) => state(g).key === 'today');
-    const upcoming = act.filter((g) => state(g).key === 'on').sort((a, b) => day(a.deadline) - day(b.deadline));
-    const ms = r.data.flatMap((g) => g.milestones || []);
-    const f = el.dataset.field;
-    if (f === 'active') el.textContent = act.length;
-    else if (f === 'today') el.textContent = dueToday.length;
-    else if (f === 'todaynote') el.textContent = dueToday.length ? dueToday.map((g) => g.title).join(', ') : 'Nothing due today';
-    else if (f === 'next') el.textContent = upcoming.length ? state(upcoming[0]).big + 'd' : '—';
-    else if (f === 'nextnote') el.textContent = upcoming.length ? `${upcoming[0].title}, ${fmt(upcoming[0].deadline)}` : 'No upcoming deadlines';
-    else if (f === 'ms') el.textContent = `${ms.filter((m) => msDone(m, all)).length}/${ms.length}`;
-  });
+  const button = (act, id, label, icon, cls) => {
+    const b = mk('button', 'gbtn' + (cls ? ' ' + cls : ''));
+    b.type = 'button'; b.dataset.gact = act; b.dataset.id = id;
+    b.append(svg(ICON[icon]), mk('span', null, label));
+    return b;
+  };
+
+  const card = (g, all) => {
+    const pct = pctOf(g, all), st = state(g, pct), live = g._s === 'active';
+    const el = mk('article', 'bt-goal bt-goal-' + st.key);
+    el.dataset.goal = g.id;
+    const top = mk('div', 'bt-goal-top');
+    const tags = mk('div', 'bt-goal-tags');
+    if (g.category) tags.appendChild(mk('span', 'bt-tag', g.category));
+    tags.appendChild(mk('span', 'bt-pill ' + st.pill, st.label));
+    const when = g._s === 'done' ? (g.done_date ? 'Completed ' + fmt(g.done_date) : 'Completed')
+      : g._s === 'archived' ? (g.archived_date ? 'Archived ' + fmt(g.archived_date) : 'Archived')
+      : g.start === g.deadline ? 'Due ' + fmt(g.deadline) : `${fmt(g.start)} → ${fmt(g.deadline)}`;
+    top.append(tags, mk('span', 'bt-small', when));
+    el.appendChild(top);
+
+    const main = mk('div', 'bt-goal-main');
+    const words = mk('div', 'bt-goal-words');
+    words.append(mk('h3', 'bt-goal-title', g.title));
+    if (g.why) words.appendChild(mk('p', 'bt-note', g.why));
+    const clock = mk('div', 'bt-clock');
+    const spanDays = Math.max(1, Math.round((day(g.deadline) - day(g.start)) / DAY) + 1);
+    let frac = 1;
+    if (st.key === 'over') frac = 0;
+    else if (st.key === 'arch') frac = pct / 100;
+    else if (st.key === 'today') frac = Math.max(0, (new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1) - new Date()) / DAY);
+    else if (st.key === 'on') frac = Math.min(1, (Math.round((day(g.deadline) - today()) / DAY) + 1) / spanDays);
+    clock.style.setProperty('--p', frac.toFixed(3));
+    const ring = mk('div', 'bt-clock-in');
+    ring.append(mk('span', 'bt-clock-num', st.big), mk('span', 'bt-clock-unit', st.unit));
+    clock.appendChild(ring);
+    main.append(words, clock);
+    el.appendChild(main);
+
+    // Time used vs work done. Archived and completed goals stop the clock on the day they left Current.
+    const ref = g._s === 'done' && g.done_date ? day(g.done_date) : g._s === 'archived' && g.archived_date ? day(g.archived_date) : today();
+    const used = Math.min(spanDays, Math.max(0, Math.round((ref - day(g.start)) / DAY) + 1));
+    const tpct = Math.round(100 * used / spanDays);
+    const bars = mk('div', 'bt-goal-bars');
+    [['Progress', g.progress ? `${g.progress.value}/${g.progress.target} ${g.progress.unit || ''} · ${pct}%` : pct + '%', pct, 'bt-fill-main'],
+     ['Time used', g.start === g.deadline ? (live ? 'Today' : fmt(g.deadline)) : `Day ${used} of ${spanDays}`, tpct, 'bt-fill-time']].forEach(([k, v, w, cls]) => {
+      const row = mk('div', 'bt-goal-bar');
+      const lab = mk('div', 'bt-row'); lab.append(mk('span', 'bt-small', k), mk('span', 'bt-small bt-strong', v));
+      const tr = mk('div', 'bt-big-prog'); const fill = mk('div', cls); fill.style.width = w + '%'; tr.appendChild(fill);
+      row.append(lab, tr); bars.appendChild(row);
+    });
+    el.appendChild(bars);
+
+    if (Array.isArray(g.metrics) && g.metrics.length) {
+      const mets = mk('div', 'bt-goal-mets');
+      g.metrics.forEach((m) => {
+        const v = m.source ? learnCount(m.source) : m.value;
+        const box = mk('div', 'bt-met');
+        box.append(mk('span', 'bt-met-num', v == null ? '—' : String(v) + (m.target ? '/' + m.target : '')), mk('span', 'bt-small', m.label));
+        mets.appendChild(box);
+      });
+      el.appendChild(mets);
+    }
+
+    if (Array.isArray(g.milestones) && g.milestones.length) {
+      const ms = g.milestones, n = ms.filter((m) => msDone(m, all)).length;
+      // Current goals show their checklist open; archived and completed ones fold it away to keep the list calm.
+      const wrap = mk(live ? 'div' : 'details', 'bt-ms');
+      if (!live) { wrap.open = openMs.has(g.id); wrap.addEventListener('toggle', () => { if (wrap.open) openMs.add(g.id); else openMs.delete(g.id); }); }
+      const head = mk(live ? 'p' : 'summary', 'bt-ms-head', `Milestones · ${n} of ${ms.length}`);
+      wrap.appendChild(head);
+      const ul = mk('ul', 'bt-ms-list');
+      ms.forEach((m) => {
+        const ok = msDone(m, all);
+        const li = mk('li', ok ? 'is-done' : '');
+        li.appendChild(mk('span', 'bt-check', ok ? '✓' : ''));
+        let t = m.title;
+        if (m.source && m.target) { const c = learnCount(m.source); if (c != null) t += ` (${Math.min(c, m.target)}/${m.target})`; }
+        li.appendChild(mk('span', null, t));
+        ul.appendChild(li);
+      });
+      wrap.appendChild(ul);
+      el.appendChild(wrap);
+    }
+
+    const acts = mk('div', 'gact');
+    if (g._s === 'active') acts.append(button('complete', g.id, 'Mark complete', 'check', 'gbtn-ok'), button('archive', g.id, 'Archive', 'archive'));
+    else if (g._s === 'archived') acts.append(button('restore', g.id, 'Restore to current', 'restore', 'gbtn-acc'), button('complete', g.id, 'Mark complete', 'check'));
+    else acts.append(button('reopen', g.id, 'Move to current', 'restore'), mk('span', 'gact-sp'), button('delete', g.id, 'Delete', 'trash', 'gbtn-bad'));
+    el.appendChild(acts);
+    return el;
+  };
+
+  const EMPTY = {
+    active: { icon: 'target', h: 'No current goals', p: 'Nothing is in motion right now. Restore an archived goal to pick it back up, or tell Claude about a new one.' },
+    archived: { icon: 'archive', h: 'Nothing archived', p: 'Goals you set aside land here with their progress kept, ready to restore whenever you want them back.' },
+    done: { icon: 'trophy', h: 'No completed goals yet', p: 'Mark a goal complete and it moves here, with the day you finished it.' }
+  };
 
   dash.draw('goals', (el) => {
-    const r = dash.data('goals');
+    const r = dash.data('goalview');
     el.replaceChildren();
     if (r.status !== 'ok') { el.appendChild(mk('p', 'bt-empty', r.status === 'error' ? 'Could not load goals.' : 'Loading…')); return; }
-    const all = goalsById();
-    const order = { today: 0, over: 1, on: 2, done: 3 };
-    r.data.slice().sort((a, b) => order[state(a).key] - order[state(b).key] || day(a.deadline) - day(b.deadline)).forEach((g) => {
-      const st = state(g), pct = pctOf(g, all);
-      const card = mk('article', 'bt-goal bt-goal-' + st.key);
-      const top = mk('div', 'bt-goal-top');
-      const tags = mk('div', 'bt-goal-tags');
-      if (g.category) tags.appendChild(mk('span', 'bt-tag', g.category));
-      tags.appendChild(mk('span', 'bt-pill ' + ({ done: 'ok', today: 'warn', over: 'bad', on: 'ok' })[st.key], st.label));
-      top.append(tags, mk('span', 'bt-small', g.start === g.deadline ? 'Due ' + fmt(g.deadline) : `${fmt(g.start)} → ${fmt(g.deadline)}`));
-      card.appendChild(top);
-
-      const main = mk('div', 'bt-goal-main');
-      const words = mk('div', 'bt-goal-words');
-      words.append(mk('h3', 'bt-goal-title', g.title));
-      if (g.why) words.appendChild(mk('p', 'bt-note', g.why));
-      const clock = mk('div', 'bt-clock');
-      const spanDays = Math.max(1, Math.round((day(g.deadline) - day(g.start)) / DAY) + 1);
-      let frac = 1;
-      if (st.key === 'over') frac = 0;
-      else if (st.key === 'today') frac = Math.max(0, (new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1) - new Date()) / DAY);
-      else if (st.key === 'on') frac = Math.min(1, (Math.round((day(g.deadline) - today()) / DAY) + 1) / spanDays);
-      clock.style.setProperty('--p', frac.toFixed(3));
-      const ring = mk('div', 'bt-clock-in');
-      ring.append(mk('span', 'bt-clock-num', st.big), mk('span', 'bt-clock-unit', st.unit));
-      clock.appendChild(ring);
-      main.append(words, clock);
-      card.appendChild(main);
-
-      // Time used vs work done
-      const span = Math.max(1, Math.round((day(g.deadline) - day(g.start)) / DAY) + 1);
-      const used = Math.min(span, Math.max(0, Math.round((today() - day(g.start)) / DAY) + 1));
-      const tpct = g.status === 'done' ? 100 : Math.round(100 * used / span);
-      const bars = mk('div', 'bt-goal-bars');
-      [['Progress', g.progress ? `${g.progress.value}/${g.progress.target} ${g.progress.unit || ''} · ${pct}%`.replace(' ·', ' ·') : pct + '%', pct, 'bt-fill-main'], ['Time used', g.start === g.deadline ? 'Today' : `Day ${used} of ${span}`, tpct, 'bt-fill-time']].forEach(([k, v, w, cls]) => {
-        const row = mk('div', 'bt-goal-bar');
-        const lab = mk('div', 'bt-row'); lab.append(mk('span', 'bt-small', k), mk('span', 'bt-small bt-strong', v));
-        const tr = mk('div', 'bt-big-prog'); const fill = mk('div', cls); fill.style.width = w + '%'; tr.appendChild(fill);
-        row.append(lab, tr); bars.appendChild(row);
-      });
-      card.appendChild(bars);
-
-      if (Array.isArray(g.metrics) && g.metrics.length) {
-        const mets = mk('div', 'bt-goal-mets');
-        g.metrics.forEach((m) => {
-          const v = m.source ? learnCount(m.source) : m.value;
-          const box = mk('div', 'bt-met');
-          box.append(mk('span', 'bt-met-num', v == null ? '—' : String(v) + (m.target ? '/' + m.target : '')), mk('span', 'bt-small', m.label));
-          mets.appendChild(box);
-        });
-        card.appendChild(mets);
-      }
-
-      if (Array.isArray(g.milestones) && g.milestones.length) {
-        const ms = g.milestones, n = ms.filter((m) => msDone(m, all)).length;
-        const wrap = mk('div', 'bt-ms');
-        wrap.appendChild(mk('p', 'bt-ms-head', `Milestones · ${n} of ${ms.length}`));
-        const ul = mk('ul', 'bt-ms-list');
-        ms.forEach((m) => {
-          const ok = msDone(m, all);
-          const li = mk('li', ok ? 'is-done' : '');
-          li.appendChild(mk('span', 'bt-check', ok ? '✓' : ''));
-          let t = m.title;
-          if (m.source && m.target) { const c = learnCount(m.source); if (c != null) t += ` (${Math.min(c, m.target)}/${m.target})`; }
-          li.appendChild(mk('span', null, t));
-          ul.appendChild(li);
-        });
-        wrap.appendChild(ul);
-        card.appendChild(wrap);
-      }
-      el.appendChild(card);
-    });
+    const all = byId();
+    const list = r.data.filter((g) => g._s === tab);
+    el.setAttribute('aria-labelledby', 'gseg-' + tab);
+    if (!list.length) {
+      const e = EMPTY[tab], c = counts();
+      const box = mk('div', 'gempty');
+      const ic = mk('span', 'gempty-ic'); ic.appendChild(svg(ICON[e.icon]));
+      box.append(ic, mk('h3', null, e.h), mk('p', null, e.p));
+      const alt = tab === 'active' ? (c.archived ? ['archived', `View archived (${c.archived})`] : null) : c.active ? ['active', `View current (${c.active})`] : null;
+      if (alt) { const b = mk('button', 'gbtn gbtn-acc', alt[1]); b.type = 'button'; b.dataset.gto = alt[0]; box.appendChild(b); }
+      el.appendChild(box);
+      return;
+    }
+    const order = { today: 0, over: 1, on: 2 };
+    const stamp = (g) => String((g._s === 'done' ? g.done_date : g.archived_date) || '');
+    list.sort((a, b) => tab === 'active'
+      ? order[state(a, 0).key] - order[state(b, 0).key] || day(a.deadline) - day(b.deadline)
+      : stamp(b).localeCompare(stamp(a)) || day(b.deadline) - day(a.deadline));
+    list.forEach((g) => el.appendChild(card(g, all)));
   });
+
+  // Segmented control: Current / Archived / Completed with live counts and a sliding indicator.
+  dash.draw('goaltabs', (el) => {
+    const c = counts();
+    el.querySelectorAll('[data-gtab]').forEach((b) => {
+      const on = b.dataset.gtab === tab;
+      b.setAttribute('aria-selected', String(on));
+      b.tabIndex = on ? 0 : -1;
+      const n = b.querySelector('.gseg-n'); if (n) n.textContent = view() ? String(c[b.dataset.gtab] || 0) : '·';
+    });
+    const sel = el.querySelector('[aria-selected="true"]'), ind = el.querySelector('.gseg-ind');
+    if (sel && ind && sel.offsetWidth) {
+      ind.style.width = sel.offsetWidth + 'px';
+      ind.style.transform = `translateX(${sel.offsetLeft}px)`;
+      if (!el.classList.contains('is-ready')) requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('is-ready')));
+    }
+  });
+
+  dash.draw('herosub', (el) => {
+    const v = view(); if (!v) return;
+    const n = v.filter((g) => g._s === 'active').length;
+    el.textContent = n === 0 ? 'No goals in motion right now. Restore one from Archived, or tell Claude what you are going after next.'
+      : n === 1 ? 'One goal in motion. Every video, application and commit you log moves it forward.'
+      : `${n} goals in motion. Every video, application and commit you log moves these numbers.`;
+  });
+
+  const setTab = (t, focus) => {
+    if (!TABS.includes(t) || t === tab) return;
+    tab = t; write(TKEY, t);
+    dash.draw('goaltabs');
+    const grid = document.querySelector('[data-draw="goals"]');
+    if (grid && !reduced()) { grid.classList.remove('is-switching'); void grid.offsetWidth; grid.classList.add('is-switching'); }
+    dash.draw('goals');
+    if (focus) { const b = document.querySelector(`[data-gtab="${t}"]`); if (b) b.focus(); }
+  };
+
+  // Toast with undo.
+  let toastTimer = 0, undoFn = null;
+  const toast = (msg, kind, undo) => {
+    const t = document.getElementById('gtoast'); if (!t) return;
+    t.querySelector('.gtoast-m').textContent = msg;
+    t.dataset.kind = kind || '';
+    undoFn = undo || null;
+    t.querySelector('.gtoast-u').hidden = !undo;
+    t.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { t.classList.remove('is-on'); undoFn = null; }, 5200);
+  };
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.gtoast-u') && undoFn) { const f = undoFn; undoFn = null; f(); document.getElementById('gtoast').classList.remove('is-on'); }
+    if (e.target.closest('.gtoast-x')) { document.getElementById('gtoast').classList.remove('is-on'); undoFn = null; }
+  });
+
+  // Moves a goal to a new state with a short exit animation and an undo.
+  const move = (id, to, msg, kind) => {
+    const prev = local[id] ? Object.assign({}, local[id]) : undefined;
+    const apply = () => {
+      setStatus(id, to); refresh();
+      toast(msg, kind, () => { if (prev) local[id] = prev; else delete local[id]; write(KEY, local); refresh(); });
+    };
+    const cardEl = document.querySelector(`.bt-goal[data-goal="${CSS.escape(id)}"]`);
+    if (cardEl && !reduced()) { cardEl.classList.add('is-leaving'); setTimeout(apply, 230); } else apply();
+  };
+
+  // Delete confirmation.
+  let pending = null;
+  const dlg = () => document.getElementById('gdlg');
+  const askDelete = (g) => {
+    const d = dlg();
+    if (!d || typeof d.showModal !== 'function') {
+      if (window.confirm(`Delete "${g.title}"? This removes it from your goals.`)) move(g.id, 'deleted', 'Goal deleted', 'bad');
+      return;
+    }
+    pending = g.id;
+    d.querySelector('.gdlg-name').textContent = g.title;
+    d.showModal();
+    const cancel = d.querySelector('[data-gdlg="cancel"]'); if (cancel) cancel.focus();
+  };
+  document.addEventListener('click', (e) => {
+    const d = dlg(); if (!d) return;
+    const b = e.target.closest('[data-gdlg]');
+    if (b && d.contains(b)) {
+      const id = pending; pending = null; d.close();
+      if (b.dataset.gdlg === 'confirm' && id) move(id, 'deleted', 'Goal deleted', 'bad');
+      return;
+    }
+    if (e.target === d) { pending = null; d.close(); } // click on the backdrop
+  });
+
+  document.addEventListener('click', (e) => {
+    const tb = e.target.closest('[data-gtab]'); if (tb) { setTab(tb.dataset.gtab); return; }
+    const to = e.target.closest('[data-gto]'); if (to) { setTab(to.dataset.gto, true); return; }
+    const b = e.target.closest('[data-gact]'); if (!b) return;
+    const g = (view() || []).find((x) => x.id === b.dataset.id); if (!g) return;
+    const a = b.dataset.gact;
+    if (a === 'complete') move(g.id, 'done', `“${g.title}” marked complete`, 'ok');
+    else if (a === 'archive') move(g.id, 'archived', `“${g.title}” moved to Archived`, '');
+    else if (a === 'restore' || a === 'reopen') move(g.id, 'active', `“${g.title}” is back in Current`, 'acc');
+    else if (a === 'delete') askDelete(g);
+  });
+  document.addEventListener('keydown', (e) => {
+    const b = e.target.closest && e.target.closest('[data-gtab]'); if (!b) return;
+    const i = TABS.indexOf(tab);
+    const k = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: TABS.length - 1 }[e.key];
+    if (k == null) return;
+    e.preventDefault();
+    setTab(TABS[(k + TABS.length) % TABS.length], true);
+  });
+  window.addEventListener('DOMContentLoaded', () => {
+    const seg = document.querySelector('[data-draw="goaltabs"]');
+    if (seg && window.ResizeObserver) new ResizeObserver(() => dash.draw('goaltabs')).observe(seg);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => dash.draw('goaltabs'));
+  });
+
   // Keep the "hours left" fresh while the page stays open.
-  setInterval(() => { dash.draw('goals'); dash.draw('goalstat'); }, 60e3);
+  setInterval(() => dash.draw('goals'), 60e3);
 })();
 </script>
 <script>
@@ -1374,7 +1694,7 @@ dash.draw('updated', (el) => {
   const row = (id) => { const r = dash.data(id); return r.status === 'ok' && r.data ? r.data[0] : null; };
   dash.draw('navbadge', (el) => {
     const f = el.dataset.field; let t = '';
-    if (f === 'goals') { const r = dash.data('goals'); if (r.status === 'ok') t = String(r.data.filter((g) => g.status !== 'done').length); }
+    if (f === 'goals') { const v = window.btGoals && window.btGoals.view(); if (v) t = String(v.filter((g) => g._s === 'active').length); }
     else if (f === 'overview') { const k = row('kpis'); if (k) t = `${k.days_built}/${k.total_days}`; }
     else if (f === 'projects') { const k = row('kpis'); if (k) t = String(k.projects); }
     else if (f === 'plan') { const k = row('kpis'); if (k) t = `${k.days_left}d`; }
@@ -1393,16 +1713,21 @@ dash.draw('updated', (el) => {
     el.querySelector('.sprint-n').textContent = `${d3.format(',')(k.sprint_commits)} commits · ${k.streak}-day streak`;
   });
   dash.draw('focus', (el) => {
-    const r = dash.data('goals'); el.replaceChildren();
+    const r = dash.data('goalview'); el.replaceChildren();
     if (r.status !== 'ok') return;
     const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
     const td = new Date(); const iso = `${td.getFullYear()}-${String(td.getMonth() + 1).padStart(2, '0')}-${String(td.getDate()).padStart(2, '0')}`;
-    const act = r.data.filter((g) => g.status !== 'done');
+    const act = r.data.filter((g) => g._s === 'active');
     const due = act.filter((g) => String(g.deadline).slice(0, 10) <= iso);
     const next = act.filter((g) => String(g.deadline).slice(0, 10) > iso).sort((a, b) => String(a.deadline).localeCompare(String(b.deadline)))[0];
     el.appendChild(mk('p', 'focus-k', due.length ? 'Focus today' : 'Up next'));
     const list = due.length ? due : next ? [next] : [];
-    if (!list.length) { el.appendChild(mk('p', 'focus-t', 'All goals done. Set a new one.')); return; }
+    if (!list.length) {
+      const c = r.data.filter((g) => g._s === 'archived').length;
+      el.appendChild(mk('p', 'focus-t', 'Nothing in motion'));
+      el.appendChild(mk('p', 'focus-n focus-n0', c ? `${c} goal${c === 1 ? '' : 's'} waiting in Archived. Restore one, or tell Claude what is next.` : 'Tell Claude the next goal you are going after.'));
+      return;
+    }
     list.forEach((g) => {
       const open = (g.milestones || []).find((m) => !m.done);
       const item = mk('div', 'focus-item');
