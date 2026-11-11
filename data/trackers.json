@@ -412,6 +412,57 @@
     {"date": "2026-11-01", "time": "05:40"},
     {"date": "2026-11-03", "time": "05:40"}
    ]
+  },
+  {
+   "id": "ai-engineer",
+   "page": "ai-engineer",
+   "item": "Session",
+   "title": "AI Engineer",
+   "subtitle": "Placeholder until you send the real tracker details",
+   "kind": "readings",
+   "icon": "spark",
+   "unit": "sessions",
+   "verb": "done",
+   "target": 100,
+   "milestones": [25, 50, 75, 100],
+   "accent": "violet",
+   "entries": [
+
+   ]
+  },
+  {
+   "id": "data-analyst",
+   "page": "data-analyst",
+   "item": "Session",
+   "title": "Data Analyst",
+   "subtitle": "Placeholder until you send the real tracker details",
+   "kind": "readings",
+   "icon": "chart",
+   "unit": "sessions",
+   "verb": "done",
+   "target": 100,
+   "milestones": [25, 50, 75, 100],
+   "accent": "cyan",
+   "entries": [
+
+   ]
+  },
+  {
+   "id": "comp-designer",
+   "page": "comp-designer",
+   "item": "Session",
+   "title": "Computational Designer",
+   "subtitle": "Placeholder until you send the real tracker details",
+   "kind": "readings",
+   "icon": "leaf",
+   "unit": "sessions",
+   "verb": "done",
+   "target": 100,
+   "milestones": [25, 50, 75, 100],
+   "accent": "emerald",
+   "entries": [
+
+   ]
   }
  ]
 }

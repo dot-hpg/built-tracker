@@ -2,6 +2,15 @@
 
 Each version is frozen on a `release/vN` branch. `main` is the live site, and the automatic activity logs and new videos land there between versions.
 
+## v11 (2026-11-11)
+
+Career path pages simplified to one tracker each.
+
+- The AI Engineer, Data Analyst and Computational Designer pages now each show a single tracker card, the same as the cards on the Trackers tab: progress bar, milestones, a one-tap "Done today" button and "Open tracker" for the full history.
+- The trackers are placeholders (100 sessions each) until you send the real details. They live in `data/trackers.json` with a `page` field, so they stay off the Trackers tab and out of its totals. The sidebar badge on each path shows its count.
+- Removed everything from v9 on those pages: the roadmap, stages and skills, readiness score, radar, levels and XP, the extra trackers, job hunt funnel, activity heatmap and achievements. `data/paths.json` is deleted, since it only held that roadmap.
+- The YouTube course trackers are no longer shown on the AI Engineer page. Their data is unchanged in `data/learning.json`, and the Goals page still reads from it.
+
 ## v10 (2026-11-11)
 
 New tracker: 48 Early Wake-Ups.
