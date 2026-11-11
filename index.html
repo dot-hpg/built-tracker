@@ -147,7 +147,6 @@ a.bt-vtitle:hover { color: var(--bt-c0); }
       <button class="bt-tab nav-item" role="tab" data-tab="goals" aria-selected="true"><span class="nav-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><span class="nav-label">Goals</span><span class="nav-badge" data-draw="navbadge" data-field="goals"></span></button>
       <button class="bt-tab nav-item" role="tab" data-tab="overview" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="9" rx="2"/><rect x="13.5" y="3.5" width="7" height="5" rx="2"/><rect x="13.5" y="11.5" width="7" height="9" rx="2"/><rect x="3.5" y="15.5" width="7" height="5" rx="2"/></svg></span><span class="nav-label">Dashboard</span><span class="nav-badge" data-draw="navbadge" data-field="overview"></span></button>
       <button class="bt-tab nav-item" role="tab" data-tab="projects" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg></span><span class="nav-label">Projects</span><span class="nav-badge" data-draw="navbadge" data-field="projects"></span></button>
-      <button class="bt-tab nav-item" role="tab" data-tab="plan" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h2M12 14h2M8 17h2"/></svg></span><span class="nav-label">48-day plan</span><span class="nav-badge" data-draw="navbadge" data-field="plan"></span></button>
       <button class="bt-tab nav-item" role="tab" data-tab="trackers" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><path d="M4 6.5h9M4 12h16M4 17.5h6"/><circle cx="16.5" cy="6.5" r="1.6" fill="currentColor"/><circle cx="13.5" cy="17.5" r="1.6" fill="currentColor"/></svg></span><span class="nav-label">Trackers</span><span class="nav-badge" data-draw="navbadge" data-field="trackers"></span></button>
     </nav>
     <p class="side-h">Career paths</p>
@@ -702,7 +701,7 @@ svg { flex: 0 0 auto; }
 .tk-reveal { transition: opacity .7s var(--cds-ease-out), transform .7s var(--cds-ease-out); }
 .tk-reveal.tk-wait { opacity: 0; transform: translateY(18px); }
 .tk-root.tk-still * { transition: none !important; }
-@media (max-width: 960px) { .dock { grid-template-columns: repeat(6, 1fr) !important; } .tk-hero { grid-template-columns: 1fr; } }
+@media (max-width: 960px) { .dock { grid-template-columns: repeat(5, 1fr) !important; } .tk-hero { grid-template-columns: 1fr; } }
 @media (max-width: 720px) { .tk-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
 @media (max-width: 560px) {
   .tk-card { padding: 20px 16px 16px; border-radius: 18px; gap: 16px; }
@@ -1022,35 +1021,6 @@ svg { flex: 0 0 auto; }
     </div>
   </section>
 
-  <section class="bt-section" id="panel-plan" data-panel="plan" hidden>
-    <div class="bt-card">
-      <h2>48-day build tracker</h2>
-      <p class="bt-note">Day 1 is Oct 25, 2026, the first day of your current daily streak and of your Claude Code sessions. Days 1 to 6 are what you actually built, from your commits. Days 7 to 48 are a suggested plan of advanced builds: finish open work first, then LLM engineering, MLOps, agents, deep learning from scratch, and a capstone. Every seventh day is a ship day for write-ups and posts.</p>
-      <div class="bt-toolbar">
-        <input class="bt-search" id="t-search" type="search" placeholder="Search days, projects, focus" aria-label="Search the plan">
-        <button class="bt-chip" data-tfilter="" aria-pressed="true">All days</button>
-        <button class="bt-chip" data-tfilter="built" aria-pressed="false">Built</button>
-        <button class="bt-chip" data-tfilter="Planned" aria-pressed="false">Planned</button>
-      </div>
-      <div class="bt-tablebox">
-        <table class="bt-table" id="ttable" data-source="tracker" data-row-key="day">
-          <thead><tr>
-            <th data-field="day" class="num"><button class="bt-sort" disabled>Day</button></th>
-            <th data-field="date"><button class="bt-sort" disabled>Date</button></th>
-            <th data-field="week" class="bt-hide-sm num"><button class="bt-sort" disabled>Week</button></th>
-            <th data-field="project"><button class="bt-sort" disabled>Project</button></th>
-            <th data-field="focus"><button class="bt-sort" disabled>Focus</button></th>
-            <th data-field="category" class="bt-hide-sm"><button class="bt-sort" disabled>Track</button></th>
-            <th data-field="level"><button class="bt-sort" disabled>Level</button></th>
-            <th data-field="status"><button class="bt-sort" disabled>Status</button></th>
-            <th data-field="commits" class="num"><button class="bt-sort" disabled>Commits</button></th>
-          </tr></thead>
-          <tbody data-draw="ttable"></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
   <section class="bt-section" id="panel-ai-engineer" data-panel="ai-engineer" hidden>
     <div data-draw="pathtracker" data-path="ai-engineer"></div>
   </section>
@@ -1134,7 +1104,7 @@ svg { flex: 0 0 auto; }
   };
 
   // Tabs
-  const TITLES = { goals: 'Goals', overview: 'Dashboard', projects: 'Projects', plan: '48-day plan', learning: 'AI Engineer', trackers: 'Trackers', 'ai-engineer': 'AI Engineer', 'data-analyst': 'Data Analyst', 'comp-designer': 'Computational Designer' };
+  const TITLES = { goals: 'Goals', overview: 'Dashboard', projects: 'Projects', learning: 'AI Engineer', trackers: 'Trackers', 'ai-engineer': 'AI Engineer', 'data-analyst': 'Data Analyst', 'comp-designer': 'Computational Designer' };
   const PATH_TABS = ['ai-engineer', 'data-analyst', 'comp-designer'];
   const show = (name) => {
     if (name === 'learning') name = 'ai-engineer';
@@ -1403,43 +1373,6 @@ svg { flex: 0 0 auto; }
     document.querySelectorAll('[data-pfilter]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     dash.draw('ptable');
   }));
-
-  // Plan table
-  window.btT = { q: '', f: '' };
-  dash.draw('ttable', (tb) => {
-    const r = dash.data('tracker');
-    tb.replaceChildren();
-    if (r.status !== 'ok') return;
-    const q = btT.q.toLowerCase();
-    r.data.filter((d) => (!btT.f || (btT.f === 'built' ? d.status !== 'Planned' : d.status === 'Planned')) &&
-      (!q || [d.project, d.focus, d.category, d.level, d.status, 'day ' + d.day].join(' ').toLowerCase().includes(q)))
-    .forEach((d) => {
-      const tr = document.createElement('tr');
-      tr.className = d.status === 'Today' ? 'bt-row-today' : d.status === 'Done' ? 'bt-row-done' : '';
-      const st = document.createElement('span');
-      st.className = 'bt-pill ' + (d.status === 'Done' ? 'ok' : d.status === 'Today' ? 'today' : d.status === 'Missed' ? 'bad' : 'muted');
-      st.textContent = d.status;
-      const dt = btFmt.parse(d.date);
-      tr.append(
-        td(String(d.day), 'num'),
-        td(d3.utcFormat('%a %b %-d')(dt), 'bt-nowrap'),
-        td(String(d.week), 'num bt-hide-sm'),
-        td(d.project, 'bt-name'),
-        td(d.focus, 'bt-desc'),
-        td(d.category, 'bt-small bt-nowrap bt-hide-sm'),
-        td(d.level, 'bt-lvl' + (d.level === 'Expert' ? ' expert' : '')),
-        td(st),
-        td(d.commits == null ? '' : btFmt.int(d.commits), 'num')
-      );
-      tb.appendChild(tr);
-    });
-  });
-  document.querySelectorAll('#t-search').forEach((i) => i.addEventListener('input', () => { btT.q = i.value; dash.draw('ttable'); }));
-  document.querySelectorAll('[data-tfilter]').forEach((b) => b.addEventListener('click', () => {
-    btT.f = b.dataset.tfilter;
-    document.querySelectorAll('[data-tfilter]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-    dash.draw('ttable');
-  }));
 })();
 </script>
 </div>
@@ -1450,7 +1383,6 @@ svg { flex: 0 0 auto; }
   <button class="bt-tab dock-item" role="tab" data-tab="goals" aria-selected="true"><span class="nav-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><span>Goals</span></button>
   <button class="bt-tab dock-item" role="tab" data-tab="overview" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="9" rx="2"/><rect x="13.5" y="3.5" width="7" height="5" rx="2"/><rect x="13.5" y="11.5" width="7" height="9" rx="2"/><rect x="3.5" y="15.5" width="7" height="5" rx="2"/></svg></span><span>Dashboard</span></button>
   <button class="bt-tab dock-item" role="tab" data-tab="projects" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg></span><span>Projects</span></button>
-  <button class="bt-tab dock-item" role="tab" data-tab="plan" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h2M12 14h2M8 17h2"/></svg></span><span>Plan</span></button>
   <button class="bt-tab dock-item" role="tab" data-tab="ai-engineer" data-group="paths" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9L12 17.5l-1.9-5.1-5.1-1.9 5.1-1.9z"/><path d="M18.5 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/></svg></span><span>Paths</span></button>
   <button class="bt-tab dock-item" role="tab" data-tab="trackers" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><path d="M4 6.5h9M4 12h16M4 17.5h6"/><circle cx="16.5" cy="6.5" r="1.6" fill="currentColor"/><circle cx="13.5" cy="17.5" r="1.6" fill="currentColor"/></svg></span><span>Trackers</span></button>
 </nav>
@@ -1739,7 +1671,6 @@ dash.draw('updated', (el) => {
     if (f === 'goals') { const r = dash.data('goals'); if (r.status === 'ok') t = String(r.data.filter((g) => g.status !== 'done').length); }
     else if (f === 'overview') { const k = row('kpis'); if (k) t = `${k.days_built}/${k.total_days}`; }
     else if (f === 'projects') { const k = row('kpis'); if (k) t = String(k.projects); }
-    else if (f === 'plan') { const k = row('kpis'); if (k) t = `${k.days_left}d`; }
     else if (f === 'learning') {
       const r = dash.data('learning');
       if (r.status === 'ok') t = String(r.data.reduce((s, c) => s + (Array.isArray(c.videos) ? c.videos.filter((v) => !v.partial).length : Number(c.watched) || 0), 0));
