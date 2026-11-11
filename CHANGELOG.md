@@ -2,6 +2,21 @@
 
 Each version is frozen on a `release/vN` branch. `main` is the live site, and the automatic activity logs and new videos land there between versions.
 
+## v9 (2026-11-11)
+
+Career paths: the Learning tab becomes AI Engineer, with new Data Analyst and Computational Designer paths.
+
+- A new "Career paths" section in the sidebar holds three pages: AI Engineer, Data Analyst and Computational Designer (architect, sustainable designer). Each shows its job-readiness % in the sidebar, and on phones a single "Paths" button in the dock opens the last one you used. Old `#learning` links open the AI Engineer page.
+- Every path is a staged roadmap: 8 stages and 55 skills for AI Engineer, 8 and 41 for Data Analyst, 9 and 43 for Computational Designer. Each stage has a summary, a time estimate, free resources to learn from, and skills you move along with one tap (not started → learning → mastered). Skills already backed by your shipped projects start as mastered or learning and list those projects as proof.
+- The top of each page shows a job-readiness score (70% skills, 30% trackers), a stage-by-stage progress strip, a radar of skill coverage per stage, levels and XP (+100 per skill mastered, +30 per skill started, +15 per log), and this week's study hours against a weekly target.
+- "Up next" lists the skills you are learning with a one-tap "Mark mastered", and "Log today" has one-tap buttons for every tracker.
+- Trackers per path, each with milestones and a 12-week sparkline. AI Engineer: deep-work hours, AI projects shipped (7 already, from your project list), DSA problems, AI papers read, mock interviews, and a job hunt funnel (applications, interviews, offers). Data Analyst: SQL problems, dashboards built (3 Tableau dashboards already), case studies (Aerofit already), study hours, certificates and its own funnel. Computational Designer: Grasshopper definitions, environmental simulations, design studies, portfolio projects, practice hours, green certifications and a funnel.
+- The YouTube course trackers (100 Days of ML, 100 AI engineer interview videos) now sit inside the AI Engineer page, unchanged.
+- An activity heatmap for the last 20 weeks and an achievements wall (one badge per stage plus tracker milestones) close each page.
+- Changes save straight to the new `data/paths.json` on GitHub with the same token as the Trackers tab. Quick taps are batched into one commit, every change has Undo, offline changes wait on the device, and milestones, finished stages and level-ups get confetti.
+- Shortcut links such as `#ai-engineer/log/deep-work` log one unit in a tap from the home screen.
+- Removed the "Get an AI engineer job" goal card from the Goals page.
+
 ## v8 (2026-11-11)
 
 New tracker: 48 Meditation Sessions.
