@@ -543,6 +543,18 @@ svg { flex: 0 0 auto; }
 .tk-legend i { width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, var(--a1), var(--a2)); }
 .tk-legend b { font-weight: 600; font-size: .9rem; }
 .tk-legend span { grid-column: 2; font-family: var(--font-mono); font-size: .72rem; color: var(--color-fg-muted); }
+.tk-tabs { display: inline-flex; align-self: flex-start; justify-self: start; width: max-content; max-width: 100%; gap: 4px; padding: 4px; border-radius: 14px; border: 1px solid var(--line-soft); background: color-mix(in srgb, var(--track) 45%, transparent); margin: 0 2px; }
+.tk-tabs button { display: inline-flex; align-items: center; gap: 8px; border: 0; background: none; color: var(--color-fg-muted); font: 600 .86rem/1 inherit; padding: 9px 14px; border-radius: 10px; cursor: pointer; transition: background .2s, color .2s; }
+.tk-tabs button em { font: 700 .72rem var(--font-mono, ui-monospace, monospace); font-style: normal; padding: 3px 7px; border-radius: 999px; background: color-mix(in srgb, var(--color-fg) 8%, transparent); }
+.tk-tabs button[aria-selected="true"] { background: var(--color-bg, #0b0b10); color: var(--color-fg); box-shadow: 0 1px 0 color-mix(in srgb, var(--color-fg) 8%, transparent), 0 6px 16px -10px rgba(0,0,0,.6); }
+.tk-tabs button[aria-selected="true"] em { background: color-mix(in srgb, #22c55e 18%, transparent); color: #16a34a; }
+.tk-tabs button:focus-visible { outline: 2px solid #7c5cff; outline-offset: 1px; }
+.tk-done-tag { display: inline-flex; align-items: center; gap: 5px; vertical-align: middle; margin-left: 8px; padding: 3px 9px 3px 7px; border-radius: 999px; font: 700 .68rem/1.3 var(--font-mono, ui-monospace, monospace); letter-spacing: .06em; text-transform: uppercase; color: #fff; background: linear-gradient(135deg, #22c55e, #059669); box-shadow: 0 4px 12px -6px #16a34a; }
+.tk-done-tag svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.tk-card.is-complete .tk-fill { filter: saturate(1.1); }
+.tk-finished { display: inline-flex; align-items: center; gap: 8px; font-weight: 650; font-size: .88rem; color: #16a34a; }
+.tk-finished svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.tk-empty-tab { padding: 34px 20px; text-align: center; border: 1px dashed var(--line-soft); border-radius: 18px; color: var(--color-fg-muted); }
 .tk-list-h { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin: 6px 2px -6px; }
 .tk-list-h h2 { margin: 0; font-size: 1.05rem; font-weight: 650; letter-spacing: -.015em; }
 .tk-cards { display: grid; gap: 16px; }
@@ -659,7 +671,7 @@ svg { flex: 0 0 auto; }
 .lg-f textarea { width: 100%; box-sizing: border-box; min-height: 150px; resize: vertical; font: inherit; line-height: 1.55; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line-soft); background: color-mix(in srgb, var(--track) 40%, transparent); color: var(--color-fg); }
 .lg-f textarea:focus { outline: 2px solid color-mix(in srgb, var(--a1) 60%, transparent); outline-offset: 1px; }
 .lg-hint { font-size: .74rem; color: var(--color-fg-muted); margin: 6px 0 0; }
-.tk-mala { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 7px; margin-top: 8px; }
+.tk-mala { max-width: 680px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 7px; margin-top: 8px; }
 .tk-bead { aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: .58rem; color: var(--color-fg-muted); background: var(--track); border: 1px solid var(--line-soft); transition: transform .2s; }
 .tk-bead.is-done { color: #fff; font-weight: 700; background: radial-gradient(circle at 35% 30%, var(--a1), var(--a2)); border-color: transparent; box-shadow: 0 4px 14px -4px var(--a2); }
 .tk-bead.is-next { border: 2px dashed var(--a1); color: var(--ink); font-weight: 700; animation: tk-breathe 2.4s ease-in-out infinite; }
@@ -1800,6 +1812,9 @@ dash.draw('updated', (el) => {
   const mins = (hm) => { const m = /^(\d{1,2}):(\d{2})/.exec(String(hm || '')); return m ? (+m[1]) * 60 + (+m[2]) : null; };
   const hm12 = (v) => { const h = Math.floor(v / 60) % 24, m = Math.round(v % 60); return `${((h + 11) % 12) + 1}:${String(m).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`; };
   const tOf = (e) => (e && e.time ? (e.approx ? '~' : '') + hm12(mins(e.time)) : null);
+  const done = (t) => t.status === 'completed' || stats(t).left <= 0;
+  const doneTag = () => { const g = mk('span', 'tk-done-tag'); g.innerHTML = CHECK; g.append(document.createTextNode('Completed')); return g; };
+  const finished = (t) => { const f = mk('span', 'tk-finished'); f.innerHTML = CHECK; const last = t.finished || (t.entries.length && t.entries[t.entries.length - 1].date); f.append(document.createTextNode(last ? `Completed ${fd(last)}` : `All ${int(stats(t).target)} ${t.unit} done`)); return f; };
   const nameOf = (t, e, i) => (e && e.title) || `${t.item || 'Entry'} ${i + 1}`;
   const cap = (x) => String(x).charAt(0).toUpperCase() + String(x).slice(1);
   const vars = (e) => Object.values((e && e.muscles) || {}).reduce((a, x) => a + (Number(x) || 0), 0);
@@ -1893,7 +1908,9 @@ dash.draw('updated', (el) => {
     const wrap = mk('div', 'tk-card tk-reveal tk-' + (t.accent || 'violet')); wrap.dataset.tkId = t.id;
     const a = mk('a', 'tk-card-link'); a.href = '#trackers/' + t.id; a.dataset.tkOpen = t.id;
     const top = mk('div', 'tk-card-top'), w = mk('div', 'tk-words');
-    w.append(mk('p', 'tk-k', `${t.unit} ${t.verb}`), mk('h3', '', t.title), mk('p', 'tk-sub', t.subtitle || ''));
+    const fin = done(t); if (fin) wrap.classList.add('is-complete');
+    const h3 = mk('h3', '', t.title); if (fin) h3.append(doneTag());
+    w.append(mk('p', 'tk-k', `${t.unit} ${t.verb}`), h3, mk('p', 'tk-sub', t.subtitle || ''));
     const num = mk('div', 'tk-num'), b = mk('b'); count(b, s.n, anim);
     num.append(b, mk('span', '', `of ${int(s.target)} ${t.unit}`));
     top.append(icOf(t), w, num);
@@ -1901,24 +1918,26 @@ dash.draw('updated', (el) => {
     const pc = mk('span', 'tk-pct'); count(pc, s.p, anim, fmtPct);
     foot.append(pc);
     const pill = (k, v) => { const p = mk('span', 'tk-pill'); p.append(document.createTextNode(k + ' '), mk('b', '', v)); return p; };
-    foot.append(pill('To go', int(s.left)));
+    if (!fin) foot.append(pill('To go', int(s.left)));
     if (s.next) foot.append(pill('Next milestone', `${int(s.next)} (${s.next - s.n} away)`));
-    if (s.last) foot.append(pill('Latest', t.kind === 'readings' ? `#${s.n} · ${s.last.date ? fd(s.last.date, { month: 'short', day: 'numeric' }) : ''}` : t.kind === 'workouts' ? `Day ${s.n} · ${vars(s.last)} variations` : nameOf(t, s.last, s.n - 1)));
+    if (s.last && !fin) foot.append(pill('Latest', t.kind === 'readings' ? `#${s.n}${s.last.date ? ' · ' + fd(s.last.date, { month: 'short', day: 'numeric' }) : ''}` : t.kind === 'workouts' ? `Day ${s.n} · ${vars(s.last)} variations` : nameOf(t, s.last, s.n - 1)));
     a.append(top, bar(t, s, false), foot);
     const acts = mk('div', 'tk-actions');
     const go = mk('a', 'tk-go'); go.href = '#trackers/' + t.id; go.dataset.tkOpen = t.id; go.innerHTML = 'Open tracker ' + ARROW;
-    acts.append(logBtn(t), go);
+    acts.append(fin ? finished(t) : logBtn(t), go);
     wrap.append(a, acts);
     return wrap;
   };
+  const tabPick = () => { try { return localStorage.getItem('bt-tk-tab') === 'completed' ? 'completed' : 'ongoing'; } catch (e) { return 'ongoing'; } };
   const home = (root, all_, anim) => {
-    const list = all_.filter((t) => !t.page);
+    const mine = all_.filter((t) => !t.page), list = mine.filter((t) => !done(t)), closed = mine.filter(done);
     const total = list.reduce((a, t) => a + t.entries.length, 0);
+    if (!S.tab) S.tab = tabPick();
     const hero = mk('div', 'hero tk-hero');
     const L = mk('div');
     L.append(mk('p', 'hero-k', 'Personal trackers'));
     const h = mk('h2', 'hero-title'); h.append(document.createTextNode('Every book, film, post, rep, sit and sunrise, '), mk('span', '', 'counted.'));
-    L.append(h, mk('p', 'hero-sub', `${int(total)} finished across ${list.length} long-haul commitments. Each bar runs from 0 to 100%, and every new one you finish moves it forward. Open a tracker to see its full history.`));
+    L.append(h, mk('p', 'hero-sub', `${int(total)} finished across ${list.length} ongoing commitments${closed.length ? `, and ${closed.length} already completed` : ''}. Each bar runs from 0 to 100%, and every new one you finish moves it forward. Open a tracker to see its full history.`));
     const nx = mk('div', 'tk-next');
     list.forEach((t) => { const s = stats(t); if (s.left <= 0) return; const c = mk('span', 'tk-' + (t.accent || 'violet')); c.append(mk('i'), document.createTextNode('Up next: '), mk('b', '', `${t.item || 'Entry'} #${s.n + 1}`)); nx.append(c); });
     L.append(nx);
@@ -1932,9 +1951,21 @@ dash.draw('updated', (el) => {
 
     const lh = mk('div', 'tk-list-h'); lh.append(mk('h2', '', 'Your trackers'), mk('span', 'bt-note', 'Tap any bar for every entry, stats and milestones.'));
     root.append(lh);
-    const cards = mk('div', 'tk-cards');
-    list.forEach((t) => cards.append(cardOf(t, anim)));
-    root.append(cards);
+    const tabs = mk('div', 'tk-tabs'); tabs.setAttribute('role', 'tablist'); tabs.setAttribute('aria-label', 'Tracker status');
+    const cards = mk('div', 'tk-cards'); cards.setAttribute('role', 'tabpanel');
+    const fill = (an) => {
+      const xs = S.tab === 'completed' ? closed : list;
+      cards.replaceChildren(); xs.forEach((t) => cards.append(cardOf(t, an)));
+      if (!xs.length) cards.append(mk('p', 'tk-empty-tab', S.tab === 'completed' ? 'Nothing completed yet. Finished trackers move here with a Completed tag.' : 'Every tracker is complete. Time for a new goal.'));
+      tabs.querySelectorAll('button').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === S.tab)));
+    };
+    [['ongoing', 'Ongoing', list.length], ['completed', 'Completed', closed.length]].forEach(([k, l, n]) => {
+      const b = mk('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.dataset.tab = k; b.append(document.createTextNode(l), mk('em', '', String(n)));
+      b.addEventListener('click', () => { if (S.tab === k) return; S.tab = k; try { localStorage.setItem('bt-tk-tab', k); } catch (e) {} fill(true); grow(cards, true); reveal(cards, true); });
+      tabs.append(b);
+    });
+    tabs.addEventListener('keydown', (e) => { if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return; const n = tabs.querySelector(`[data-tab="${S.tab === 'ongoing' ? 'completed' : 'ongoing'}"]`); n.click(); n.focus(); });
+    root.append(tabs, cards); fill(anim);
   };
 
   // Detail helpers
@@ -2146,12 +2177,13 @@ dash.draw('updated', (el) => {
     const hero = mk('div', 'tk-dhero'), top = mk('div', 'tk-dtop'), tt = mk('div', 'tk-dtitle'), tw = mk('div');
     tw.append(mk('p', 'tk-k', `${t.unit} ${t.verb}`));
     const h = mk('h2'); const words = t.title.split(' '); h.append(document.createTextNode(words.length > 1 ? words.slice(0, -1).join(' ') + ' ' : ''), mk('span', '', words[words.length - 1]));
+    const kk = tw.querySelector('.tk-k'); if (done(t) && kk) kk.append(doneTag());
     tw.append(h, mk('p', 'tk-sub', t.subtitle || ''));
     tt.append(icOf(t), tw);
     const num = mk('div', 'tk-dnum'), b = mk('b'), bn = mk('span'); count(bn, s.n, anim);
     b.append(bn, mk('small', '', '/ ' + int(s.target)));
     const pl = mk('span'); count(pl, s.p, anim, (v) => `${fmtPct(v)} complete`);
-    num.append(b, pl, logBtn(t, true));
+    num.append(b, pl, done(t) ? finished(t) : logBtn(t, true));
     top.append(tt, num);
     hero.append(top, bar(t, s, true));
     root.append(hero);
@@ -2165,6 +2197,7 @@ dash.draw('updated', (el) => {
     else if (t.kind === 'books') tile('Authors', tally(t.entries, (e) => e.author).length, 'different writers');
     else if (t.kind === 'posts') tile('Full texts', t.entries.filter((e) => e.text).length, 'posts saved in full');
     else if (t.kind === 'workouts') tile('Variations', t.entries.reduce((a, e) => a + vars(e), 0), 'exercise variations in total');
+    else if (done(t) && !t.start) tile('Status', 'Done', 'commitment completed');
     else { const st = pd(t.start || (t.entries[0] && t.entries[0].date) || iso(new Date())); const days = Math.max(1, Math.round((new Date().setHours(0, 0, 0, 0) - st) / 864e5) + 1); tile('Per week', s.n * 7 / days, 'average since the start', (v) => v.toFixed(1)); }
     root.append(tiles);
 
@@ -2222,7 +2255,7 @@ dash.draw('updated', (el) => {
     // One floating button on <body>, so no blurred card can trap its fixed position.
     let fab = document.getElementById('tk-fab');
     if (!fab) { fab = mk('button', 'tk-fab is-anim'); fab.id = 'tk-fab'; fab.type = 'button'; fab.dataset.tkMode = 'form'; fab.innerHTML = PLUS; fab.append(mk('span', '', 'Log progress')); fab.setAttribute('aria-label', 'Log progress'); document.body.append(fab); }
-    fab.dataset.tkLog = t ? t.id : ''; fab.hidden = false;
+    fab.dataset.tkLog = t && !done(t) ? t.id : ''; fab.hidden = false;
     if (window.btTkAfterDraw) window.btTkAfterDraw(el);
     const title = document.getElementById('page-title'); if (title) title.textContent = t ? t.title : 'Trackers';
     grow(el, anim); reveal(el, anim);
@@ -2247,7 +2280,7 @@ dash.draw('updated', (el) => {
     const list = all(); const mine = list ? list.filter((t) => t.page === el.dataset.path) : [];
     el.textContent = mine.length ? String(mine.reduce((a, t) => a + t.entries.length, 0)) : ''; el.classList.toggle('is-empty', !mine.length);
   });
-  window.btTk = { stats, all, fmtPct, int, pd, fd, iso, ic, icOf, one, many, mins, hm12, tOf, nameOf, S, mk, vars, cap };
+  window.btTk = { done, stats, all, fmtPct, int, pd, fd, iso, ic, icOf, one, many, mins, hm12, tOf, nameOf, S, mk, vars, cap };
   const open = (id, push) => {
     S.id = id || null; S.q = ''; S.sort = 'new';
     if (!document.querySelector('[data-panel="trackers"]:not([hidden])')) window.btShow('trackers');
@@ -2504,7 +2537,7 @@ dash.draw('updated', (el) => {
   const pickView = () => sheet(null, (sh, close) => {
     head(sh, null, 'What did you finish?', 'Pick a tracker. It takes five seconds.', close);
     const box = mk('div', 'lg-picks');
-    trackers().forEach((t) => {
+    trackers().filter((t) => !t.page && !K().done(t)).forEach((t) => {
       const s = K().stats(t), b = mk('button', 'lg-pick tk-' + (t.accent || 'violet')); b.type = 'button';
       const w = mk('span', 'w'), tr = mk('span', 'tk-track'), f = mk('span', 'tk-fill'); f.style.width = s.p + '%'; tr.append(f);
       w.append(mk('b', '', t.kind === 'readings' ? `${t.title} ${K().one(t)}` : t.kind === 'workouts' ? `A workout · ${t.title}` : `A ${t.item.toLowerCase()} · ${t.title}`), tr);
@@ -2868,7 +2901,7 @@ dash.draw('updated', (el) => {
     whenLoaded(() => {
       window.btTk.S.id = m[1] || null; window.btShow('trackers'); dash.draw('trackers');
       const t = m[1] && byId(m[1]);
-      if (!t) pickView(); else if (t.kind === 'readings') { if (t.entries.length && t.entries[t.entries.length - 1].date === today()) { toast(t, `Today's ${K().one(t)} is already logged`, `${t.entries.length} of ${t.target} done. Use the button to log another.`); } else quickDone(t, null); } else formView(t);
+      if (!t || K().done(t)) pickView(); else if (t.kind === 'readings') { if (t.entries.length && t.entries[t.entries.length - 1].date === today()) { toast(t, `Today's ${K().one(t)} is already logged`, `${t.entries.length} of ${t.target} done. Use the button to log another.`); } else quickDone(t, null); } else formView(t);
     });
   };
   window.addEventListener('DOMContentLoaded', deep);
