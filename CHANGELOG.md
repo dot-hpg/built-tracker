@@ -2,6 +2,15 @@
 
 Each version is frozen on a `release/vN` branch. `main` is the live site, and the automatic activity logs and new videos land there between versions.
 
+## v8 (2026-11-11)
+
+New tracker: 48 Meditation Sessions.
+
+- Added from your meditation log: 10 of 48 sessions done (20.8%), started Oct 3, latest Oct 24. Session numbers follow completed sessions, not calendar days, and missed days never reset anything.
+- One tap logs today: "Mark today's session done" on the card and the detail page saves at once with confetti and Undo, and `#log/meditation-48` does the same from a home-screen shortcut.
+- The detail page has 48 beads with milestones at 12, 24, 36 and 48, your pace and projected finish, a calendar of session days, and the full session log. It has its own lotus colour and a meditation icon.
+- Trackers that count dated sessions now take their wording from the tracker itself (session, reading), so new ones of this kind need only a data entry. Bead milestones now follow each tracker's own milestone list.
+
 ## v7 (2026-11-10)
 
 New tracker: 48-Day Gym.

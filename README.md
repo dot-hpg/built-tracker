@@ -26,7 +26,7 @@ It works on phones (the tables turn into cards) and follows the device's light o
 | `data/projects.json` | One row per project |
 | `data/tracker.json` | One row per day of the 48-day sprint. `locked: true` keeps the updater from rewriting a day that was logged by hand. |
 | `data/learning.json` | YouTube courses and playlists: `watched` of `total` videos. A course shows as Completed once every video is watched. |
-| `data/trackers.json` | Personal trackers (books, films, Hanuman Chalisa readings). Each tracker has a `target` and an `entries` list; the count is the number of entries. To log one, append an object such as `{"title": "...", "author": "...", "date": "YYYY-MM-DD"}` to the end of that tracker's `entries`. |
+| `data/trackers.json` | Personal trackers (books, films, Hanuman Chalisa readings, gym days, meditation sessions). Each tracker has a `target` and an `entries` list; the count is the number of entries. To log one, append an object such as `{"title": "...", "author": "...", "date": "YYYY-MM-DD"}` to the end of that tracker's `entries`. |
 | `data/meta.json` | When the data was last updated |
 | `scripts/update_tracker.py` | The updater the workflow runs |
 
@@ -34,7 +34,7 @@ It works on phones (the tables turn into cards) and follows the device's light o
 
 On the Trackers page, the log buttons save a new entry straight into `data/trackers.json` through the GitHub API. Each device connects once with a fine-grained personal access token limited to this repository with **Contents: Read and write**. The token is kept only in that browser's localStorage, so visitors cannot add entries. If a device is offline, entries are queued on it and committed when it reconnects.
 
-Typing a film or book title searches IMDb (via imdbapi.dev) or Open Library and fills in the other fields. Shortcut links: `#log/hanuman-chalisa` logs today's reading at once, and `#log/movies` or `#log/books` opens the log sheet.
+Typing a film or book title searches IMDb (via imdbapi.dev) or Open Library and fills in the other fields. Shortcut links: `#log/hanuman-chalisa` and `#log/meditation-48` log today at once, and `#log/movies` or `#log/books` opens the log sheet.
 
 ## Native app (parked)
 
