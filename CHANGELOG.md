@@ -2,6 +2,14 @@
 
 Each version is frozen on a `release/vN` branch. `main` is the live site, and the automatic activity logs and new videos land there between versions.
 
+## v15 (2026-11-11)
+
+Ongoing and Completed tabs on the Trackers page.
+
+- Two simple tabs sit above your trackers. Ongoing shows the 7 trackers in progress, and Completed shows the ones you have finished. Each tab shows its count, and the site remembers which tab you last opened.
+- Added your first Hanuman Chalisa commitment, 48 of 48 readings, as a completed tracker. Its dates were not in the record, so its readings show without dates for now.
+- A completed tracker looks like the others, with a green "Completed" tag and a full bar. Instead of a log button it shows "All 48 readings done", and it no longer appears in the "What did you finish?" picker.
+- The hero, rings and "Up next" chips now count only ongoing trackers and mention how many are complete. A tracker moves to Completed by itself when it reaches its target.
 ## v14 (2026-11-11)
 
 Dashboard and Projects are now one tab.
