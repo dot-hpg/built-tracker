@@ -520,8 +520,9 @@ svg { flex: 0 0 auto; }
 .tk-emerald { --a1: #10b981; --a2: #84cc16; --ink: #047857; }
 .tk-saffron { --a1: #ff8a00; --a2: #e8341c; --ink: #c2410c; }
 .tk-lotus { --a1: #f472b6; --a2: #8b5cf6; --ink: #be185d; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tk-violet { --ink: #a99fff; } :root:not([data-theme="light"]) .tk-cyan { --ink: #5fd8ee; } :root:not([data-theme="light"]) .tk-saffron { --ink: #ffa45c; } :root:not([data-theme="light"]) .tk-emerald { --ink: #4ade80; } :root:not([data-theme="light"]) .tk-lotus { --ink: #f9a8d4; } }
-:root[data-theme="dark"] .tk-violet { --ink: #a99fff; } :root[data-theme="dark"] .tk-cyan { --ink: #5fd8ee; } :root[data-theme="dark"] .tk-saffron { --ink: #ffa45c; } :root[data-theme="dark"] .tk-emerald { --ink: #4ade80; } :root[data-theme="dark"] .tk-lotus { --ink: #f9a8d4; }
+.tk-dawn { --a1: #fbbf24; --a2: #f43f5e; --ink: #b45309; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tk-violet { --ink: #a99fff; } :root:not([data-theme="light"]) .tk-cyan { --ink: #5fd8ee; } :root:not([data-theme="light"]) .tk-saffron { --ink: #ffa45c; } :root:not([data-theme="light"]) .tk-emerald { --ink: #4ade80; } :root:not([data-theme="light"]) .tk-lotus { --ink: #f9a8d4; } :root:not([data-theme="light"]) .tk-dawn { --ink: #fcd34d; } }
+:root[data-theme="dark"] .tk-violet { --ink: #a99fff; } :root[data-theme="dark"] .tk-cyan { --ink: #5fd8ee; } :root[data-theme="dark"] .tk-saffron { --ink: #ffa45c; } :root[data-theme="dark"] .tk-emerald { --ink: #4ade80; } :root[data-theme="dark"] .tk-lotus { --ink: #f9a8d4; } :root[data-theme="dark"] .tk-dawn { --ink: #fcd34d; }
 .tk-root { display: grid; gap: 22px; }
 .tk-mono { font-family: var(--font-mono); }
 .tk-hero { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
@@ -645,6 +646,26 @@ svg { flex: 0 0 auto; }
 .tk-day.is-on { background: linear-gradient(135deg, var(--a1), var(--a2)); color: #fff; font-weight: 700; box-shadow: 0 4px 12px -5px var(--a2); }
 .tk-day.is-today { outline: 2px solid var(--color-fg); outline-offset: -2px; }
 .tk-day.is-blank { background: none; }
+.tk-day.is-miss { background: none; box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--color-fg-muted) 45%, transparent); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--color-fg-muted) 70%, transparent); }
+.tk-calkey { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 10px 0 0; font-size: .74rem; color: var(--color-fg-muted); }
+.tk-calkey span { display: inline-flex; align-items: center; gap: 6px; }
+.tk-calkey i { width: 11px; height: 11px; border-radius: 4px; display: inline-block; background: linear-gradient(135deg, var(--a1), var(--a2)); }
+.tk-calkey i.m { background: none; box-shadow: inset 0 0 0 1.5px var(--color-fg-muted); }
+.tk-wakex { overflow-x: auto; margin: 0 -4px; padding: 0 4px; -webkit-overflow-scrolling: touch; }
+.tk-wake { width: 100%; min-width: 680px; height: auto; display: block; margin-top: 6px; overflow: visible; }
+.tk-wake .ax { font-size: 10px; fill: var(--color-fg-muted); font-family: var(--font-mono, ui-monospace, monospace); }
+.tk-wake .gl { stroke: color-mix(in srgb, var(--color-fg-muted) 22%, transparent); stroke-width: 1; }
+.tk-wake .cut { stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.tk-wake .cutl { font-size: 10.5px; fill: var(--ink); font-weight: 700; }
+.tk-wake .ok { fill: url(#tk-wake-g); stroke: var(--color-bg, #0b0b10); stroke-width: 2; }
+.tk-wake .ms { fill: var(--color-bg, #0b0b10); stroke: var(--color-fg-muted); stroke-width: 1.8; }
+.tk-wake .ms.ap { stroke-dasharray: 2.5 2; } .tk-wake .ok.ap { opacity: .55; }
+.tk-wake .stem { stroke: color-mix(in srgb, var(--color-fg-muted) 35%, transparent); stroke-width: 1.5; }
+.tk-wake circle { transition: r .15s; } .tk-wake circle:hover { r: 7; }
+.tk-wstats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin: 12px 0 4px; }
+.tk-wstats div { padding: 10px 12px; border-radius: 12px; background: color-mix(in srgb, var(--track) 55%, transparent); }
+.tk-wstats b { display: block; font-size: 1.15rem; font-variant-numeric: tabular-nums; color: var(--color-fg); }
+.tk-wstats span { font-size: .72rem; color: var(--color-fg-muted); }
 .tk-pace { margin: 6px 0 0; font-size: 1rem; line-height: 1.55; }
 .tk-pace b { color: var(--ink); }
 .tk-recent { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 10px; }
@@ -2114,6 +2135,7 @@ dash.draw('updated', (el) => {
   const ICONS = {
     books: '<svg viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg>',
     movies: '<svg viewBox="0 0 24 24"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9M12.4 3.4l3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>',
+    sunrise: '<svg viewBox="0 0 24 24"><path d="M12 2v5M4.9 9.9l1.4 1.4M2 17h2M20 17h2M17.7 11.3l1.4-1.4M22 21H2M8 17a4 4 0 0 1 8 0"/><path d="m9 5 3-3 3 3"/></svg>',
     meditation: '<svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.2"/><path d="M12 8.5v5"/><path d="M7 11.5l5 2 5-2"/><path d="M4 19.5c2.5-2.6 5.2-3.6 8-3.6s5.5 1 8 3.6"/><path d="M7.5 17.2 12 20l4.5-2.8"/></svg>',
     workouts: '<svg viewBox="0 0 24 24"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>',
     readings: '<svg viewBox="0 0 24 24"><path d="M12 3c2.6 3 4.5 5.4 4.5 8.2A4.5 4.5 0 0 1 12 15.7a4.5 4.5 0 0 1-4.5-4.5C7.5 8.4 9.4 6 12 3z"/><path d="M3 15.5c2.5 0 3.6 1.4 4.6 2.6 1 1.1 2.2 1.9 4.4 1.9s3.4-.8 4.4-1.9c1-1.2 2.1-2.6 4.6-2.6"/><path d="M12 11v2"/></svg>'
@@ -2160,6 +2182,10 @@ dash.draw('updated', (el) => {
     const next = ms.find((m) => m > n);
     return { n, target, p, left: Math.max(0, target - n), next: next == null ? null : next, last: t.entries[n - 1] };
   };
+  // Wake-up times: "05:40" -> minutes after midnight, and back to "5:40 AM" (with ~ when approximate).
+  const mins = (hm) => { const m = /^(\d{1,2}):(\d{2})/.exec(String(hm || '')); return m ? (+m[1]) * 60 + (+m[2]) : null; };
+  const hm12 = (v) => { const h = Math.floor(v / 60) % 24, m = Math.round(v % 60); return `${((h + 11) % 12) + 1}:${String(m).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`; };
+  const tOf = (e) => (e && e.time ? (e.approx ? '~' : '') + hm12(mins(e.time)) : null);
   const nameOf = (t, e, i) => (e && e.title) || `${t.item || 'Entry'} ${i + 1}`;
   const cap = (x) => String(x).charAt(0).toUpperCase() + String(x).slice(1);
   const vars = (e) => Object.values((e && e.muscles) || {}).reduce((a, x) => a + (Number(x) || 0), 0);
@@ -2168,7 +2194,7 @@ dash.draw('updated', (el) => {
       const m = Object.entries(e.muscles || {}).filter(([, v]) => v > 0).map(([k, v]) => `${cap(k)} ${v}`).join(', ');
       return [e.date ? fd(e.date, { weekday: 'short', month: 'short', day: 'numeric' }) : null, m].filter(Boolean).join(' · ') || 'Details not recorded';
     }
-    if (t.kind === 'readings') return e.date ? fd(e.date, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' }) : 'Date not recorded';
+    if (t.kind === 'readings') return [e.date ? fd(e.date, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' }) : 'Date not recorded', e.note || null].filter(Boolean).join(' · ');
     const bits = t.kind === 'movies' ? [e.director, e.year, e.genre, e.runtime ? e.runtime + ' min' : null] : [e.author, e.year, e.genre];
     return bits.filter((x) => x != null && x !== '').join(' · ') || 'Details not recorded';
   };
@@ -2252,7 +2278,7 @@ dash.draw('updated', (el) => {
     const hero = mk('div', 'hero tk-hero');
     const L = mk('div');
     L.append(mk('p', 'hero-k', 'Personal trackers'));
-    const h = mk('h2', 'hero-title'); h.append(document.createTextNode('Every book, film, reading, rep and sit, '), mk('span', '', 'counted.'));
+    const h = mk('h2', 'hero-title'); h.append(document.createTextNode('Every book, film, rep, sit and sunrise, '), mk('span', '', 'counted.'));
     L.append(h, mk('p', 'hero-sub', `${int(total)} finished across ${list.length} long-haul commitments. Each bar runs from 0 to 100%, and every new one you finish moves it forward. Open a tracker to see its full history.`));
     const nx = mk('div', 'tk-next');
     list.forEach((t) => { const s = stats(t); if (s.left <= 0) return; const c = mk('span', 'tk-' + (t.accent || 'violet')); c.append(mk('i'), document.createTextNode('Up next: '), mk('b', '', `${t.item || 'Entry'} #${s.n + 1}`)); nx.append(c); });
@@ -2341,6 +2367,7 @@ dash.draw('updated', (el) => {
       c2.append(vbars(E.map((e, i) => ({ l: String(i + 1), v: vars(e) })))); out.push(c2);
       out.push(...paceCal(t, s, E, 'workout days', 'workout'));
     } else {
+      if (t.by) out.push(...wakeCards(t, s));
       const ms = t.milestones || [];
       const c1 = card(`The ${s.target} ${many(t)}`, `Each bead is one ${one(t)}. Filled beads are done, the dashed one is next, and the ringed ones are milestones${ms.length ? ' (' + ms.join(', ') + ')' : ''}.`);
       const g = mk('div', 'tk-mala');
@@ -2354,6 +2381,36 @@ dash.draw('updated', (el) => {
       out.push(...paceCal(t, s, E, many(t), one(t)));
     }
     return out;
+  };
+  // For trackers with a cut-off time (t.by): every recorded morning, early ones and missed ones, on one chart.
+  const wakeCards = (t, s) => {
+    const cut = mins(t.by), days = [...t.entries.map((e) => ({ ...e, ok: true })), ...(t.missed || []).map((e) => ({ ...e, ok: false }))].filter((e) => e.date && mins(e.time) != null).sort((a, b) => a.date.localeCompare(b.date));
+    if (!days.length) return [];
+    const okT = days.filter((d) => d.ok).map((d) => mins(d.time)), rec = days.length, miss = (t.missed || []).length, all = s.n + miss;
+    const avg = okT.length ? okT.reduce((a, x) => a + x, 0) / okT.length : null, best = okT.length ? Math.min(...okT) : null;
+    const c = card('Wake-up times', `Every morning on record. Filled dots are wake-ups before ${hm12(cut)}, hollow ones are missed days, and faded or dashed dots mean the time is approximate.`);
+    const st = mk('div', 'tk-wstats');
+    [[`${Math.round(100 * s.n / Math.max(1, all))}%`, `of ${all} recorded mornings were early`], [avg != null ? hm12(avg) : '—', 'average early wake-up'], [best != null ? hm12(best) : '—', 'earliest so far'], [String(miss), miss === 1 ? 'missed day on record' : 'missed days on record']]
+      .forEach(([b, l]) => { const d = mk('div'); d.append(mk('b', '', b), mk('span', '', l)); st.append(d); });
+    c.append(st);
+    const ts = days.map((d) => mins(d.time)), lo = Math.floor(Math.min(cut - 60, ...ts) / 60) * 60, hi = Math.ceil(Math.max(cut + 60, ...ts) / 60) * 60;
+    const W = 1000, H = 240, L = 52, Rr = 12, T = 12, B = 26, x = (i) => L + (days.length === 1 ? (W - L - Rr) / 2 : i * (W - L - Rr) / (days.length - 1)), y = (v) => T + (v - lo) / (hi - lo) * (H - T - B);
+    const NS = 'http://www.w3.org/2000/svg', el = (n, a, txt) => { const e = document.createElementNS(NS, n); Object.keys(a).forEach((k) => e.setAttribute(k, a[k])); if (txt != null) e.textContent = txt; return e; };
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'tk-wake', role: 'img', 'aria-label': `Wake-up times for ${rec} recorded mornings` });
+    const g = el('linearGradient', { id: 'tk-wake-g', x1: 0, y1: 0, x2: 1, y2: 1 }); g.append(el('stop', { offset: 0, 'stop-color': 'var(--a1)' }), el('stop', { offset: 1, 'stop-color': 'var(--a2)' })); const defs = el('defs', {}); defs.append(g); svg.append(defs);
+    for (let v = lo; v <= hi; v += 60) { svg.append(el('line', { x1: L, x2: W - Rr, y1: y(v), y2: y(v), class: 'gl' }), el('text', { x: L - 8, y: y(v) + 3.5, 'text-anchor': 'end', class: v === cut ? 'ax cutl' : 'ax' }, hm12(v).replace(':00', ''))); }
+    svg.append(el('line', { x1: L, x2: W - Rr, y1: y(cut), y2: y(cut), class: 'cut' }));
+    if (cut % 60) svg.append(el('text', { x: L - 8, y: y(cut) + 3.5, 'text-anchor': 'end', class: 'cutl' }, hm12(cut)));
+    const every = Math.max(1, Math.ceil(days.length / 8));
+    days.forEach((d, i) => {
+      const v = mins(d.time), cx = x(i), cy = y(v);
+      svg.append(el('line', { x1: cx, x2: cx, y1: y(cut), y2: cy, class: 'stem' }));
+      const dot = el('circle', { cx, cy, r: 5, class: (d.ok ? 'ok' : 'ms') + (d.approx ? ' ap' : '') });
+      dot.append(el('title', {}, `${fd(d.date, { weekday: 'short', month: 'short', day: 'numeric' })} · ${tOf(d)} · ${d.ok ? 'early' : 'missed'}`)); svg.append(dot);
+      if (i % every === 0 || i === days.length - 1) svg.append(el('text', { x: cx, y: H - 6, 'text-anchor': 'middle', class: 'ax' }, fd(d.date, { month: 'short', day: 'numeric' })));
+    });
+    const sx = mk('div', 'tk-wakex'); sx.append(svg); c.append(sx); c.style.gridColumn = '1 / -1';
+    return [c];
   };
   const paceCal = (t, s, E, noun, one) => {
     const out = [];
@@ -2369,14 +2426,18 @@ dash.draw('updated', (el) => {
         if (finish && s.left) p.append(document.createTextNode(` At this pace ${one} #${s.target} lands around `), mk('b', '', fd(iso(finish))), document.createTextNode('.'));
         c2.append(p);
         const on = new Map(); E.forEach((e) => { if (e.date) on.set(e.date, (on.get(e.date) || 0) + 1); });
+        const missed = new Map((t.missed || []).filter((e) => e.date).map((e) => [e.date, e]));
         const cal = mk('div', 'tk-cal'); ['M', 'T', 'W', 'T', 'F', 'S', 'S'].forEach((d) => cal.append(mk('span', 'h', d)));
         const s0 = pd(start), lead = (s0.getDay() + 6) % 7;
         for (let i = 0; i < lead; i++) cal.append(mk('span', 'tk-day is-blank'));
         for (let d = new Date(s0); d <= today; d.setDate(d.getDate() + 1)) {
-          const k = iso(d), n = on.get(k) || 0, c = mk('span', 'tk-day' + (n ? ' is-on' : '') + (k === iso(today) ? ' is-today' : ''), String(d.getDate()));
-          c.title = `${fd(k, { weekday: 'short', month: 'short', day: 'numeric' })}${n ? ` · ${n} ${one}${n > 1 ? 's' : ''}` : ''}`; cal.append(c);
+          const k = iso(d), n = on.get(k) || 0, ms = !n && missed.get(k), c = mk('span', 'tk-day' + (n ? ' is-on' : '') + (ms ? ' is-miss' : '') + (k === iso(today) ? ' is-today' : ''), String(d.getDate()));
+          const hit = n && E.find((e) => e.date === k && e.time);
+          c.title = `${fd(k, { weekday: 'short', month: 'short', day: 'numeric' })}${n ? ` · ${n} ${one}${n > 1 ? 's' : ''}` : ''}${hit ? ` · up at ${tOf(hit)}` : ''}${ms ? ` · missed${ms.time ? ', up at ' + tOf(ms) : ''}` : ''}`; cal.append(c);
         }
-        c2.append(mk('p', 'tk-tl', `${cap(one)} days since the start`), cal); out.push(c2);
+        c2.append(mk('p', 'tk-tl', `${cap(one)} days since the start`), cal);
+        if (t.missed) { const key = mk('p', 'tk-calkey'); const a = mk('span'), b = mk('span'); a.append(mk('i'), document.createTextNode(`Before ${hm12(mins(t.by))}`)); const ii = mk('i'); ii.className = 'm'; b.append(ii, document.createTextNode('Missed')); key.append(a, b, mk('span', '', 'Blank: not recorded')); c2.append(key); }
+        out.push(c2);
       }
     }
     return out;
@@ -2389,6 +2450,7 @@ dash.draw('updated', (el) => {
     if (latest) { li.classList.add('is-latest'); li.append(mk('span', 'tk-tag', 'Latest')); }
     else if (e.imdb) li.append(mk('span', 'tk-side tk-star', '★ ' + Number(e.imdb).toFixed(1)));
     else if (t.kind === 'workouts') li.append(mk('span', 'tk-side tk-star', `${vars(e)} var.`));
+    else if (e.time) li.append(mk('span', 'tk-side tk-star', tOf(e)));
     else if (e.date && t.kind !== 'readings') li.append(mk('span', 'tk-side', fd(e.date, { month: 'short', day: 'numeric' })));
     return li;
   };
@@ -2502,7 +2564,7 @@ dash.draw('updated', (el) => {
     grow(el, anim); reveal(el, anim);
   });
 
-  window.btTk = { stats, all, fmtPct, int, pd, fd, iso, ic, icOf, one, many, nameOf, S, mk, vars, cap };
+  window.btTk = { stats, all, fmtPct, int, pd, fd, iso, ic, icOf, one, many, mins, hm12, tOf, nameOf, S, mk, vars, cap };
   const open = (id, push) => {
     S.id = id || null; S.q = ''; S.sort = 'new';
     if (push) { try { history.pushState(null, '', '#trackers' + (id ? '/' + id : '')); } catch (e) {} }
@@ -2956,7 +3018,8 @@ dash.draw('updated', (el) => {
       const f = mk('div', 'lg-f'); f.append(mk('label', '', 'Variations by muscle group'), grid, sum); form.append(f); upd();
     } else {
       I.date = field(form, 'date', 'Completed on', { type: 'date', value: (preset && preset.date) || today(), max: today(), main: true });
-      I.note = field(form, 'note', 'Note', { placeholder: t.id === 'hanuman-chalisa' ? 'Optional, e.g. read at the temple' : 'Optional, e.g. 20 minutes, breathwork' });
+      if (t.by) { const nw = new Date(), hh = `${String(nw.getHours()).padStart(2, '0')}:${String(nw.getMinutes()).padStart(2, '0')}`; I.time = field(form, 'time', 'Woke up at', { type: 'time', value: hh < t.by ? hh : '', size: 'half' }); }
+      I.note = field(form, 'note', 'Note', { placeholder: t.id === 'hanuman-chalisa' ? 'Optional, e.g. read at the temple' : t.by ? 'Optional, e.g. no alarm needed' : 'Optional, e.g. 20 minutes, breathwork' });
     }
     const warn = mk('p', 'lg-warn'); warn.hidden = true; form.append(warn);
     sh.append(form);
@@ -3013,6 +3076,7 @@ dash.draw('updated', (el) => {
       const d = v('date');
       if (d) { if (d > today()) { err.textContent = 'That date is in the future.'; err.hidden = false; return; } entry.date = d; if (entry.muscles) { const mm = entry.muscles; delete entry.muscles; entry.muscles = mm; } }
       else if (t.kind === 'readings') { err.textContent = `Pick the date of the ${K().one(t)}.`; err.hidden = false; return; }
+      if (t.by && v('time')) { if (v('time') >= t.by) { err.textContent = `${K().hm12(K().mins(v('time')))} is after ${K().hm12(K().mins(t.by))}, so it doesn't count toward the goal.`; err.hidden = false; return; } entry.time = v('time'); }
       if (t.kind === 'readings' && v('note')) entry.note = v('note');
       if (!token()) { connectView(() => run(entry)); return; }
       run(entry);
@@ -3061,6 +3125,7 @@ dash.draw('updated', (el) => {
 
   const quickDone = async (t, btn) => {
     const entry = { date: today() };
+    if (t.by) { const nw = new Date(), hh = `${String(nw.getHours()).padStart(2, '0')}:${String(nw.getMinutes()).padStart(2, '0')}`; if (hh < t.by) { entry.time = hh; entry.approx = true; } }
     if (!token()) { connectView(() => quickDone(byId(t.id) || t, null)); return; }
     btn && (btn.disabled = true);
     const hide = toast(t, 'Saving…', `${t.title} ${K().one(t)} #${t.entries.length + 1}`, { sticky: true });
