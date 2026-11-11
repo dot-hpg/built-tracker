@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10",
+ "updated": "2026-11-11",
  "how_to_update": "Append a new object to a tracker's entries array. The count is entries.length and the number shown for each entry is its position (#1, #2, ...). Fields left out show as not recorded.",
  "trackers": [
   {
@@ -333,6 +333,34 @@
     {"date": "2026-10-30", "muscles": {"back": 3}},
     {"date": "2026-11-03", "muscles": {"shoulders": 5}},
     {"date": "2026-11-01", "muscles": {"triceps": 3}}
+   ]
+  },
+  {
+   "id": "meditation-48",
+   "item": "Session",
+   "title": "48 Meditation Sessions",
+   "subtitle": "48 sessions, one calm sit at a time",
+   "kind": "readings",
+   "icon": "meditation",
+   "unit": "sessions",
+   "verb": "completed",
+   "target": 48,
+   "start": "2026-10-03",
+   "milestones": [12, 24, 36, 48],
+   "accent": "lotus",
+   "fields": {"date": "Completed"},
+   "notes": ["Counts completed sessions, not consecutive days. Missed or unreported days never reset progress.", "Only sessions confirmed as completed are logged, with the date they were done."],
+   "entries": [
+    {"date": "2026-10-03"},
+    {"date": "2026-10-04"},
+    {"date": "2026-10-05"},
+    {"date": "2026-10-06"},
+    {"date": "2026-10-07"},
+    {"date": "2026-10-08"},
+    {"date": "2026-10-12"},
+    {"date": "2026-10-15"},
+    {"date": "2026-10-23"},
+    {"date": "2026-10-24"}
    ]
   }
  ]

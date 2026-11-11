@@ -514,8 +514,9 @@ svg { flex: 0 0 auto; }
 .tk-cyan { --a1: #06b6d4; --a2: #3b82f6; --ink: #0e7490; }
 .tk-emerald { --a1: #10b981; --a2: #84cc16; --ink: #047857; }
 .tk-saffron { --a1: #ff8a00; --a2: #e8341c; --ink: #c2410c; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tk-violet { --ink: #a99fff; } :root:not([data-theme="light"]) .tk-cyan { --ink: #5fd8ee; } :root:not([data-theme="light"]) .tk-saffron { --ink: #ffa45c; } :root:not([data-theme="light"]) .tk-emerald { --ink: #4ade80; } }
-:root[data-theme="dark"] .tk-violet { --ink: #a99fff; } :root[data-theme="dark"] .tk-cyan { --ink: #5fd8ee; } :root[data-theme="dark"] .tk-saffron { --ink: #ffa45c; } :root[data-theme="dark"] .tk-emerald { --ink: #4ade80; }
+.tk-lotus { --a1: #f472b6; --a2: #8b5cf6; --ink: #be185d; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tk-violet { --ink: #a99fff; } :root:not([data-theme="light"]) .tk-cyan { --ink: #5fd8ee; } :root:not([data-theme="light"]) .tk-saffron { --ink: #ffa45c; } :root:not([data-theme="light"]) .tk-emerald { --ink: #4ade80; } :root:not([data-theme="light"]) .tk-lotus { --ink: #f9a8d4; } }
+:root[data-theme="dark"] .tk-violet { --ink: #a99fff; } :root[data-theme="dark"] .tk-cyan { --ink: #5fd8ee; } :root[data-theme="dark"] .tk-saffron { --ink: #ffa45c; } :root[data-theme="dark"] .tk-emerald { --ink: #4ade80; } :root[data-theme="dark"] .tk-lotus { --ink: #f9a8d4; }
 .tk-root { display: grid; gap: 22px; }
 .tk-mono { font-family: var(--font-mono); }
 .tk-hero { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
@@ -1773,17 +1774,22 @@ dash.draw('updated', (el) => {
 </script>
 <script>
 (() => {
-  // Personal trackers: books, films, Hanuman Chalisa readings. Data: data/trackers.json.
+  // Personal trackers: books, films, readings, workouts, meditation. Data: data/trackers.json.
   const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
   const ICONS = {
     books: '<svg viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg>',
     movies: '<svg viewBox="0 0 24 24"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9M12.4 3.4l3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>',
+    meditation: '<svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.2"/><path d="M12 8.5v5"/><path d="M7 11.5l5 2 5-2"/><path d="M4 19.5c2.5-2.6 5.2-3.6 8-3.6s5.5 1 8 3.6"/><path d="M7.5 17.2 12 20l4.5-2.8"/></svg>',
     workouts: '<svg viewBox="0 0 24 24"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>',
     readings: '<svg viewBox="0 0 24 24"><path d="M12 3c2.6 3 4.5 5.4 4.5 8.2A4.5 4.5 0 0 1 12 15.7a4.5 4.5 0 0 1-4.5-4.5C7.5 8.4 9.4 6 12 3z"/><path d="M3 15.5c2.5 0 3.6 1.4 4.6 2.6 1 1.1 2.2 1.9 4.4 1.9s3.4-.8 4.4-1.9c1-1.2 2.1-2.6 4.6-2.6"/><path d="M12 11v2"/></svg>'
   };
   const ARROW = '<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
   const BACK = '<svg viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>';
   const ic = (kind) => { const s = mk('span', 'tk-ic'); s.innerHTML = ICONS[kind] || ICONS.books; return s; };
+  const icOf = (t) => ic((t && t.icon) || (t && t.kind));
+  // Singular and plural nouns for a tracker's entries, e.g. reading/readings, session/sessions.
+  const one = (t) => String((t && t.item) || 'reading').toLowerCase();
+  const many = (t) => String((t && t.unit) || one(t) + 's');
   const pd = (s) => { const [y, m, d] = String(s).slice(0, 10).split('-').map(Number); return new Date(y, m - 1, d); };
   const fd = (s, o) => pd(s).toLocaleDateString('en-US', o || { month: 'short', day: 'numeric', year: 'numeric' });
   const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -1801,8 +1807,8 @@ dash.draw('updated', (el) => {
       b.dataset.tkMode = doneToday ? 'form' : 'quick';
       if (doneToday) b.classList.add('is-done');
       b.innerHTML = doneToday ? CHECK : CHECK;
-      b.append(document.createTextNode(doneToday ? 'Done today' : `Mark today's reading done`));
-      if (doneToday) b.title = 'Today is logged. Click to log another reading.';
+      b.append(document.createTextNode(doneToday ? 'Done today' : `Mark today's ${one(t)} done`));
+      if (doneToday) b.title = `Today is logged. Click to log another ${one(t)}.`;
     } else if (t.kind === 'workouts') {
       const doneToday = t.entries.some((e) => e.date === iso(new Date()));
       b.dataset.tkMode = 'form'; if (doneToday) b.classList.add('is-done');
@@ -1911,7 +1917,7 @@ dash.draw('updated', (el) => {
     const hero = mk('div', 'hero tk-hero');
     const L = mk('div');
     L.append(mk('p', 'hero-k', 'Personal trackers'));
-    const h = mk('h2', 'hero-title'); h.append(document.createTextNode('Every book, film, reading and rep, '), mk('span', '', 'counted.'));
+    const h = mk('h2', 'hero-title'); h.append(document.createTextNode('Every book, film, reading, rep and sit, '), mk('span', '', 'counted.'));
     L.append(h, mk('p', 'hero-sub', `${int(total)} finished across ${list.length} long-haul commitments. Each bar runs from 0 to 100%, and every new one you finish moves it forward. Open a tracker to see its full history.`));
     const nx = mk('div', 'tk-next');
     list.forEach((t) => { const s = stats(t); if (s.left <= 0) return; const c = mk('span', 'tk-' + (t.accent || 'violet')); c.append(mk('i'), document.createTextNode('Up next: '), mk('b', '', `${t.item || 'Entry'} #${s.n + 1}`)); nx.append(c); });
@@ -1935,7 +1941,7 @@ dash.draw('updated', (el) => {
       w.append(mk('p', 'tk-k', `${t.unit} ${t.verb}`), mk('h3', '', t.title), mk('p', 'tk-sub', t.subtitle || ''));
       const num = mk('div', 'tk-num'), b = mk('b'); count(b, s.n, anim);
       num.append(b, mk('span', '', `of ${int(s.target)} ${t.unit}`));
-      top.append(ic(t.kind), w, num);
+      top.append(icOf(t), w, num);
       const foot = mk('div', 'tk-foot');
       const pc = mk('span', 'tk-pct'); count(pc, s.p, anim, fmtPct);
       foot.append(pc);
@@ -2000,15 +2006,17 @@ dash.draw('updated', (el) => {
       c2.append(vbars(E.map((e, i) => ({ l: String(i + 1), v: vars(e) })))); out.push(c2);
       out.push(...paceCal(t, s, E, 'workout days', 'workout'));
     } else {
-      const c1 = card(`The ${s.target} readings`, 'Each bead is one reading. Filled beads are done, the dashed one is next, and every 24th is a milestone.');
+      const ms = t.milestones || [];
+      const c1 = card(`The ${s.target} ${many(t)}`, `Each bead is one ${one(t)}. Filled beads are done, the dashed one is next, and the ringed ones are milestones${ms.length ? ' (' + ms.join(', ') + ')' : ''}.`);
       const g = mk('div', 'tk-mala');
       for (let i = 0; i < s.target; i++) {
-        const e = E[i], b = mk('span', 'tk-bead' + (e ? ' is-done' : '') + (i === s.n ? ' is-next' : '') + ((i + 1) % 24 === 0 ? ' is-mile' : ''), String(i + 1));
-        b.title = e ? `Reading ${i + 1} · ${e.date ? fd(e.date) : 'date not recorded'}` : (i === s.n ? `Reading ${i + 1} is next` : `Reading ${i + 1}`);
+        const e = E[i], b = mk('span', 'tk-bead' + (e ? ' is-done' : '') + (i === s.n ? ' is-next' : '') + (ms.includes(i + 1) ? ' is-mile' : ''), String(i + 1));
+        const W = cap(one(t));
+        b.title = e ? `${W} ${i + 1} · ${e.date ? fd(e.date) : 'date not recorded'}` : (i === s.n ? `${W} ${i + 1} is next` : `${W} ${i + 1}`);
         g.append(b);
       }
       c1.append(g); out.push(c1);
-      out.push(...paceCal(t, s, E, 'readings', 'reading'));
+      out.push(...paceCal(t, s, E, many(t), one(t)));
     }
     return out;
   };
@@ -2019,7 +2027,7 @@ dash.draw('updated', (el) => {
       if (start) {
         const today = new Date(); today.setHours(0, 0, 0, 0);
         const days = Math.max(1, Math.round((today - pd(start)) / 864e5) + 1), rate = s.n / days;
-        const c2 = card('Pace', t.kind === 'readings' ? 'Readings are counted, not days in a row. A missed day never resets anything.' : 'Workout days are counted, not days in a row. Rest days never reset anything.');
+        const c2 = card('Pace', t.kind === 'readings' ? `${cap(many(t))} are counted, not days in a row. A missed day never resets anything.` : 'Workout days are counted, not days in a row. Rest days never reset anything.');
         const p = mk('p', 'tk-pace');
         const finish = rate > 0 ? new Date(today.getTime() + Math.ceil(s.left / rate) * 864e5) : null;
         p.append(document.createTextNode(`Started ${fd(start)}. That is `), mk('b', '', `${s.n} ${noun} in ${days} days`), document.createTextNode(`, about `), mk('b', '', `${(rate * 7).toFixed(1)} a week`), document.createTextNode('.'));
@@ -2079,7 +2087,7 @@ dash.draw('updated', (el) => {
     tw.append(mk('p', 'tk-k', `${t.unit} ${t.verb}`));
     const h = mk('h2'); const words = t.title.split(' '); h.append(document.createTextNode(words.length > 1 ? words.slice(0, -1).join(' ') + ' ' : ''), mk('span', '', words[words.length - 1]));
     tw.append(h, mk('p', 'tk-sub', t.subtitle || ''));
-    tt.append(ic(t.kind), tw);
+    tt.append(icOf(t), tw);
     const num = mk('div', 'tk-dnum'), b = mk('b'), bn = mk('span'); count(bn, s.n, anim);
     b.append(bn, mk('small', '', '/ ' + int(s.target)));
     const pl = mk('span'); count(pl, s.p, anim, (v) => `${fmtPct(v)} complete`);
@@ -2102,7 +2110,7 @@ dash.draw('updated', (el) => {
     const ins = mk('div', 'tk-ins'); insights(t, s).forEach((c) => ins.append(c)); root.append(ins);
 
     if (t.kind !== 'readings') {
-    const rc = card('Recently added', t.kind === 'readings' ? 'Your latest confirmed readings.' : 'The newest entries, latest first.');
+    const rc = card('Recently added', t.kind === 'readings' ? `Your latest confirmed ${many(t)}.` : 'The newest entries, latest first.');
     const ul = mk('ul', 'tk-recent');
     t.entries.slice(-5).map((e, k, arr) => ({ e, i: s.n - arr.length + k })).reverse().forEach((x, k) => ul.append(row(t, x.e, x.i, k === 0)));
     if (!s.n) ul.append(mk('li', 'bt-empty', 'Nothing logged yet.'));
@@ -2110,7 +2118,7 @@ dash.draw('updated', (el) => {
     }
 
     const dated = t.kind === 'readings' || t.kind === 'workouts';
-    const lc = card(t.kind === 'readings' ? 'Full reading log' : t.kind === 'workouts' ? 'Every workout day' : `Every ${String(t.item || 'entry').toLowerCase()}, numbered`);
+    const lc = card(t.kind === 'readings' ? `Full ${one(t)} log` : t.kind === 'workouts' ? 'Every workout day' : `Every ${String(t.item || 'entry').toLowerCase()}, numbered`);
     const tools = mk('div', 'tk-tools');
     let search = null;
     if (!dated) { search = mk('input', 'bt-search'); search.type = 'search'; search.placeholder = t.kind === 'movies' ? 'Search films, directors, years' : 'Search books, authors, categories'; search.value = S.q; search.setAttribute('aria-label', 'Search ' + t.title); tools.append(search); }
@@ -2133,7 +2141,7 @@ dash.draw('updated', (el) => {
         const os = stats(o), a = mk('a', 'tk-jump tk-reveal tk-' + (o.accent || 'violet')); a.href = '#trackers/' + o.id; a.dataset.tkOpen = o.id;
         const m = mk('span', 'mini'), tr = mk('span', 'tk-track'), f = mk('span', 'tk-fill'); f.dataset.w = os.p; tr.append(f);
         m.append(mk('b', '', o.title), tr);
-        a.append(ic(o.kind), m, mk('span', 'pc', fmtPct(os.p)));
+        a.append(icOf(o), m, mk('span', 'pc', fmtPct(os.p)));
         j.append(a);
       });
       root.append(j);
@@ -2159,7 +2167,7 @@ dash.draw('updated', (el) => {
     grow(el, anim); reveal(el, anim);
   });
 
-  window.btTk = { stats, all, fmtPct, int, pd, fd, iso, ic, nameOf, S, mk, vars, cap };
+  window.btTk = { stats, all, fmtPct, int, pd, fd, iso, ic, icOf, one, many, nameOf, S, mk, vars, cap };
   const open = (id, push) => {
     S.id = id || null; S.q = ''; S.sort = 'new';
     if (push) { try { history.pushState(null, '', '#trackers' + (id ? '/' + id : '')); } catch (e) {} }
@@ -2313,7 +2321,7 @@ dash.draw('updated', (el) => {
     if (toastEl) toastEl.remove(); clearTimeout(toastTimer);
     const el = mk('div', 'lg-toast tk-' + (t ? t.accent || 'violet' : 'violet') + (opts.mile ? ' is-mile' : ''));
     el.setAttribute('role', 'status');
-    if (t) el.append(K().ic(t.kind));
+    if (t) el.append(K().icOf(t));
     const w = mk('div', 'w'); w.append(mk('b', '', title)); if (sub) w.append(mk('span', '', sub)); el.append(w);
     if (opts.action) { const b = mk('button', 'lg-btn', opts.action.label); b.type = 'button'; b.addEventListener('click', () => { hide(); opts.action.fn(); }); el.append(b); }
     document.body.append(el); toastEl = el;
@@ -2330,7 +2338,7 @@ dash.draw('updated', (el) => {
     const inView = box && r.top > 60 && r.bottom < innerHeight - 60;
     setTimeout(() => confetti(inView ? r.left + r.width : innerWidth / 2, inView ? r.top + r.height / 2 : innerHeight - 110, cols, mile || done), 350);
     try { navigator.vibrate && navigator.vibrate(mile ? [30, 60, 30] : 25); } catch (e) {}
-    const name = t.kind === 'readings' ? `Reading #${sa.n} done` : t.kind === 'workouts' ? `Day ${sa.n} done · ${K().vars(entry)} variations` : `“${entry.title}” logged`;
+    const name = t.kind === 'readings' ? `${K().cap(K().one(t))} #${sa.n} done` : t.kind === 'workouts' ? `Day ${sa.n} done · ${K().vars(entry)} variations` : `“${entry.title}” logged`;
     const sub = `${t.item} #${sa.n} · ${K().fmtPct(sa.p)} of ${K().int(sa.target)}` + (sa.next ? ` · ${sa.next - sa.n} to ${K().int(sa.next)}` : '');
     const undo = { label: 'Undo', fn: () => undoLast(t.id, entry) };
     if (done) toast(after, `${after.title} complete!`, `All ${K().int(sa.target)} ${after.unit}. Incredible.`, { mile: true, ms: 10000, action: undo });
@@ -2352,7 +2360,7 @@ dash.draw('updated', (el) => {
   // ---------- save ----------
   const save = async (t, entry, btn) => {
     const before = JSON.parse(JSON.stringify(t)), p0 = K().stats(t).p;
-    const label = t.kind === 'readings' ? `Log ${t.title} reading #${t.entries.length + 1}` : t.kind === 'workouts' ? `Log ${t.title} day ${t.entries.length + 1} (${K().vars(entry)} variations)` : `Log ${t.item.toLowerCase()} #${t.entries.length + 1}: ${entry.title}`;
+    const label = t.kind === 'readings' ? `Log ${t.title} ${K().one(t)} #${t.entries.length + 1}` : t.kind === 'workouts' ? `Log ${t.title} day ${t.entries.length + 1} (${K().vars(entry)} variations)` : `Log ${t.item.toLowerCase()} #${t.entries.length + 1}: ${entry.title}`;
     try {
       const d = await commit((x) => appendTo(x, t.id, entry), label);
       setData(d);
@@ -2406,7 +2414,7 @@ dash.draw('updated', (el) => {
     return close;
   };
   const head = (sh, t, title, sub, close) => {
-    const h = mk('div', 'lg-head'); if (t) h.append(K().ic(t.kind));
+    const h = mk('div', 'lg-head'); if (t) h.append(K().icOf(t));
     const w = mk('div'); w.append(mk('h2', '', title)); if (sub) w.append(mk('p', '', sub)); h.append(w);
     const x = mk('button', 'lg-x', '×'); x.type = 'button'; x.setAttribute('aria-label', 'Close'); x.addEventListener('click', () => close()); h.append(x);
     sh.append(h);
@@ -2418,9 +2426,9 @@ dash.draw('updated', (el) => {
     trackers().forEach((t) => {
       const s = K().stats(t), b = mk('button', 'lg-pick tk-' + (t.accent || 'violet')); b.type = 'button';
       const w = mk('span', 'w'), tr = mk('span', 'tk-track'), f = mk('span', 'tk-fill'); f.style.width = s.p + '%'; tr.append(f);
-      w.append(mk('b', '', t.kind === 'readings' ? `${t.title} reading` : t.kind === 'workouts' ? `A workout · ${t.title}` : `A ${t.item.toLowerCase()} · ${t.title}`), tr);
+      w.append(mk('b', '', t.kind === 'readings' ? `${t.title} ${K().one(t)}` : t.kind === 'workouts' ? `A workout · ${t.title}` : `A ${t.item.toLowerCase()} · ${t.title}`), tr);
       const n = mk('span', 'n'); n.append(mk('em', '', `#${s.n + 1}`), document.createTextNode(`${s.n}/${s.target}`));
-      b.append(K().ic(t.kind), w, n);
+      b.append(K().icOf(t), w, n);
       b.addEventListener('click', () => formView(t));
       box.append(b);
     });
@@ -2512,7 +2520,7 @@ dash.draw('updated', (el) => {
       list.replaceChildren();
       hits.forEach((h, i) => {
         const li = mk('li'); li.setAttribute('role', 'option'); li.id = 'lg-opt-' + i;
-        const th = mk('span', 'th'); if (h.img) { const im = mk('img'); im.src = h.img; im.alt = ''; im.loading = 'lazy'; im.referrerPolicy = 'no-referrer'; im.onerror = () => im.remove(); th.append(im); } else th.append(K().ic(t.kind));
+        const th = mk('span', 'th'); if (h.img) { const im = mk('img'); im.src = h.img; im.alt = ''; im.loading = 'lazy'; im.referrerPolicy = 'no-referrer'; im.onerror = () => im.remove(); th.append(im); } else th.append(K().icOf(t));
         const w = mk('span', 'w'); w.append(mk('b', '', h.title), mk('span', '', h.sub || ''));
         const dup = t.entries.findIndex((e) => String(e.title || '').toLowerCase() === String(h.title).toLowerCase());
         li.append(th, w); if (dup >= 0) li.append(mk('em', '', `#${dup + 1}`));
@@ -2543,7 +2551,7 @@ dash.draw('updated', (el) => {
       });
       I._picked = I.title.value;
       found.replaceChildren(); found.hidden = false; found.classList.remove('is-in'); void found.offsetWidth; found.classList.add('is-in');
-      const cov = mk('span', 'cov'); if (d._img) { const im = mk('img'); im.src = d._img; im.alt = ''; im.referrerPolicy = 'no-referrer'; im.onerror = () => { im.remove(); cov.append(K().ic(t.kind)); }; cov.append(im); } else cov.append(K().ic(t.kind));
+      const cov = mk('span', 'cov'); if (d._img) { const im = mk('img'); im.src = d._img; im.alt = ''; im.referrerPolicy = 'no-referrer'; im.onerror = () => { im.remove(); cov.append(K().icOf(t)); }; cov.append(im); } else cov.append(K().icOf(t));
       const w = mk('div', 'w'); w.append(mk('p', 'tk-k', `Found on ${src.name}`), mk('b', '', d.title));
       const meta = t.kind === 'movies' ? [d.year, d.director, d.genre, d.runtime ? d.runtime + ' min' : null] : [d.author, d.year, d.genre];
       w.append(mk('span', '', meta.filter(Boolean).join(' · ') || 'Some details were not available'));
@@ -2572,8 +2580,8 @@ dash.draw('updated', (el) => {
 
   const formView = (t, preset) => sheet(t.accent || 'violet', (sh, close) => {
     const s = K().stats(t), E = t.entries, item = t.item.toLowerCase();
-    const ttl = t.kind === 'books' ? 'Log a book you finished' : t.kind === 'movies' ? 'Log a film you watched' : t.kind === 'workouts' ? `Log workout day ${s.n + 1}` : `Log ${t.title} reading #${s.n + 1}`;
-    head(sh, t, ttl, t.kind === 'readings' ? 'Readings are counted, not days in a row.' : t.kind === 'workouts' ? 'Tap a muscle group once for each exercise variation you did.' : `This becomes ${t.item} #${s.n + 1} in ${t.title}.`, close);
+    const ttl = t.kind === 'books' ? 'Log a book you finished' : t.kind === 'movies' ? 'Log a film you watched' : t.kind === 'workouts' ? `Log workout day ${s.n + 1}` : `Log ${t.title} ${K().one(t)} #${s.n + 1}`;
+    head(sh, t, ttl, t.kind === 'readings' ? `${K().cap(K().many(t))} are counted, not days in a row.` : t.kind === 'workouts' ? 'Tap a muscle group once for each exercise variation you did.' : `This becomes ${t.item} #${s.n + 1} in ${t.title}.`, close);
     const form = mk('form', 'lg-form'); form.noValidate = true;
     const vals = (k) => E.map((e) => e[k]).filter(Boolean);
     const I = {};
@@ -2613,7 +2621,7 @@ dash.draw('updated', (el) => {
       const f = mk('div', 'lg-f'); f.append(mk('label', '', 'Variations by muscle group'), grid, sum); form.append(f); upd();
     } else {
       I.date = field(form, 'date', 'Completed on', { type: 'date', value: (preset && preset.date) || today(), max: today(), main: true });
-      I.note = field(form, 'note', 'Note', { placeholder: 'Optional, e.g. read at the temple' });
+      I.note = field(form, 'note', 'Note', { placeholder: t.id === 'hanuman-chalisa' ? 'Optional, e.g. read at the temple' : 'Optional, e.g. 20 minutes, breathwork' });
     }
     const warn = mk('p', 'lg-warn'); warn.hidden = true; form.append(warn);
     sh.append(form);
@@ -2669,7 +2677,7 @@ dash.draw('updated', (el) => {
       if (I._extra && I._picked === I.title.value) Object.keys(I._extra).forEach((k) => { if (I._extra[k] != null && I._extra[k] !== '') entry[k] = I._extra[k]; });
       const d = v('date');
       if (d) { if (d > today()) { err.textContent = 'That date is in the future.'; err.hidden = false; return; } entry.date = d; if (entry.muscles) { const mm = entry.muscles; delete entry.muscles; entry.muscles = mm; } }
-      else if (t.kind === 'readings') { err.textContent = 'Pick the date of the reading.'; err.hidden = false; return; }
+      else if (t.kind === 'readings') { err.textContent = `Pick the date of the ${K().one(t)}.`; err.hidden = false; return; }
       if (t.kind === 'readings' && v('note')) entry.note = v('note');
       if (!token()) { connectView(() => run(entry)); return; }
       run(entry);
@@ -2717,7 +2725,7 @@ dash.draw('updated', (el) => {
     const entry = { date: today() };
     if (!token()) { connectView(() => quickDone(byId(t.id) || t, null)); return; }
     btn && (btn.disabled = true);
-    const hide = toast(t, 'Saving…', `${t.title} reading #${t.entries.length + 1}`, { sticky: true });
+    const hide = toast(t, 'Saving…', `${t.title} ${K().one(t)} #${t.entries.length + 1}`, { sticky: true });
     try { await save(t, entry, btn); if (toastEl && toastEl.textContent.startsWith('Saving')) hide(); }
     catch (e) { hide(); btn && (btn.disabled = false); if (e.code === 'auth' || e.code === 'perm') { ls.set(TK, null); connectView(() => quickDone(byId(t.id) || t, null)); } toast(t, 'Could not save', e.message); }
   };
@@ -2763,7 +2771,7 @@ dash.draw('updated', (el) => {
     whenLoaded(() => {
       window.btTk.S.id = m[1] || null; window.btShow('trackers'); dash.draw('trackers');
       const t = m[1] && byId(m[1]);
-      if (!t) pickView(); else if (t.kind === 'readings') { if (t.entries.length && t.entries[t.entries.length - 1].date === today()) { toast(t, "Today's reading is already logged", `${t.entries.length} of ${t.target} done. Use the button to log another.`); } else quickDone(t, null); } else formView(t);
+      if (!t) pickView(); else if (t.kind === 'readings') { if (t.entries.length && t.entries[t.entries.length - 1].date === today()) { toast(t, `Today's ${K().one(t)} is already logged`, `${t.entries.length} of ${t.target} done. Use the button to log another.`); } else quickDone(t, null); } else formView(t);
     });
   };
   window.addEventListener('DOMContentLoaded', deep);
