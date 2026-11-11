@@ -2,6 +2,16 @@
 
 Each version is frozen on a `release/vN` branch. `main` is the live site, and the automatic activity logs and new videos land there between versions.
 
+## v14 (2026-11-11)
+
+Dashboard and Projects are now one tab.
+
+- The Dashboard opens with one project tracker: how many projects you have built and shipped, average progress, total commits, the latest activity, and a ring split into Shipped, Active and Early stage.
+- A timeline shows the day each project started, with a line running to its latest commit. Tapping a dot jumps to that project.
+- Below it, every project is listed one by one, grouped by the month it started, with its dates, days, commits, status and a progress bar. Tap a project for its description, stack and GitHub link. Filter by status, search, or sort by newest, progress or name.
+- Removed the separate Projects tab (sidebar and phone dock) and the busy sprint charts. Old `#projects` links open the Dashboard. The sidebar badge on Dashboard now shows the project count.
+- The phone dock now has four buttons. Service worker cache bumped to `built-shell-v21`.
+
 ## v13 (2026-11-11)
 
 New tracker: 1,000 Philosophy Posts (Insta Post Philosophy).

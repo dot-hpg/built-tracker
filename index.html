@@ -92,6 +92,108 @@ a.bt-vtitle:hover { color: var(--bt-c0); }
 .bt-empty { color: var(--color-fg-muted); font-size: var(--cds-font-size-body); margin: 0; }
 .bt-foot { max-width: 1320px; margin: 32px auto 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .bt-foot a { color: inherit; }
+/* ===== v14: one Dashboard for every project ===== */
+.pj-root { display: grid; gap: 22px; }
+.pj-hero { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
+.pj-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 22px; max-width: 560px; }
+.pj-stat { display: grid; gap: 2px; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--line-soft); background: color-mix(in srgb, var(--color-bg) 55%, transparent); }
+.pj-stat b { font-size: 1.45rem; font-weight: 650; letter-spacing: -.035em; font-variant-numeric: tabular-nums; }
+.pj-stat span { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; color: var(--color-fg-muted); }
+.pj-latest { margin: 16px 0 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: .84rem; color: var(--color-fg-muted); }
+.pj-latest b { color: var(--color-fg); font-weight: 600; }
+.pj-latest i { width: 8px; height: 8px; border-radius: 50%; background: var(--color-ok); box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-ok) 22%, transparent); animation: pj-pulse 2.4s ease-in-out infinite; }
+@keyframes pj-pulse { 50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--color-ok) 0%, transparent); } }
+.pj-ring { display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap; }
+.pj-ring svg { width: 184px; height: 184px; flex: 0 0 auto; overflow: visible; }
+.pj-ring circle { fill: none; stroke-width: 14; }
+.pj-ring .trk { stroke: var(--track); }
+.pj-ring .arc { stroke-linecap: round; transition: stroke-dasharray 1.4s var(--cds-ease-out), stroke-dashoffset 1.4s var(--cds-ease-out); }
+.pj-ring text { fill: var(--color-fg); text-anchor: middle; font-family: var(--font-anthropic-sans); }
+.pj-ring .big { font-size: 38px; font-weight: 700; letter-spacing: -.04em; }
+.pj-ring .small { font-size: 8.5px; font-family: var(--font-mono); letter-spacing: .14em; fill: var(--color-fg-muted); }
+.pj-legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; min-width: 9rem; }
+.pj-legend li { display: grid; grid-template-columns: 10px 1fr auto; column-gap: 10px; align-items: center; }
+.pj-legend i { width: 10px; height: 10px; border-radius: 3px; background: var(--k); }
+.pj-legend b { font-weight: 600; font-size: .9rem; }
+.pj-legend em { font-style: normal; font-family: var(--font-mono); font-size: .8rem; font-weight: 600; }
+.pj-legend span { grid-column: 2 / 4; font-family: var(--font-mono); font-size: .7rem; color: var(--color-fg-muted); }
+.pj-ship { --k: var(--c0); --k2: #b28cff; }
+.pj-active { --k: var(--c1); --k2: #f59e0b; }
+.pj-early { --k: var(--cds-chart-axis); --k2: var(--cds-chart-muted); }
+
+.pj-tl { grid-column: 1 / -1; border-top: 1px solid var(--line-soft); padding-top: 18px; position: relative; }
+.pj-tl-h { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+.pj-tl-h p { margin: 0; font-size: .8rem; color: var(--color-fg-muted); }
+.pj-tl svg { display: block; width: 100%; overflow: visible; }
+.pj-tl .seg { stroke-width: 3; stroke-linecap: round; opacity: .35; }
+.pj-tl .dot { cursor: pointer; transition: r .15s; }
+.pj-tl .dot:hover, .pj-tl .dot:focus { r: 8; outline: none; }
+.pj-tl .ax { fill: var(--color-fg-muted); font-family: var(--font-mono); font-size: 10px; }
+.pj-tl .grid { stroke: var(--line-soft); }
+.pj-tl .today { stroke: var(--cds-chart-reference); stroke-dasharray: 3 4; }
+.pj-tip { position: absolute; z-index: 5; pointer-events: none; padding: 9px 12px; border-radius: 12px; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); box-shadow: var(--cds-shadow-popover); display: grid; gap: 2px; font-size: .78rem; max-width: 240px; }
+.pj-tip b { font-size: .86rem; }
+.pj-tip span { color: var(--color-fg-muted); }
+
+.pj-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.pj-tools .bt-search { flex: 1 1 13rem; max-width: 22rem; }
+.pj-tools .bt-chip { display: inline-flex; gap: 6px; align-items: center; }
+.pj-tools .bt-chip small { font-family: var(--font-mono); font-size: .68rem; opacity: .7; }
+.pj-tools .bt-chip[aria-pressed="true"] { background: var(--color-fg); color: var(--color-bg); border-color: transparent; }
+.pj-sort { display: inline-flex; padding: 3px; border-radius: 999px; border: 1px solid var(--line-soft); background: var(--glass); margin-left: auto; }
+.pj-sort button { appearance: none; border: 0; background: none; font: inherit; font-size: .78rem; font-weight: 500; color: var(--color-fg-muted); padding: 5px 12px; border-radius: 999px; cursor: pointer; }
+.pj-sort button[aria-pressed="true"] { background: var(--hover); color: var(--color-fg); box-shadow: 0 0 0 1px var(--line-soft); }
+.pj-tools button:focus-visible, .pj-main:focus-visible, .pj-more a:focus-visible { outline: 2px solid var(--c0); outline-offset: 2px; }
+
+.pj-list { display: grid; gap: 10px; }
+.pj-month { display: flex; align-items: baseline; gap: 10px; margin: 14px 2px 2px; font-family: var(--font-mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--color-fg-muted); }
+.pj-month:first-child { margin-top: 0; }
+.pj-month::after { content: ""; flex: 1; height: 1px; background: var(--line-soft); }
+.pj-row { position: relative; border-radius: 18px; background: var(--glass); border: 1px solid var(--line-soft); box-shadow: var(--bt-shadow); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); overflow: hidden; transition: border-color .2s, transform .2s var(--cds-ease-out); }
+.pj-row::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: linear-gradient(180deg, var(--k), var(--k2)); }
+.pj-row:hover { border-color: color-mix(in srgb, var(--k) 40%, transparent); transform: translateY(-1px); }
+.pj-row.pj-flash { animation: pj-flash 1.6s ease-out; }
+@keyframes pj-flash { 0%, 30% { box-shadow: 0 0 0 2px var(--k), var(--bt-shadow); } }
+.pj-main { appearance: none; width: 100%; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; display: grid; grid-template-columns: 44px minmax(0, 1fr) minmax(150px, 220px) 18px; gap: 16px; align-items: center; padding: 14px 18px 14px 20px; }
+.pj-badge { width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center; font-weight: 700; font-size: .86rem; letter-spacing: -.02em; color: #fff; background: linear-gradient(135deg, var(--k), var(--k2)); box-shadow: 0 6px 18px -8px var(--k); }
+.pj-early .pj-badge { color: var(--color-fg); }
+.pj-body { min-width: 0; display: grid; gap: 4px; }
+.pj-title { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.pj-title b { font-weight: 620; font-size: 1rem; letter-spacing: -.015em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pj-pill { flex: 0 0 auto; font-family: var(--font-mono); font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; color: var(--k); background: color-mix(in srgb, var(--k) 14%, transparent); }
+.pj-early .pj-pill { color: var(--color-fg-muted); }
+.pj-meta { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: .78rem; color: var(--color-fg-muted); }
+.pj-meta span { white-space: nowrap; }
+.pj-meta .pj-dates { font-family: var(--font-mono); font-size: .72rem; color: var(--color-fg); }
+.pj-prog { display: grid; gap: 6px; }
+.pj-prog-top { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-mono); font-size: .68rem; color: var(--color-fg-muted); }
+.pj-prog-top b { font-family: var(--font-anthropic-sans); font-size: 1.15rem; font-weight: 650; letter-spacing: -.03em; color: var(--color-fg); }
+.pj-bar { height: 8px; border-radius: 4px; background: var(--track); overflow: hidden; }
+.pj-bar > div { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--k), var(--k2)); transition: width 1.1s var(--cds-ease-out); }
+.pj-chev { width: 18px; height: 18px; color: var(--color-fg-muted); transition: transform .2s; }
+.pj-main[aria-expanded="true"] .pj-chev { transform: rotate(180deg); }
+.pj-more { padding: 0 20px 18px 80px; display: grid; gap: 12px; }
+.pj-more p { margin: 0; font-size: .9rem; line-height: 1.55; max-width: 75ch; }
+.pj-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+.pj-stack span { font-size: .74rem; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line-soft); background: color-mix(in srgb, var(--color-bg) 55%, transparent); }
+.pj-links { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-size: .8rem; color: var(--color-fg-muted); }
+.pj-links a { color: var(--c0); font-weight: 600; text-decoration: none; }
+.pj-links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.pj-none { margin: 0; padding: 28px; text-align: center; color: var(--color-fg-muted); border: 1px dashed var(--line-soft); border-radius: 18px; }
+@media (max-width: 960px) { .pj-hero { grid-template-columns: 1fr; } }
+@media (max-width: 720px) {
+  .pj-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pj-main { grid-template-columns: 40px minmax(0, 1fr) 18px; gap: 12px; padding: 14px 14px 14px 16px; }
+  .pj-badge { width: 40px; height: 40px; border-radius: 12px; }
+  .pj-prog { grid-column: 1 / -1; grid-row: 2; }
+  .pj-chev { grid-column: 3; grid-row: 1; }
+  .pj-more { padding: 0 16px 16px; }
+  .pj-sort { margin-left: 0; }
+  .pj-ring { flex-wrap: nowrap; justify-content: flex-start; gap: 18px; }
+  .pj-ring svg { width: 124px; height: 124px; }
+  .pj-legend { min-width: 0; flex: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .pj-row, .pj-bar > div, .pj-ring .arc { transition: none; } .pj-latest i, .pj-row.pj-flash { animation: none; } }
 </style>
 <script>try { const t = localStorage.getItem('bt-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}</script>
 <script src="d3.min.js"></script>
@@ -146,7 +248,6 @@ a.bt-vtitle:hover { color: var(--bt-c0); }
     <nav class="side-nav" role="tablist" aria-label="Views">
       <button class="bt-tab nav-item" role="tab" data-tab="goals" aria-selected="true"><span class="nav-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><span class="nav-label">Goals</span><span class="nav-badge" data-draw="navbadge" data-field="goals"></span></button>
       <button class="bt-tab nav-item" role="tab" data-tab="overview" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="9" rx="2"/><rect x="13.5" y="3.5" width="7" height="5" rx="2"/><rect x="13.5" y="11.5" width="7" height="9" rx="2"/><rect x="3.5" y="15.5" width="7" height="5" rx="2"/></svg></span><span class="nav-label">Dashboard</span><span class="nav-badge" data-draw="navbadge" data-field="overview"></span></button>
-      <button class="bt-tab nav-item" role="tab" data-tab="projects" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg></span><span class="nav-label">Projects</span><span class="nav-badge" data-draw="navbadge" data-field="projects"></span></button>
       <button class="bt-tab nav-item" role="tab" data-tab="trackers" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><path d="M4 6.5h9M4 12h16M4 17.5h6"/><circle cx="16.5" cy="6.5" r="1.6" fill="currentColor"/><circle cx="13.5" cy="17.5" r="1.6" fill="currentColor"/></svg></span><span class="nav-label">Trackers</span><span class="nav-badge" data-draw="navbadge" data-field="trackers"></span></button>
     </nav>
     <p class="side-h">Career paths</p>
@@ -486,7 +587,7 @@ svg { flex: 0 0 auto; }
   .topbar { padding-top: max(12px, env(safe-area-inset-top, 0px)); padding-bottom: 10px; }
   .page-title { font-size: 1.12rem; }
   .bt { margin-top: 16px; }
-  .dock { display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; z-index: 30; left: 10px; right: 10px; bottom: max(10px, env(safe-area-inset-bottom, 0px)); padding: 6px; border-radius: 20px; border: 1px solid var(--line-soft); background: color-mix(in srgb, var(--color-panel) 80%, transparent); -webkit-backdrop-filter: blur(22px) saturate(1.5); backdrop-filter: blur(22px) saturate(1.5); box-shadow: 0 12px 40px -12px rgba(0, 0, 0, .35); }
+  .dock { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; z-index: 30; left: 10px; right: 10px; bottom: max(10px, env(safe-area-inset-bottom, 0px)); padding: 6px; border-radius: 20px; border: 1px solid var(--line-soft); background: color-mix(in srgb, var(--color-panel) 80%, transparent); -webkit-backdrop-filter: blur(22px) saturate(1.5); backdrop-filter: blur(22px) saturate(1.5); box-shadow: 0 12px 40px -12px rgba(0, 0, 0, .35); }
   .dock-item { appearance: none; border: 0; background: none; font: inherit; font-size: .64rem; font-weight: 500; color: var(--color-fg-muted); display: grid; justify-items: center; gap: 3px; padding: 7px 2px; border-radius: 14px; cursor: pointer; }
   .dock-item[aria-selected="true"] { color: var(--c0); background: color-mix(in srgb, var(--c0) 13%, transparent); }
   .dock-item .nav-ic svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
@@ -728,7 +829,7 @@ svg { flex: 0 0 auto; }
 .tk-reveal { transition: opacity .7s var(--cds-ease-out), transform .7s var(--cds-ease-out); }
 .tk-reveal.tk-wait { opacity: 0; transform: translateY(18px); }
 .tk-root.tk-still * { transition: none !important; }
-@media (max-width: 960px) { .dock { grid-template-columns: repeat(5, 1fr) !important; } .tk-hero { grid-template-columns: 1fr; } }
+@media (max-width: 960px) { .dock { grid-template-columns: repeat(4, 1fr) !important; } .tk-hero { grid-template-columns: 1fr; } }
 @media (max-width: 720px) { .tk-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
 @media (max-width: 560px) {
   .tk-card { padding: 20px 16px 16px; border-radius: 18px; gap: 16px; }
@@ -928,124 +1029,7 @@ svg { flex: 0 0 auto; }
   </section>
 
   <section class="bt-section" id="panel-overview" data-panel="overview" hidden>
-    <div class="hero hero-slim">
-      <div class="hero-words">
-        <p class="hero-k">Build sprint · Oct 25 to Dec 11</p>
-        <p class="bt-take">Day <b data-draw="val" data-source="kpis" data-field="days_built" data-row="0">—</b> of <b data-draw="val" data-source="kpis" data-field="total_days" data-row="0">—</b>: a <b data-draw="val" data-source="kpis" data-field="streak" data-row="0">—</b>-day streak and <b data-draw="val" data-source="kpis" data-field="sprint_commits" data-row="0">—</b> commits so far. Next up on <b data-draw="val" data-source="nextup" data-field="date" data-row="0" data-fmt="date">—</b>: <b data-draw="val" data-source="nextup" data-field="project" data-row="0">—</b>.</p>
-      </div>
-    </div>
-    <div class="bt-tiles">
-      <div class="bt-tile">
-        <p class="bt-tile-label">Projects built</p>
-        <p class="bt-tile-num bt-big" data-draw="val" data-source="kpis" data-field="projects" data-row="0">—</p>
-        <p class="bt-tile-note">July to October 2026</p>
-      </div>
-      <div class="bt-tile">
-        <p class="bt-tile-label">Shipped</p>
-        <p class="bt-tile-num bt-big" data-draw="val" data-source="kpis" data-field="shipped" data-row="0">—</p>
-        <p class="bt-tile-note">Live, documented or submitted</p>
-      </div>
-      <div class="bt-tile">
-        <p class="bt-tile-label">Average progress</p>
-        <p class="bt-tile-num bt-big" data-draw="val" data-source="kpis" data-field="avg_progress" data-row="0" data-fmt="pct">—</p>
-        <p class="bt-tile-note">Across every project</p>
-      </div>
-      <div class="bt-tile">
-        <p class="bt-tile-label">Current streak</p>
-        <p class="bt-tile-num bt-big" data-draw="val" data-source="kpis" data-field="streak" data-row="0" data-fmt="days">—</p>
-        <p class="bt-tile-note">Consecutive days with commits</p>
-      </div>
-      <div class="bt-tile">
-        <p class="bt-tile-label">Commits this sprint</p>
-        <p class="bt-tile-num bt-big" data-draw="val" data-source="kpis" data-field="sprint_commits" data-row="0">—</p>
-        <p class="bt-tile-note">Since day 1, Oct 25</p>
-      </div>
-      <div class="bt-tile">
-        <p class="bt-tile-label">Sprint complete</p>
-        <p class="bt-tile-num bt-big" data-draw="val" data-source="kpis" data-field="sprint_share" data-row="0" data-fmt="pct">—</p>
-        <p class="bt-tile-note"><b data-draw="val" data-source="kpis" data-field="days_left" data-row="0">—</b> days to go</p>
-      </div>
-    </div>
-
-    <div class="bt-card">
-      <h2 id="streak">48-day streak</h2>
-      <p class="bt-note">One square per day from Oct 25 to Dec 11, columns are weeks. Filled squares are days you built, shaded by commits. Red outlines are missed days. Dashed squares are planned days. Hover for the project.</p>
-      <ul class="bt-legend">
-        <li><span class="bt-sw bt-sw-done"></span>Built</li>
-        <li><span class="bt-sw bt-sw-today"></span>Today</li>
-        <li><span class="bt-sw bt-sw-missed"></span>Missed</li>
-        <li><span class="bt-sw bt-sw-plan"></span>Planned</li>
-      </ul>
-      <div class="bt-chart bt-heat" data-draw="heatmap" data-source="tracker"></div>
-    </div>
-
-    <div class="bt-grid">
-      <div class="bt-card">
-        <h2 id="daily">Commits per day</h2>
-        <p class="bt-note">All 48 days on one axis. The empty stretch is the plan still ahead.</p>
-        <div class="bt-chart bt-daily" data-draw="daily" data-source="tracker"></div>
-      </div>
-      <div class="bt-card">
-        <h2 id="categories">Projects by category</h2>
-        <p class="bt-note">Number of projects in each category, with their average progress.</p>
-        <div class="bt-chart bt-bars" data-draw="cats" data-source="categories"></div>
-      </div>
-    </div>
-
-    <div class="bt-grid">
-      <div class="bt-card">
-        <h2 id="progress">Progress by project</h2>
-        <p class="bt-note">Estimated completion of each project, sorted from most to least done.</p>
-        <ul class="bt-legend">
-          <li><span class="bt-sw bt-sw-ship"></span>Shipped</li>
-          <li><span class="bt-sw bt-sw-active"></span>Active</li>
-          <li><span class="bt-sw bt-sw-early"></span>Early stage</li>
-        </ul>
-        <div class="bt-chart bt-bars" data-draw="progress" data-source="projects"></div>
-      </div>
-      <div class="bt-card">
-        <h2 id="planmix">Where the 48 days go</h2>
-        <p class="bt-note">Days per track across the whole sprint, built and planned. Agents and LLM apps lead, with MLOps and from-scratch deep learning for depth.</p>
-        <div class="bt-chart bt-bars" data-draw="planmix" data-source="planmix"></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="bt-section" id="panel-projects" data-panel="projects" hidden>
-    <div class="bt-card">
-      <h2>All projects</h2>
-      <p class="bt-note">Every project found in your GitHub repos and Claude sessions from July 2026 on. Click a column to sort. Progress is my estimate from what each repo contains.</p>
-      <div class="bt-toolbar">
-        <input class="bt-search" id="p-search" type="search" placeholder="Search projects, stack, category" aria-label="Search projects">
-        <button class="bt-chip" data-pfilter="" aria-pressed="true">All</button>
-        <button class="bt-chip" data-pfilter="Shipped" aria-pressed="false">Shipped</button>
-        <button class="bt-chip" data-pfilter="Active" aria-pressed="false">Active</button>
-        <button class="bt-chip" data-pfilter="Early stage" aria-pressed="false">Early stage</button>
-      </div>
-      <div class="bt-tablebox">
-        <table class="bt-table" id="ptable" data-source="projects" data-row-key="name">
-          <thead><tr>
-            <th data-field="name" data-sortkey="name"><button class="bt-sort">Project</button></th>
-            <th data-field="category" data-sortkey="category"><button class="bt-sort">Category</button></th>
-            <th data-field="status" data-sortkey="status"><button class="bt-sort">Status</button></th>
-            <th data-field="progress" data-sortkey="progress" aria-sort="descending"><button class="bt-sort">Progress</button></th>
-            <th data-field="description"><button class="bt-sort" disabled>What it is</button></th>
-            <th data-field="stack" class="bt-hide-sm"><button class="bt-sort" disabled>Stack</button></th>
-            <th data-field="start" data-sortkey="start"><button class="bt-sort">Started</button></th>
-            <th data-field="last" data-sortkey="last" class="bt-hide-sm"><button class="bt-sort">Last commit</button></th>
-            <th data-field="commits" data-sortkey="commits" class="num"><button class="bt-sort">Commits</button></th>
-            <th data-field="repo"><button class="bt-sort" disabled>Repo</button></th>
-            <th data-field="evidence" class="bt-hide-sm"><button class="bt-sort" disabled>Found in</button></th>
-          </tr></thead>
-          <tbody data-draw="ptable"></tbody>
-        </table>
-      </div>
-    </div>
-    <div class="bt-card bt-method">
-      <h2>How this was compiled</h2>
-      <p>I read the commit history, README and file list of every repo you pushed since July 2026, plus your recent Claude sessions and threads. Older repos from 2025 and the early-2026 course repos (pandas-100, eda-100, the Tableau and Power BI collections) are learning material rather than builds, so they are left out. The empty fitcheck- repo is a duplicate of FitCheck and is also left out.</p>
-      <p>Shipped means the repo has a working app, API, live demo or submitted report. Active means real work landed but something is still open (an unmerged branch, a missing link, a deploy). Early stage means a scaffold or a single starter file.</p>
-    </div>
+    <div data-draw="projboard"></div>
   </section>
 
   <section class="bt-section" id="panel-ai-engineer" data-panel="ai-engineer" hidden>
@@ -1093,36 +1077,6 @@ svg { flex: 0 0 auto; }
     }
   });
 
-  dash.calc('nextup', {
-    inputs: ['tracker'],
-    title: 'Next planned day',
-    description: 'The first day in the 48-day log that is still planned.',
-    fn: (tracker) => tracker.filter((d) => d.status === 'Planned').slice(0, 1)
-  });
-
-  dash.calc('categories', {
-    inputs: ['projects'],
-    title: 'Projects by category',
-    description: 'Count of projects and their average progress per category.',
-    fn: (projects) => {
-      const m = {};
-      projects.forEach((p) => { (m[p.category] = m[p.category] || []).push(Number(p.progress)); });
-      return Object.keys(m).map((k) => ({ category: k, projects: m[k].length, avg_progress: m[k].reduce((a, b) => a + b, 0) / m[k].length / 100 }))
-        .sort((a, b) => b.projects - a.projects || b.avg_progress - a.avg_progress);
-    }
-  });
-
-  dash.calc('planmix', {
-    inputs: ['tracker'],
-    title: 'Days per track',
-    description: 'Number of the 48 sprint days given to each track, built and planned.',
-    fn: (tracker) => {
-      const m = {};
-      tracker.forEach((d) => { m[d.category] = (m[d.category] || 0) + 1; });
-      return Object.keys(m).map((k) => ({ category: k, days: m[k] })).sort((a, b) => b.days - a.days);
-    }
-  });
-
   window.btFmt = {
     date: d3.utcFormat('%b %-d'),
     pct: d3.format('.0%'),
@@ -1131,10 +1085,11 @@ svg { flex: 0 0 auto; }
   };
 
   // Tabs
-  const TITLES = { goals: 'Goals', overview: 'Dashboard', projects: 'Projects', learning: 'AI Engineer', trackers: 'Trackers', 'ai-engineer': 'AI Engineer', 'data-analyst': 'Data Analyst', 'comp-designer': 'Computational Designer' };
+  const TITLES = { goals: 'Goals', overview: 'Dashboard', learning: 'AI Engineer', trackers: 'Trackers', 'ai-engineer': 'AI Engineer', 'data-analyst': 'Data Analyst', 'comp-designer': 'Computational Designer' };
   const PATH_TABS = ['ai-engineer', 'data-analyst', 'comp-designer'];
   const show = (name) => {
     if (name === 'learning') name = 'ai-engineer';
+    if (name === 'projects') name = 'overview';
     const isPath = PATH_TABS.includes(name);
     if (isPath) { document.querySelectorAll('[data-group="paths"]').forEach((t) => { t.dataset.tab = name; }); try { localStorage.setItem('bt-path-last', name); } catch (e) {} }
     document.querySelectorAll('.bt-tab').forEach((t) => t.setAttribute('aria-selected', String(t.dataset.tab === name)));
@@ -1149,7 +1104,7 @@ svg { flex: 0 0 auto; }
     setTimeout(() => dash.redrawAll(), 0);
   });
   const h = location.hash.slice(1).split('/')[0];
-  if (h === 'learning' || (h && document.querySelector(`[data-panel="${h}"]`))) { show(h); requestAnimationFrame(() => window.scrollTo(0, 0)); }
+  if (h === 'learning' || h === 'projects' || (h && document.querySelector(`[data-panel="${h}"]`))) { show(h); requestAnimationFrame(() => window.scrollTo(0, 0)); }
 
   // Generic value
   dash.draw('val', (el) => {
@@ -1171,235 +1126,230 @@ svg { flex: 0 0 auto; }
 
 <script>
 (() => {
-  const tip = (host) => {
-    let t = host.querySelector('.bt-tip');
-    if (!t) { t = document.createElement('div'); t.className = 'bt-tip'; t.hidden = true; host.appendChild(t); }
-    return t;
+  // Dashboard: one tracker for every project, then each project with its dates and progress.
+  const S = window.btPJ = { f: '', sort: 'recent', q: '', open: null };
+  const NS = 'http://www.w3.org/2000/svg';
+  const DAY = 864e5;
+  const ST = { Shipped: 'ship', Active: 'active', 'Early stage': 'early' };
+  const LABEL = { ship: 'Shipped', active: 'Active', early: 'Early stage' };
+  const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+  const sv = (tag, attrs) => { const e = document.createElementNS(NS, tag); Object.entries(attrs || {}).forEach(([k, v]) => e.setAttribute(k, v)); return e; };
+  const P = (s) => new Date(String(s).slice(0, 10) + 'T00:00:00Z');
+  const fd = d3.utcFormat('%b %-d'), fdy = d3.utcFormat('%b %-d, %Y'), fmon = d3.utcFormat('%B %Y'), fmy = d3.utcFormat('%b %Y');
+  const int = d3.format(',');
+  const plural = (n, w) => `${int(n)} ${w}${n === 1 ? '' : 's'}`;
+  const initials = (n) => n.replace(/[^\w\s]/g, '').split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+  const today = () => { const d = new Date(); return new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())); };
+  const norm = (p) => {
+    const a = P(p.start), b = P(p.last);
+    return { ...p, s: a <= b ? a : b, e: a <= b ? b : a, pr: Math.max(0, Math.min(100, Number(p.progress) || 0)), c: Number(p.commits) || 0, k: ST[p.status] || 'early' };
   };
-  const placeTip = (host, t, x, y) => {
-    const w = host.clientWidth, tw = t.offsetWidth, th = t.offsetHeight;
-    let left = x + 12, top = y - th - 10;
-    if (left + tw > w) left = Math.max(0, x - tw - 12);
-    if (top < 0) top = y + 14;
-    t.style.left = left + 'px'; t.style.top = top + 'px';
-  };
-  const fillTip = (t, lines) => {
-    t.replaceChildren(...lines.map(([cls, txt]) => { const s = document.createElement('span'); s.className = cls; s.textContent = txt; return s; }));
-  };
-  const muted = () => getComputedStyle(document.querySelector('.bt')).getPropertyValue('--color-fg-muted').trim();
-  let animated = {};
+  const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let seen = false;
 
-  // Heatmap
-  dash.draw('heatmap', (el) => {
-    const r = dash.data('tracker');
-    el.replaceChildren();
-    if (r.status !== 'ok') { el.textContent = '—'; return; }
-    const rows = r.data;
-    const W = el.clientWidth || 600;
-    const labelW = 34, gap = 6, weeks = Math.ceil(rows.length / 7);
-    const cell = Math.max(18, Math.min(64, (W - labelW - gap * weeks) / weeks));
-    const H = 22 + 7 * (cell + gap);
-    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', '48-day streak heatmap');
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const first = btFmt.parse(rows[0].date);
-    svg.selectAll('text.wd').data(days).join('text').attr('class', 'wd').attr('x', 0).attr('y', (d, i) => 22 + i * (cell + gap) + cell / 2 + 4)
-      .attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text((d, i) => i % 2 === 0 ? d : '');
-    const off = first.getUTCDay();
-    const maxC = d3.max(rows, (d) => Number(d.commits) || 0) || 1;
-    const shade = d3.scaleSqrt([0, maxC], [0.25, 1]);
-    const pos = (i) => { const k = i + off; return { col: Math.floor(k / 7), row: k % 7 }; };
-    svg.selectAll('text.wk').data(d3.range(weeks)).join('text').attr('class', 'wk')
-      .attr('x', (w) => labelW + w * (cell + gap)).attr('y', 12)
-      .attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)')
-      .text((w) => cell >= 50 ? 'Week ' + (w + 1) : 'W' + (w + 1));
-    const g = svg.selectAll('g.day').data(rows).join('g').attr('class', 'day')
-      .attr('transform', (d, i) => { const p = pos(i); return `translate(${labelW + p.col * (cell + gap)},${22 + p.row * (cell + gap)})`; });
-    g.append('rect').attr('width', cell).attr('height', cell).attr('rx', 4)
-      .attr('fill', (d) => d.status === 'Planned' || d.status === 'Missed' ? 'transparent' : dash.colors[0])
-      .attr('fill-opacity', (d) => d.status === 'Planned' ? 0 : shade(Number(d.commits) || 0))
-      .attr('stroke', (d) => d.status === 'Today' ? 'var(--color-fg)' : d.status === 'Missed' ? 'var(--color-bad)' : d.status === 'Planned' ? 'var(--color-fg-muted)' : 'none')
-      .attr('stroke-width', (d) => d.status === 'Today' || d.status === 'Missed' ? 2 : 1)
-      .attr('stroke-dasharray', (d) => d.status === 'Planned' ? '3 3' : null)
-      .attr('stroke-opacity', (d) => d.status === 'Planned' ? 0.6 : 1);
-    if (cell >= 24) {
-      g.append('text').attr('x', cell / 2).attr('y', cell / 2 + 4).attr('text-anchor', 'middle')
-        .attr('fill', (d) => d.status === 'Planned' ? 'var(--color-fg-muted)' : d.status === 'Missed' ? 'var(--color-bad)' : shade(Number(d.commits) || 0) > 0.6 ? 'var(--color-bg)' : 'var(--color-fg)')
-        .style('font-size', 'var(--cds-font-size-caption)').style('font-variant-numeric', 'tabular-nums')
-        .text((d) => d.day);
-    }
-    const t = tip(el);
-    g.style('cursor', 'default')
-      .on('pointerenter pointermove', (ev, d) => {
-        fillTip(t, [['k', `Day ${d.day} · ${btFmt.date(btFmt.parse(d.date))} · ${d.status}`], ['v', d.project], ['k', d.focus], ['k', d.status === 'Planned' ? d.level : `${d.commits} commits`]]);
-        t.hidden = false; const [x, y] = d3.pointer(ev, el); placeTip(el, t, x, y);
-      })
-      .on('pointerleave', () => { t.hidden = true; });
-  });
-
-  // Daily commits
-  dash.draw('daily', (el) => {
-    const r = dash.data('tracker');
-    el.replaceChildren();
-    if (r.status !== 'ok') { el.textContent = '—'; return; }
-    const rows = r.data;
-    const W = el.clientWidth || 500, H = 220;
-    const m = { t: 16, r: 8, b: 26, l: 30 };
-    const x = d3.scaleBand(rows.map((d) => d.day), [m.l, W - m.r]).padding(0.25);
-    const maxC = d3.max(rows, (d) => Number(d.commits) || 0) || 1;
-    const y = d3.scaleLinear([0, maxC], [H - m.b, m.t]).nice();
-    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Commits per day');
-    const ticks = y.ticks(4);
-    svg.append('g').selectAll('line').data(ticks).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y).attr('stroke', 'var(--cds-chart-grid)');
-    svg.append('g').selectAll('text').data(ticks).join('text').attr('x', m.l - 6).attr('y', (d) => y(d) + 4).attr('text-anchor', 'end')
-      .attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text(d3.format('d'));
-    const every = W < 520 ? 14 : 7;
-    const wkStarts = rows.filter((d) => (d.day - 1) % every === 0);
-    svg.append('g').selectAll('text').data(wkStarts).join('text').attr('x', (d) => x(d.day)).attr('y', H - 6)
-      .attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text((d) => btFmt.date(btFmt.parse(d.date)));
-    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', 'var(--cds-chart-axis)');
-    const bars = svg.append('g').selectAll('rect').data(rows.filter((d) => d.status !== 'Planned')).join('rect')
-      .attr('x', (d) => x(d.day)).attr('width', x.bandwidth()).attr('rx', Math.min(3, x.bandwidth() / 2))
-      .attr('y', (d) => y(Number(d.commits) || 0)).attr('height', (d) => y(0) - y(Number(d.commits) || 0))
-      .attr('fill', dash.colors[0]);
-    svg.append('g').selectAll('circle').data(rows.filter((d) => d.status === 'Planned')).join('circle')
-      .attr('cx', (d) => x(d.day) + x.bandwidth() / 2).attr('cy', y(0) - 4).attr('r', 1.5).attr('fill', 'var(--cds-chart-muted)');
-    const today = rows.find((d) => d.status === 'Today');
-    if (today) {
-      const tx = x(today.day) + x.bandwidth() / 2;
-      svg.append('line').attr('x1', tx).attr('x2', tx).attr('y1', m.t).attr('y2', y(0)).attr('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '3 3');
-      svg.append('text').attr('x', tx + 4).attr('y', m.t + 8).attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text('Today');
-    }
-    const t = tip(el);
-    svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', (d) => x(d.day) - x.step() * x.paddingInner() / 2).attr('width', x.step())
-      .attr('y', m.t).attr('height', H - m.b - m.t).attr('fill', 'transparent')
-      .on('pointerenter pointermove', (ev, d) => {
-        fillTip(t, [['k', `Day ${d.day} · ${btFmt.date(btFmt.parse(d.date))}`], ['v', d.status === 'Planned' ? 'Planned' : `${d.commits} commits`], ['k', d.project]]);
-        t.hidden = false; const [px, py] = d3.pointer(ev, el); placeTip(el, t, px, py);
-      })
-      .on('pointerleave', () => { t.hidden = true; });
-    if (!animated.daily) { animated.daily = true; el.classList.add('bt-anim'); }
-  });
-
-  // Horizontal bar helper
-  const hbars = (el, rows, opt) => {
-    el.replaceChildren();
-    const W = el.clientWidth || 400;
-    const rowH = 26, H = rows.length * rowH + 6;
-    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', opt.label);
-    const probe = svg.append('text').style('font-size', 'var(--cds-font-size-caption)');
-    let lw = 0, vw = 0;
-    rows.forEach((d) => { probe.text(d[opt.key]); lw = Math.max(lw, probe.node().getComputedTextLength()); probe.text(opt.valText(d)); vw = Math.max(vw, probe.node().getComputedTextLength()); });
-    probe.remove();
-    lw = Math.min(lw, W * 0.45);
-    const x = d3.scaleLinear([0, opt.max], [lw + 10, Math.max(lw + 40, W - vw - 10)]);
-    const g = svg.selectAll('g').data(rows).join('g').attr('transform', (d, i) => `translate(0,${i * rowH + 3})`);
-    g.append('text').attr('x', lw).attr('y', 14).attr('text-anchor', 'end').attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').text((d) => d[opt.key]);
-    g.append('rect').attr('x', x(0)).attr('y', 4).attr('height', 14).attr('width', x(opt.max) - x(0)).attr('rx', 3).attr('fill', 'var(--cds-chart-grid)');
-    g.append('rect').attr('x', x(0)).attr('y', 4).attr('height', 14).attr('width', (d) => Math.max(0, x(opt.val(d)) - x(0))).attr('rx', 3).attr('fill', opt.color);
-    g.append('text').attr('x', (d) => x(opt.max) + 6).attr('y', 15).attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').style('font-variant-numeric', 'tabular-nums').text(opt.valText);
-    if (opt.tip) {
-      const t = tip(el);
-      g.on('pointerenter pointermove', (ev, d) => { fillTip(t, opt.tip(d)); t.hidden = false; const [px, py] = d3.pointer(ev, el); placeTip(el, t, px, py); })
-       .on('pointerleave', () => { t.hidden = true; });
-    }
-  };
-
-  dash.draw('cats', (el) => {
-    const r = dash.data('categories');
-    if (r.status !== 'ok') { el.replaceChildren(); el.textContent = '—'; return; }
-    const max = d3.max(r.data, (d) => d.projects) || 1;
-    hbars(el, r.data, { label: 'Projects by category', key: 'category', max, val: (d) => d.projects, color: dash.colors[0],
-      valText: (d) => `${d.projects} · ${btFmt.pct(d.avg_progress)} done`,
-      tip: (d) => [['k', d.category], ['v', `${d.projects} projects`], ['k', `Average progress ${btFmt.pct(d.avg_progress)}`]] });
-  });
-
-  dash.draw('progress', (el) => {
-    const r = dash.data('projects');
-    if (r.status !== 'ok') { el.replaceChildren(); el.textContent = '—'; return; }
-    const rows = r.data.slice().sort((a, b) => Number(b.progress) - Number(a.progress));
-    const col = (d) => d.status === 'Shipped' ? dash.colors[0] : d.status === 'Active' ? dash.colors[1] : 'var(--cds-chart-muted)';
-    hbars(el, rows, { label: 'Progress by project', key: 'name', max: 100, val: (d) => Number(d.progress), color: col,
-      valText: (d) => `${d.progress}%`,
-      tip: (d) => [['k', `${d.category} · ${d.status}`], ['v', `${d.name}: ${d.progress}%`], ['k', d.description]] });
-  });
-
-  dash.draw('planmix', (el) => {
-    const r = dash.data('planmix');
-    if (r.status !== 'ok') { el.replaceChildren(); el.textContent = '—'; return; }
-    const max = d3.max(r.data, (d) => d.days) || 1;
-    hbars(el, r.data, { label: 'Days per track', key: 'category', max, val: (d) => d.days, color: dash.colors[2],
-      valText: (d) => `${d.days} days`,
-      tip: (d) => [['k', d.category], ['v', `${d.days} of 48 days`]] });
-  });
-})();
-</script>
-
-<script>
-(() => {
-  // Projects table
-  window.btP = { key: 'progress', dir: -1, q: '', status: '' };
-  const pill = (status) => {
-    const s = document.createElement('span');
-    s.className = 'bt-pill ' + (status === 'Shipped' ? 'ok' : status === 'Active' ? 'warn' : 'muted');
-    s.textContent = status;
-    return s;
-  };
-  const td = (txt, cls) => { const e = document.createElement('td'); if (cls) e.className = cls; if (txt instanceof Node) e.appendChild(txt); else e.textContent = txt; return e; };
-
-  dash.draw('ptable', (tb) => {
-    const r = dash.data('projects');
-    tb.replaceChildren();
-    if (r.status !== 'ok') return;
-    const q = btP.q.toLowerCase();
-    const rows = r.data.filter((p) => (!btP.status || p.status === btP.status) &&
-      (!q || [p.name, p.category, p.stack, p.description, p.status].join(' ').toLowerCase().includes(q)));
-    const num = ['progress', 'commits'].includes(btP.key);
-    rows.sort((a, b) => {
-      const va = num ? Number(a[btP.key]) : String(a[btP.key]);
-      const vb = num ? Number(b[btP.key]) : String(b[btP.key]);
-      return (va < vb ? -1 : va > vb ? 1 : 0) * btP.dir;
+  const ring = (n, counts) => {
+    const box = mk('div', 'pj-ring');
+    const svg = sv('svg', { viewBox: '0 0 200 200', role: 'img', 'aria-label': `${n} projects: ${counts.map(([k, c]) => `${c} ${LABEL[k].toLowerCase()}`).join(', ')}` });
+    const r = 82, C = 2 * Math.PI * r, gap = n > 1 ? 7 : 0;
+    svg.append(sv('circle', { class: 'trk', cx: 100, cy: 100, r }));
+    let off = 0;
+    const arcs = [];
+    counts.forEach(([k, c]) => {
+      if (!c) return;
+      const len = Math.max(0, (c / n) * C - gap);
+      const a = sv('circle', { class: 'arc pj-' + k, cx: 100, cy: 100, r, transform: 'rotate(-90 100 100)', stroke: 'var(--k)', 'stroke-dasharray': `0 ${C}`, 'stroke-dashoffset': -off });
+      arcs.push([a, len, C]);
+      svg.append(a);
+      off += (c / n) * C;
     });
-    rows.forEach((p) => {
-      const tr = document.createElement('tr');
-      const prog = document.createElement('div'); prog.className = 'bt-prog';
-      const track = document.createElement('div'); track.className = 'bt-prog-track';
-      const fill = document.createElement('div'); fill.className = 'bt-prog-fill';
-      fill.style.width = Number(p.progress) + '%';
-      fill.style.background = p.status === 'Shipped' ? dash.colors[0] : p.status === 'Active' ? dash.colors[1] : 'var(--cds-chart-muted)';
-      track.appendChild(fill);
-      const lab = document.createElement('span'); lab.className = 'bt-small'; lab.textContent = p.progress + '%';
-      prog.append(track, lab);
-      const a = document.createElement('a'); a.href = p.repo_url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = p.repo;
-      tr.append(
-        td(p.name, 'bt-name'),
-        td(p.category, 'bt-nowrap'),
-        td(pill(p.status)),
-        td(prog),
-        td(p.description, 'bt-desc'),
-        td(p.stack, 'bt-small bt-hide-sm'),
-        td(btFmt.date(btFmt.parse(p.start)), 'bt-nowrap'),
-        td(btFmt.date(btFmt.parse(p.last)), 'bt-nowrap bt-hide-sm'),
-        td(btFmt.int(p.commits), 'num'),
-        td(a, 'bt-small'),
-        td(p.evidence, 'bt-small bt-hide-sm')
-      );
-      tb.appendChild(tr);
+    const t1 = sv('text', { x: 100, y: 108, class: 'big' }); t1.textContent = n;
+    const t2 = sv('text', { x: 100, y: 128, class: 'small' }); t2.textContent = 'PROJECTS';
+    svg.append(t1, t2);
+    const set = () => arcs.forEach(([a, len, C]) => a.setAttribute('stroke-dasharray', `${len} ${C}`));
+    if (!seen && !reduce()) requestAnimationFrame(() => requestAnimationFrame(set)); else set();
+    const ul = mk('ul', 'pj-legend');
+    counts.forEach(([k, c]) => {
+      const li = mk('li', 'pj-' + k);
+      li.append(mk('i'), mk('b', null, LABEL[k]), mk('em', null, String(c)), mk('span', null, `${Math.round((c / n) * 100)}% of projects`));
+      ul.append(li);
     });
+    box.append(svg, ul);
+    return box;
+  };
+
+  const timeline = (host, all, W) => {
+    const wrap = mk('div', 'pj-tl');
+    const h = mk('div', 'pj-tl-h');
+    h.append(mk('p', 'hero-k', 'Timeline'), mk('p', null, 'Each dot is the day a project started; the line runs to its latest commit. Tap one to jump to it.'));
+    wrap.append(h);
+    const now = today();
+    const lo = d3.utcMonth.floor(d3.min(all, (p) => p.s));
+    const hi = new Date(Math.max(+d3.max(all, (p) => p.e), +now) + 4 * DAY);
+    const m = 10, x = d3.scaleUtc([lo, hi], [m, Math.max(m + 100, W - m)]);
+    const rr = 6, rows = [];
+    const placed = all.slice().sort((a, b) => a.s - b.s).map((p) => {
+      const x0 = x(p.s), x1 = Math.max(x0, x(p.e));
+      let lane = rows.findIndex((end) => end < x0 - rr * 2 - 3);
+      if (lane < 0) { lane = rows.length; rows.push(0); }
+      rows[lane] = x1;
+      return { p, x0, x1, lane };
+    });
+    const laneH = 17, top = 10, H = top + rows.length * laneH + 26;
+    const svg = sv('svg', { viewBox: `0 0 ${W} ${H}`, height: H, role: 'img', 'aria-label': 'Timeline of when each project started' });
+    const months = d3.utcMonth.range(lo, hi, W < 560 ? 2 : 1);
+    months.forEach((d) => {
+      svg.append(sv('line', { class: 'grid', x1: x(d), x2: x(d), y1: 0, y2: H - 20 }));
+      const t = sv('text', { class: 'ax', x: x(d) + 3, y: H - 6 }); t.textContent = d3.utcFormat(d.getUTCMonth() === 0 || d === months[0] ? '%b %Y' : '%b')(d); svg.append(t);
+    });
+    const tx = x(now);
+    svg.append(sv('line', { class: 'today', x1: tx, x2: tx, y1: 0, y2: H - 20 }));
+    const tt = sv('text', { class: 'ax', x: tx - 4, y: 9, 'text-anchor': 'end' }); tt.textContent = 'Today'; svg.append(tt);
+    const tip = mk('div', 'pj-tip'); tip.hidden = true;
+    placed.forEach(({ p, x0, x1, lane }) => {
+      const cy = top + lane * laneH + laneH / 2;
+      if (x1 - x0 > 2) svg.append(sv('line', { class: 'seg pj-' + p.k, x1: x0, x2: x1, y1: cy, y2: cy, stroke: 'var(--k)' }));
+      const c = sv('circle', { class: 'dot pj-' + p.k, cx: x0, cy, r: rr, fill: 'var(--k)', stroke: 'var(--color-panel)', 'stroke-width': 2, tabindex: 0, role: 'button', 'aria-label': `${p.name}, started ${fdy(p.s)}, ${p.status}` });
+      const showTip = () => {
+        tip.replaceChildren(mk('b', null, p.name), mk('span', null, `${LABEL[p.k]} · ${p.pr}% done`), mk('span', null, `${fd(p.s)} → ${fd(p.e)} · ${plural(p.c, 'commit')}`));
+        tip.hidden = false;
+        const wr = wrap.getBoundingClientRect(), sr = svg.getBoundingClientRect(), k = sr.width / W;
+        const sx = sr.left - wr.left + x0 * k, sy = sr.top - wr.top + cy * k;
+        const left = Math.min(Math.max(0, sx - 20), Math.max(0, wr.width - tip.offsetWidth));
+        const topY = sy - tip.offsetHeight - 12;
+        tip.style.left = left + 'px'; tip.style.top = (topY < 0 ? sy + 14 : topY) + 'px';
+      };
+      c.addEventListener('pointerenter', showTip); c.addEventListener('focus', showTip);
+      c.addEventListener('pointerleave', () => { tip.hidden = true; }); c.addEventListener('blur', () => { tip.hidden = true; });
+      const go = () => { tip.hidden = true; S.open = p.name; S.f = ''; S.q = ''; dash.draw('projboard'); jump(p.name); };
+      c.addEventListener('click', go);
+      c.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+      svg.append(c);
+    });
+    wrap.append(svg, tip);
+    host.append(wrap);
+  };
+
+  const jump = (name) => requestAnimationFrame(() => {
+    const row = [...document.querySelectorAll('.pj-row')].find((r) => r.dataset.name === name); if (!row) return;
+    row.scrollIntoView({ behavior: reduce() ? 'auto' : 'smooth', block: 'center' });
+    row.classList.remove('pj-flash'); void row.offsetWidth; row.classList.add('pj-flash');
   });
 
-  document.querySelectorAll('#ptable th[data-sortkey] .bt-sort').forEach((b) => b.addEventListener('click', () => {
-    const th = b.closest('th'); const k = th.dataset.sortkey;
-    if (btP.key === k) btP.dir *= -1; else { btP.key = k; btP.dir = ['progress', 'commits', 'start', 'last'].includes(k) ? -1 : 1; }
-    document.querySelectorAll('#ptable th').forEach((x) => x.removeAttribute('aria-sort'));
-    th.setAttribute('aria-sort', btP.dir === 1 ? 'ascending' : 'descending');
-    dash.draw('ptable');
-  }));
-  document.querySelectorAll('#p-search').forEach((i) => i.addEventListener('input', () => { btP.q = i.value; dash.draw('ptable'); }));
-  document.querySelectorAll('[data-pfilter]').forEach((b) => b.addEventListener('click', () => {
-    btP.status = b.dataset.pfilter;
-    document.querySelectorAll('[data-pfilter]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-    dash.draw('ptable');
-  }));
+  const rowOf = (p, anim) => {
+    const art = mk('article', 'pj-row pj-' + p.k); art.dataset.name = p.name;
+    const open = S.open === p.name;
+    const btn = mk('button', 'pj-main'); btn.type = 'button'; btn.setAttribute('aria-expanded', String(open));
+    const badge = mk('span', 'pj-badge', initials(p.name)); badge.setAttribute('aria-hidden', 'true');
+    const body = mk('div', 'pj-body');
+    const title = mk('div', 'pj-title'); title.append(mk('b', null, p.name), mk('span', 'pj-pill', LABEL[p.k]));
+    const days = Math.round((p.e - p.s) / DAY) + 1;
+    const meta = mk('div', 'pj-meta');
+    meta.append(mk('span', 'pj-dates', +p.s === +p.e ? fdy(p.s) : `${fd(p.s)} → ${fdy(p.e)}`), mk('span', null, plural(days, 'day')), mk('span', null, plural(p.c, 'commit')), mk('span', null, p.category));
+    body.append(title, meta);
+    const prog = mk('div', 'pj-prog');
+    const pt = mk('div', 'pj-prog-top'); pt.append(mk('b', null, p.pr + '%'), mk('span', null, p.pr >= 100 ? 'complete' : `${100 - p.pr}% to go`));
+    const bar = mk('div', 'pj-bar'); bar.setAttribute('role', 'progressbar'); bar.setAttribute('aria-valuenow', p.pr); bar.setAttribute('aria-valuemin', 0); bar.setAttribute('aria-valuemax', 100); bar.setAttribute('aria-label', p.name + ' progress');
+    const fill = mk('div'); fill.style.width = anim ? '0%' : p.pr + '%'; bar.append(fill);
+    if (anim) requestAnimationFrame(() => requestAnimationFrame(() => { fill.style.width = p.pr + '%'; }));
+    prog.append(pt, bar);
+    const chev = sv('svg', { viewBox: '0 0 24 24', class: 'pj-chev', fill: 'none', stroke: 'currentColor', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' });
+    chev.append(sv('path', { d: 'M6 9l6 6 6-6' }));
+    btn.append(badge, body, prog, chev);
+    const more = mk('div', 'pj-more'); more.hidden = !open;
+    if (p.description) more.append(mk('p', null, p.description));
+    if (p.stack) { const st = mk('div', 'pj-stack'); String(p.stack).split(',').map((s) => s.trim()).filter(Boolean).forEach((s) => st.append(mk('span', null, s))); more.append(st); }
+    const links = mk('div', 'pj-links');
+    if (p.repo_url) { const a = mk('a', null, `${p.repo || 'Repo'} on GitHub ↗`); a.href = p.repo_url; a.target = '_blank'; a.rel = 'noopener'; links.append(a); }
+    links.append(mk('span', null, `Started ${fdy(p.s)} · last commit ${fdy(p.e)}`));
+    if (p.evidence) links.append(mk('span', null, 'Found in ' + p.evidence));
+    more.append(links);
+    btn.addEventListener('click', () => {
+      const on = btn.getAttribute('aria-expanded') !== 'true';
+      document.querySelectorAll('.pj-main[aria-expanded="true"]').forEach((b) => { if (b !== btn) { b.setAttribute('aria-expanded', 'false'); b.nextElementSibling.hidden = true; } });
+      btn.setAttribute('aria-expanded', String(on)); more.hidden = !on; S.open = on ? p.name : null;
+    });
+    art.append(btn, more);
+    return art;
+  };
+
+  const SORTS = {
+    recent: (a, b) => b.s - a.s || b.e - a.e,
+    progress: (a, b) => b.pr - a.pr || b.e - a.e,
+    name: (a, b) => a.name.localeCompare(b.name)
+  };
+
+  dash.draw('projboard', (el) => {
+    const r = dash.data('projects');
+    if (r.status !== 'ok') { if (r.status === 'error') { el.replaceChildren(mk('p', 'pj-none', 'Could not load the project list.')); } return; }
+    const all = r.data.map(norm);
+    const anim = !seen && !reduce();
+    const n = all.length;
+    const counts = ['ship', 'active', 'early'].map((k) => [k, all.filter((p) => p.k === k).length]);
+    const cnt = Object.fromEntries(counts);
+    const avg = n ? Math.round(d3.mean(all, (p) => p.pr)) : 0;
+    const commits = d3.sum(all, (p) => p.c);
+    const first = d3.min(all, (p) => p.s);
+    const latest = all.slice().sort((a, b) => b.e - a.e || b.s - a.s)[0];
+
+    el.replaceChildren();
+    const root = mk('div', 'pj-root');
+
+    // Tracker on top
+    const hero = mk('div', 'hero pj-hero');
+    const L = mk('div');
+    L.append(mk('p', 'hero-k', n ? `Project tracker · since ${fmy(first)}` : 'Project tracker'));
+    const h1 = mk('h1', 'hero-title'); h1.append(`${plural(n, 'project')} built, `, mk('span', null, `${cnt.ship} shipped.`));
+    L.append(h1);
+    L.append(mk('p', 'hero-sub', `Every repo and Claude build, tracked one by one with its dates and progress. ${cnt.active} still moving, ${cnt.early} just started.`));
+    const stats = mk('div', 'pj-stats');
+    [[int(n), 'projects'], [int(cnt.ship), 'shipped'], [avg + '%', 'avg. done'], [int(commits), 'commits']].forEach(([v, l]) => { const s = mk('div', 'pj-stat'); s.append(mk('b', null, v), mk('span', null, l)); stats.append(s); });
+    L.append(stats);
+    if (latest) { const lt = mk('p', 'pj-latest'); lt.append(mk('i'), 'Latest activity:', mk('b', null, latest.name), '· ' + fdy(latest.e)); L.append(lt); }
+    hero.append(L, ring(n || 1, counts));
+    root.append(hero);
+    el.append(root);
+    if (n) timeline(hero, all, Math.round(hero.clientWidth - 2 * parseFloat(getComputedStyle(hero).paddingLeft || 0)) || 600);
+
+    // Every project
+    const head = mk('div', 'tk-list-h'); head.append(mk('h2', null, 'Every project'), mk('span', 'tk-count', 'Tap a project for details'));
+    const tools = mk('div', 'pj-tools');
+    const chips = [['', 'All', n], ['Shipped', 'Shipped', cnt.ship], ['Active', 'Active', cnt.active], ['Early stage', 'Early', cnt.early]].map(([v, l, c]) => {
+      const b = mk('button', 'bt-chip'); b.type = 'button'; b.append(l, mk('small', null, String(c))); b.setAttribute('aria-pressed', String(S.f === v));
+      b.addEventListener('click', () => { S.f = v; chips.forEach((x) => x.setAttribute('aria-pressed', String(x === b))); list(); });
+      return b;
+    });
+    const q = mk('input', 'bt-search'); q.type = 'search'; q.placeholder = 'Search projects, stack, category'; q.value = S.q; q.setAttribute('aria-label', 'Search projects');
+    q.addEventListener('input', () => { S.q = q.value; list(); });
+    const sort = mk('div', 'pj-sort'); sort.setAttribute('role', 'group'); sort.setAttribute('aria-label', 'Sort projects');
+    const sb = [['recent', 'Newest'], ['progress', 'Progress'], ['name', 'A–Z']].map(([v, l]) => {
+      const b = mk('button', null, l); b.type = 'button'; b.setAttribute('aria-pressed', String(S.sort === v));
+      b.addEventListener('click', () => { S.sort = v; sb.forEach((x) => x.setAttribute('aria-pressed', String(x === b))); list(); });
+      return b;
+    });
+    sort.append(...sb);
+    tools.append(q, ...chips, sort);
+    const box = mk('div', 'pj-list');
+    root.append(head, tools, box);
+
+    let firstList = true;
+    function list() {
+      const qq = S.q.trim().toLowerCase();
+      const rows = all.filter((p) => (!S.f || p.status === S.f) && (!qq || [p.name, p.category, p.stack, p.description, p.status, p.repo].join(' ').toLowerCase().includes(qq))).sort(SORTS[S.sort]);
+      box.replaceChildren();
+      if (!rows.length) { box.append(mk('p', 'pj-none', 'No projects match that search.')); return; }
+      let mon = '';
+      rows.forEach((p) => {
+        if (S.sort === 'recent') {
+          const m = fmon(p.s);
+          if (m !== mon) { mon = m; const c = rows.filter((x) => fmon(x.s) === m).length; box.append(mk('div', 'pj-month', `${m} · ${c} started`)); }
+        }
+        box.append(rowOf(p, anim && firstList));
+      });
+      firstList = false;
+    }
+    list();
+    seen = true;
+  });
 })();
 </script>
 </div>
@@ -1409,7 +1359,6 @@ svg { flex: 0 0 auto; }
 <nav class="dock" role="tablist" aria-label="Views">
   <button class="bt-tab dock-item" role="tab" data-tab="goals" aria-selected="true"><span class="nav-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><span>Goals</span></button>
   <button class="bt-tab dock-item" role="tab" data-tab="overview" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="9" rx="2"/><rect x="13.5" y="3.5" width="7" height="5" rx="2"/><rect x="13.5" y="11.5" width="7" height="9" rx="2"/><rect x="3.5" y="15.5" width="7" height="5" rx="2"/></svg></span><span>Dashboard</span></button>
-  <button class="bt-tab dock-item" role="tab" data-tab="projects" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg></span><span>Projects</span></button>
   <button class="bt-tab dock-item" role="tab" data-tab="ai-engineer" data-group="paths" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9L12 17.5l-1.9-5.1-5.1-1.9 5.1-1.9z"/><path d="M18.5 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/></svg></span><span>Paths</span></button>
   <button class="bt-tab dock-item" role="tab" data-tab="trackers" aria-selected="false"><span class="nav-ic"><svg viewBox="0 0 24 24"><path d="M4 6.5h9M4 12h16M4 17.5h6"/><circle cx="16.5" cy="6.5" r="1.6" fill="currentColor"/><circle cx="13.5" cy="17.5" r="1.6" fill="currentColor"/></svg></span><span>Trackers</span></button>
 </nav>
@@ -1696,8 +1645,7 @@ dash.draw('updated', (el) => {
   dash.draw('navbadge', (el) => {
     const f = el.dataset.field; let t = '';
     if (f === 'goals') { const r = dash.data('goals'); if (r.status === 'ok') t = String(r.data.filter((g) => g.status !== 'done').length); }
-    else if (f === 'overview') { const k = row('kpis'); if (k) t = `${k.days_built}/${k.total_days}`; }
-    else if (f === 'projects') { const k = row('kpis'); if (k) t = String(k.projects); }
+    else if (f === 'overview') { const k = row('kpis'); if (k) t = String(k.projects); }
     else if (f === 'learning') {
       const r = dash.data('learning');
       if (r.status === 'ok') t = String(r.data.reduce((s, c) => s + (Array.isArray(c.videos) ? c.videos.filter((v) => !v.partial).length : Number(c.watched) || 0), 0));
@@ -2271,11 +2219,11 @@ dash.draw('updated', (el) => {
   const h0 = location.hash.slice(1).split('/');
   if (h0[0] === 'trackers') S.id = h0[1] || null;
   // The bottom dock is parsed after the tab script runs, so sync its selected state here.
-  if (h0[0] === 'learning' || (h0[0] && document.querySelector(`[data-panel="${h0[0]}"]`))) window.btShow(h0[0]);
+  if (h0[0] === 'learning' || h0[0] === 'projects' || (h0[0] && document.querySelector(`[data-panel="${h0[0]}"]`))) window.btShow(h0[0]);
   window.addEventListener('popstate', () => {
     if (fromHash()) return;
     const base = location.hash.slice(1);
-    if (base === 'learning' || (base && base !== 'trackers' && document.querySelector(`[data-panel="${base}"]`))) { const f = document.getElementById('tk-fab'); if (f) f.hidden = true; window.btShow(base); dash.redrawAll(); }
+    if (base === 'learning' || base === 'projects' || (base && base !== 'trackers' && document.querySelector(`[data-panel="${base}"]`))) { const f = document.getElementById('tk-fab'); if (f) f.hidden = true; window.btShow(base); dash.redrawAll(); }
   });
 })();
 </script>
