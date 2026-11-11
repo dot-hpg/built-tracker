@@ -2,6 +2,13 @@
 
 Each version is frozen on a `release/vN` branch. `main` is the live site, and the automatic activity logs and new videos land there between versions.
 
+## v12 (2026-11-11)
+
+- Removed the 48-day plan page: its sidebar item, the Plan button in the phone dock, the `#plan` route and the 48-day build tracker table with its search and filters. An old `#plan` link now opens Goals.
+- The phone dock now has five buttons.
+- Kept the Dashboard sprint charts and the sidebar 48-day sprint widget, which still read `data/tracker.json`.
+- Service worker cache bumped to `built-shell-v19` so phones pick up the change.
+
 ## v11 (2026-11-11)
 
 Career path pages simplified to one tracker each.
