@@ -16,6 +16,7 @@ Career paths: the Learning tab becomes AI Engineer, with new Data Analyst and Co
 - Changes save straight to the new `data/paths.json` on GitHub with the same token as the Trackers tab. Quick taps are batched into one commit, every change has Undo, offline changes wait on the device, and milestones, finished stages and level-ups get confetti.
 - Shortcut links such as `#ai-engineer/log/deep-work` log one unit in a tap from the home screen.
 - Removed the "Get an AI engineer job" goal card from the Goals page.
+- Added `vercel.json` turning off Vercel deployments for this repository. The site is served by GitHub Pages, and a Vercel project linked to the repo was failing on every commit.
 
 ## v8 (2026-11-11)
 
