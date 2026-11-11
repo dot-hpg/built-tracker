@@ -2,6 +2,15 @@
 
 Each version is frozen on a `release/vN` branch. `main` is the live site, and the automatic activity logs and new videos land there between versions.
 
+## v10 (2026-11-11)
+
+New tracker: 48 Early Wake-Ups.
+
+- Added from your wake-up log: 29 of 48 early days (60.4%), up before 6:00 AM, from Sep 30 to Nov 6. All 38 recorded mornings are kept, including the 9 missed days and the approximate (~) times.
+- One tap logs today: "Mark today's wake-up done" saves at once. Tapped before 6:00 AM, it also records the time you tapped as an approximate wake-up time. The log sheet has a "Woke up at" field and refuses times after 6:00 AM, since those don't count.
+- A new "Wake-up times" chart shows every recorded morning against the 6:00 AM line, with your early-morning rate, average and earliest wake-up and missed days. The calendar marks missed days, and each log row shows the time you woke up.
+- It has its own dawn colour and a sunrise icon. `#log/wake-48` logs today from a home-screen shortcut.
+
 ## v9 (2026-11-11)
 
 Career paths: the Learning tab becomes AI Engineer, with new Data Analyst and Computational Designer paths.
