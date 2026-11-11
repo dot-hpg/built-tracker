@@ -207,7 +207,7 @@
    "category": "AI agents & LLM apps",
    "focus": "Point site metadata, sitemap and README at the Vercel URL; Publish the site to the gh-pages branch; Build data analyst portfolio website",
    "level": "Expert",
-   "status": "Today",
+   "status": "Done",
    "commits": 3,
    "plan_project": "GraphRAG",
    "plan_focus": "Knowledge graph over research papers in Neo4j with graph plus vector retrieval"
@@ -220,8 +220,8 @@
    "category": "NLP & deep learning",
    "focus": "Vision-language question answering over charts, tables and scanned PDFs",
    "level": "Advanced",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 20,
