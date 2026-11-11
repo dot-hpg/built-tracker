@@ -6,11 +6,10 @@ A live tracker for everything I build: every project so far, and a 48-day daily 
 
 ## What's on it
 
-- **Dashboard:** headline numbers, a 48-day streak heatmap, commits per day, projects by category, progress for each project, and how the 48 days split by track
-- **All projects:** a sortable, searchable table with category, status, progress, stack, dates, commits and repo links
-- **48-day tracker:** one row per day showing what was built and what's planned next
+- **Dashboard:** one tracker for every project (counts, status ring and a start-date timeline), then each project with its dates, commits and progress
+- **Trackers** and **Career paths:** personal trackers you can log from the site
 
-It works on phones (the tables turn into cards) and follows the device's light or dark setting.
+It works on phones and follows the device's light or dark setting.
 
 ## How it stays up to date
 

@@ -10,6 +10,15 @@ Ongoing and Completed tabs on the Trackers page.
 - Added your first Hanuman Chalisa commitment, 48 of 48 readings, as a completed tracker. Its dates were not in the record, so its readings show without dates for now.
 - A completed tracker looks like the others, with a green "Completed" tag and a full bar. Instead of a log button it shows "All 48 readings done", and it no longer appears in the "What did you finish?" picker.
 - The hero, rings and "Up next" chips now count only ongoing trackers and mention how many are complete. A tracker moves to Completed by itself when it reaches its target.
+## v14 (2026-11-11)
+
+Dashboard and Projects are now one tab.
+
+- The Dashboard opens with one project tracker: how many projects you have built and shipped, average progress, total commits, the latest activity, and a ring split into Shipped, Active and Early stage.
+- A timeline shows the day each project started, with a line running to its latest commit. Tapping a dot jumps to that project.
+- Below it, every project is listed one by one, grouped by the month it started, with its dates, days, commits, status and a progress bar. Tap a project for its description, stack and GitHub link. Filter by status, search, or sort by newest, progress or name.
+- Removed the separate Projects tab (sidebar and phone dock) and the busy sprint charts. Old `#projects` links open the Dashboard. The sidebar badge on Dashboard now shows the project count.
+- The phone dock now has four buttons. Service worker cache bumped to `built-shell-v21`.
 
 ## v13 (2026-11-11)
 
