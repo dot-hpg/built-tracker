@@ -1,0 +1,287 @@
+{
+ "updated": "2026-11-11",
+ "about": "Career paths: stages, skills (status todo | learning | done) and trackers. Skills marked from your projects list the evidence. Edit on the site or tell Claude.",
+ "paths": [
+  {
+   "id": "ai-engineer",
+   "title": "AI Engineer",
+   "role": "AI Engineer",
+   "article": "an",
+   "accent": "violet",
+   "icon": "spark",
+   "tagline": "Build, ship and evaluate products on top of large language models and machine learning.",
+   "goal": "Land an AI engineer role",
+   "weekly_hours": 20,
+   "hours": "deep-work",
+   "levels": ["Curious", "Apprentice", "Builder", "Practitioner", "AI Engineer", "Hire-ready"],
+   "learning": ["campusx-100-days-ml", "ai-engineer-interviews"],
+   "stages": [
+    {"id": "foundations", "title": "Foundations", "short": "Basics", "summary": "The tools every AI engineer uses daily: Python, Git, the shell, data handling and the maths under the models.", "weeks": 3, "learn": [{"t": "3Blue1Brown: Essence of linear algebra", "u": "https://www.3blue1brown.com/topics/linear-algebra"}, {"t": "The Missing Semester (shell, Git)", "u": "https://missing.csail.mit.edu/"}], "skills": [
+     {"id": "python", "title": "Python, properly", "detail": "Typing, dataclasses, generators, async, packaging with uv or pip, virtual envs.", "status": "done", "evidence": ["AI Engineering Copilot", "FlipItNews Classification", "Python Learn"]},
+     {"id": "git", "title": "Git and GitHub", "detail": "Branches, pull requests, rebasing, Actions for CI. Commit every day.", "status": "done", "evidence": ["Portfolio Website", "FitCheck"]},
+     {"id": "shell", "title": "Linux and the shell", "detail": "Navigating, pipes, grep/sed, ssh, environment variables, cron.", "status": "learning"},
+     {"id": "numpy-pandas", "title": "NumPy and pandas", "detail": "Vectorised maths, indexing, groupby, joins, reshaping, time series.", "status": "done", "evidence": ["Aerofit Customer Analysis", "Product Sales Forecasting"]},
+     {"id": "sql", "title": "SQL for engineers", "detail": "Joins, CTEs, window functions, indexes. Most AI data still lives in Postgres.", "status": "learning", "evidence": ["Target Brazil Sql Case Study"]},
+     {"id": "lin-alg", "title": "Linear algebra", "detail": "Vectors, matrices, dot products, eigenvectors, SVD. The language of embeddings.", "status": "todo"},
+     {"id": "prob-stats", "title": "Probability and statistics", "detail": "Distributions, Bayes, hypothesis tests, confidence intervals, sampling.", "status": "done", "evidence": ["Insurance Cost Prediction", "Network Anomaly Detection"]},
+     {"id": "calculus", "title": "Calculus for ML", "detail": "Derivatives, chain rule, gradients. Enough to follow backprop by hand.", "status": "todo"}
+    ]},
+    {"id": "ml", "title": "Machine learning", "short": "ML", "summary": "Classical ML end to end: framing a problem, building features, training, validating and explaining models.", "weeks": 4, "learn": [{"t": "CampusX: 100 Days of Machine Learning", "u": "https://www.youtube.com/results?search_query=CampusX+100+days+of+machine+learning"}, {"t": "Kaggle Learn", "u": "https://www.kaggle.com/learn"}], "skills": [
+     {"id": "supervised", "title": "Supervised learning", "detail": "Linear and logistic regression, kNN, SVM, decision trees. When to use which.", "status": "done", "evidence": ["Insurance Cost Prediction", "Product Sales Forecasting"]},
+     {"id": "features", "title": "Feature engineering", "detail": "Encoding, scaling, leakage, lag features, target encoding, feature selection.", "status": "done", "evidence": ["Product Sales Forecasting"]},
+     {"id": "evaluation", "title": "Model evaluation", "detail": "Train/val/test splits, cross-validation, precision/recall, ROC, calibration.", "status": "done", "evidence": ["FlipItNews Classification", "Network Anomaly Detection"]},
+     {"id": "ensembles", "title": "Tree ensembles", "detail": "Random forest, XGBoost, LightGBM, tuning with Optuna.", "status": "done", "evidence": ["Product Sales Forecasting"]},
+     {"id": "unsupervised", "title": "Unsupervised learning", "detail": "k-means, DBSCAN, PCA, UMAP, anomaly detection.", "status": "learning", "evidence": ["Network Anomaly Detection"]},
+     {"id": "sklearn", "title": "scikit-learn pipelines", "detail": "Pipelines, ColumnTransformer, custom transformers, model persistence.", "status": "done", "evidence": ["FlipItNews Classification"]},
+     {"id": "explain", "title": "Explainability", "detail": "SHAP, permutation importance, partial dependence. Explain a model to a PM.", "status": "todo"}
+    ]},
+    {"id": "dl", "title": "Deep learning", "short": "Deep learning", "summary": "Neural networks from the ground up, then the architectures that power modern AI, ending at the transformer.", "weeks": 5, "learn": [{"t": "Andrej Karpathy: Neural Networks, Zero to Hero", "u": "https://karpathy.ai/zero-to-hero.html"}, {"t": "Dive into Deep Learning", "u": "https://d2l.ai/"}], "skills": [
+     {"id": "nn", "title": "Neural nets and backprop", "detail": "Build a tiny autograd engine, then an MLP. Know what a gradient step does.", "status": "done", "evidence": ["Twitter NER"]},
+     {"id": "pytorch", "title": "PyTorch", "detail": "Tensors, autograd, Dataset/DataLoader, training loops, saving and loading.", "status": "learning"},
+     {"id": "cnn", "title": "CNNs and vision", "detail": "Convolutions, ResNets, transfer learning, image classification.", "status": "todo"},
+     {"id": "seq", "title": "Sequence models", "detail": "RNNs, LSTMs, BiLSTM-CRF for tagging.", "status": "done", "evidence": ["Twitter NER"]},
+     {"id": "transformers", "title": "Transformers and attention", "detail": "Self-attention, positional encodings, encoder vs decoder. Build a mini GPT.", "status": "done", "evidence": ["Twitter NER"]},
+     {"id": "training", "title": "Training at scale", "detail": "GPUs, mixed precision, gradient accumulation, distributed basics.", "status": "todo"}
+    ]},
+    {"id": "llm", "title": "LLM foundations", "short": "LLMs", "summary": "How large language models work and how to drive them well: tokens, embeddings, prompting, APIs and fine-tuning.", "weeks": 3, "learn": [{"t": "Hugging Face LLM Course", "u": "https://huggingface.co/learn/llm-course"}, {"t": "Chip Huyen: AI Engineering (book)", "u": "https://www.oreilly.com/library/view/ai-engineering/9781098166298/"}], "skills": [
+     {"id": "tokens", "title": "Tokenisation and text processing", "detail": "BPE, token counts, cleaning, lemmatisation, why tokens cost money.", "status": "done", "evidence": ["FlipItNews Classification"]},
+     {"id": "embeddings", "title": "Embeddings", "detail": "Sentence embeddings, similarity, choosing and evaluating an embedding model.", "status": "done", "evidence": ["RAG Hybrid Search", "AI Engineering Copilot"]},
+     {"id": "hf", "title": "Hugging Face ecosystem", "detail": "transformers, datasets, tokenizers, the Hub, pipelines.", "status": "done", "evidence": ["Twitter NER"]},
+     {"id": "prompting", "title": "Prompt engineering", "detail": "System prompts, few-shot, chain of thought, structured outputs, prompt versioning.", "status": "learning", "evidence": ["JobPilot"]},
+     {"id": "llm-apis", "title": "LLM APIs", "detail": "Claude, Gemini and OpenAI APIs: streaming, tool use, JSON mode, prompt caching, batching.", "status": "done", "evidence": ["AI Engineering Copilot"]},
+     {"id": "finetune", "title": "Fine-tuning LLMs", "detail": "LoRA and QLoRA, instruction data, when fine-tuning beats prompting.", "status": "todo"},
+     {"id": "local-llm", "title": "Open and local models", "detail": "Llama, Qwen, Mistral; Ollama and quantisation for running models locally.", "status": "todo"}
+    ]},
+    {"id": "apps", "title": "LLM applications", "short": "LLM apps", "summary": "The heart of the job: retrieval, agents and tools that turn a model into a product.", "weeks": 5, "learn": [{"t": "Model Context Protocol docs", "u": "https://modelcontextprotocol.io/"}, {"t": "Anthropic: Building effective agents", "u": "https://www.anthropic.com/engineering/building-effective-agents"}], "skills": [
+     {"id": "rag", "title": "Retrieval-augmented generation", "detail": "Chunking, indexing, retrieval, grounding answers with citations.", "status": "done", "evidence": ["AI Engineering Copilot"]},
+     {"id": "vectordb", "title": "Vector databases", "detail": "Qdrant, pgvector, FAISS. Filters, HNSW, payloads.", "status": "done", "evidence": ["AI Engineering Copilot", "RAG Hybrid Search"]},
+     {"id": "hybrid", "title": "Hybrid search and reranking", "detail": "BM25 + vectors, reciprocal rank fusion, cross-encoder rerankers.", "status": "learning", "evidence": ["RAG Hybrid Search"]},
+     {"id": "agents", "title": "Agents and tool use", "detail": "Tool calling, planning loops, memory, self-correction, human in the loop.", "status": "done", "evidence": ["AI Engineering Copilot", "JobPilot"]},
+     {"id": "frameworks", "title": "Agent frameworks", "detail": "LangGraph, LangChain, LlamaIndex, Claude Agent SDK: know one deeply.", "status": "learning", "evidence": ["Agentic AI App"]},
+     {"id": "mcp", "title": "Model Context Protocol", "detail": "Build MCP servers that expose tools and data to any AI client.", "status": "learning", "evidence": ["MCP Task Server"]},
+     {"id": "multimodal", "title": "Multimodal AI", "detail": "Vision inputs, document parsing, speech to text, image generation.", "status": "todo"},
+     {"id": "guardrails", "title": "Guardrails and safety", "detail": "Input/output validation, prompt-injection defence, PII handling, quality gates.", "status": "done", "evidence": ["AI Engineering Copilot"]}
+    ]},
+    {"id": "evals", "title": "Evals and reliability", "short": "Evals", "summary": "What separates demos from products: measuring quality, tracing failures and controlling cost.", "weeks": 2, "learn": [{"t": "Hamel Husain: Your AI product needs evals", "u": "https://hamel.dev/blog/posts/evals/"}], "skills": [
+     {"id": "llm-evals", "title": "LLM evals", "detail": "Golden datasets, LLM-as-judge, pairwise comparisons, regression suites in CI.", "status": "learning", "evidence": ["JobPilot"]},
+     {"id": "rag-evals", "title": "RAG evaluation", "detail": "Retrieval recall@k, faithfulness, answer relevance, RAGAS-style metrics.", "status": "learning", "evidence": ["RAG Hybrid Search"]},
+     {"id": "observability", "title": "Tracing and observability", "detail": "Langfuse, LangSmith or OpenTelemetry traces, logging prompts and costs.", "status": "done", "evidence": ["AI Engineering Copilot", "JobPilot"]},
+     {"id": "cost", "title": "Cost and latency", "detail": "Caching, streaming, model routing, batching, small models where they suffice.", "status": "todo"}
+    ]},
+    {"id": "prod", "title": "Shipping to production", "short": "Production", "summary": "Serve, containerise, deploy and monitor AI systems like a software engineer.", "weeks": 4, "learn": [{"t": "Made With ML", "u": "https://madewithml.com/"}, {"t": "Full Stack Deep Learning", "u": "https://fullstackdeeplearning.com/"}], "skills": [
+     {"id": "fastapi", "title": "APIs with FastAPI", "detail": "Pydantic models, async endpoints, streaming responses, auth.", "status": "done", "evidence": ["AI Engineering Copilot", "Twitter NER", "FlipItNews Classification"]},
+     {"id": "testing", "title": "Testing", "detail": "pytest, fixtures, mocking LLM calls, end-to-end tests with Playwright.", "status": "done", "evidence": ["FlipItNews Classification", "FitCheck"]},
+     {"id": "docker", "title": "Docker and Compose", "detail": "Images, multi-stage builds, Compose for app + vector DB.", "status": "done", "evidence": ["AI Engineering Copilot", "Twitter NER"]},
+     {"id": "cicd", "title": "CI/CD", "detail": "GitHub Actions: lint, test, build, deploy on every push.", "status": "done", "evidence": ["FitCheck", "JobPilot"]},
+     {"id": "cloud", "title": "Cloud deployment", "detail": "Deploy to AWS, GCP or Azure: containers, serverless, secrets, IAM basics.", "status": "todo"},
+     {"id": "k8s", "title": "Kubernetes basics", "detail": "Deployments, services, autoscaling for model servers.", "status": "learning", "evidence": ["Twitter NER"]},
+     {"id": "mlops", "title": "MLOps", "detail": "Experiment tracking (MLflow, W&B), model registry, data versioning.", "status": "todo"},
+     {"id": "serving", "title": "Model serving", "detail": "vLLM, TGI, batching and GPUs for self-hosted models.", "status": "todo"}
+    ]},
+    {"id": "career", "title": "System design and hiring", "short": "Hiring", "summary": "Turn the skills into an offer: design interviews, DSA, a sharp portfolio and lots of applications.", "weeks": 4, "learn": [{"t": "NeetCode 150", "u": "https://neetcode.io/practice"}, {"t": "Chip Huyen: Designing Machine Learning Systems", "u": "https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/"}], "skills": [
+     {"id": "ml-design", "title": "ML system design", "detail": "Design recommendation, search, fraud and ranking systems end to end.", "status": "todo"},
+     {"id": "ai-design", "title": "AI system design", "detail": "Design a RAG assistant, an agent platform, an eval pipeline under constraints.", "status": "learning"},
+     {"id": "dsa", "title": "DSA for interviews", "detail": "Arrays, hashing, two pointers, trees, graphs, DP. NeetCode 150.", "status": "todo"},
+     {"id": "portfolio", "title": "Portfolio with 3 flagship projects", "detail": "Live demos, clean READMEs, architecture diagrams and eval results.", "status": "learning", "evidence": ["Portfolio Website"]},
+     {"id": "resume", "title": "Resume and LinkedIn", "detail": "One page, impact numbers, AI engineer keywords, open to work.", "status": "todo"},
+     {"id": "mock", "title": "Mock interviews", "detail": "Technical, system design and behavioural rounds with feedback.", "status": "todo"},
+     {"id": "apply", "title": "Applications and outreach", "detail": "Targeted applications, referrals, recruiter messages every week.", "status": "todo"}
+    ]}
+   ],
+   "trackers": [
+    {"id": "deep-work", "title": "Deep-work hours", "sub": "Focused study and build time", "item": "Hour", "unit": "hours", "target": 500, "icon": "clock", "accent": "violet", "milestones": [50, 100, 250, 500], "quick": [1, 2], "log": []},
+    {"id": "projects", "title": "AI projects shipped", "sub": "Live, documented, on GitHub", "item": "Project", "unit": "projects", "target": 12, "icon": "rocket", "accent": "cyan", "milestones": [3, 6, 9, 12], "quick": [1], "ask": "title", "link": true, "log": [
+     {"date": "2026-07-10", "title": "Insurance Cost Prediction"},
+     {"date": "2026-07-13", "title": "Network Anomaly Detection"},
+     {"date": "2026-09-22", "title": "AI Engineering Copilot"},
+     {"date": "2026-10-26", "title": "Twitter NER"},
+     {"date": "2026-10-27", "title": "FlipItNews Classification"},
+     {"date": "2026-10-27", "title": "FitCheck"},
+     {"date": "2026-10-31", "title": "Product Sales Forecasting"}
+    ]},
+    {"id": "dsa", "title": "DSA problems", "sub": "NeetCode 150 for coding rounds", "item": "Problem", "unit": "problems", "target": 150, "icon": "code", "accent": "emerald", "milestones": [25, 50, 100, 150], "quick": [1, 3], "log": []},
+    {"id": "papers", "title": "AI papers read", "sub": "Attention, RAG, agents, evals", "item": "Paper", "unit": "papers", "target": 50, "icon": "paper", "accent": "saffron", "milestones": [10, 25, 50], "quick": [1], "ask": "title", "link": true, "log": []},
+    {"id": "mocks", "title": "Mock interviews", "sub": "Technical, design and behavioural", "item": "Mock", "unit": "mocks", "target": 20, "icon": "mic", "accent": "lotus", "milestones": [5, 10, 20], "quick": [1], "ask": "optional", "log": []},
+    {"id": "applications", "title": "Applications sent", "item": "Application", "unit": "applications", "target": 50, "icon": "send", "accent": "violet", "milestones": [10, 25, 50], "quick": [1, 5], "ask": "optional", "funnel": true, "log": []},
+    {"id": "interviews", "title": "Interviews", "item": "Interview", "unit": "interviews", "target": 10, "icon": "chat", "accent": "cyan", "milestones": [1, 5, 10], "quick": [1], "ask": "optional", "funnel": true, "log": []},
+    {"id": "offers", "title": "Offers", "item": "Offer", "unit": "offers", "target": 1, "icon": "trophy", "accent": "emerald", "milestones": [1], "quick": [1], "ask": "optional", "funnel": true, "score": false, "log": []}
+   ]
+  },
+  {
+   "id": "data-analyst",
+   "title": "Data Analyst",
+   "role": "Data Analyst",
+   "article": "a",
+   "accent": "cyan",
+   "icon": "chart",
+   "tagline": "Turn messy data into decisions with SQL, statistics, dashboards and clear stories.",
+   "goal": "Job-ready as a data analyst",
+   "weekly_hours": 10,
+   "hours": "da-hours",
+   "levels": ["Curious", "Apprentice", "Querier", "Analyst", "Insight lead", "Hire-ready"],
+   "stages": [
+    {"id": "excel", "title": "Spreadsheets and business sense", "short": "Excel", "summary": "Where most analysis still starts: Excel, the metrics a business runs on, and asking the right question.", "weeks": 2, "learn": [{"t": "Excel skills for business (Coursera)", "u": "https://www.coursera.org/specializations/excel"}], "skills": [
+     {"id": "excel-core", "title": "Excel essentials", "detail": "XLOOKUP, IF/IFS, SUMIFS, text and date functions, data validation.", "status": "todo"},
+     {"id": "pivots", "title": "Pivot tables and charts", "detail": "Pivot tables, slicers, pivot charts, quick summaries.", "status": "todo"},
+     {"id": "excel-dash", "title": "Excel dashboards", "detail": "A one-page KPI dashboard with dynamic ranges and slicers.", "status": "todo"},
+     {"id": "kpis", "title": "Business metrics and KPIs", "detail": "Revenue, margin, CAC, LTV, churn, conversion, retention.", "status": "learning", "evidence": ["Walmart Black Friday Clt Analysis"]},
+     {"id": "framing", "title": "Problem framing", "detail": "Turn a vague ask into a question, a metric and a decision.", "status": "learning", "evidence": ["Aerofit Customer Analysis"]}
+    ]},
+    {"id": "sql", "title": "SQL", "short": "SQL", "summary": "The analyst's daily language. Fluency here wins most interviews on its own.", "weeks": 4, "learn": [{"t": "SQLBolt", "u": "https://sqlbolt.com/"}, {"t": "LeetCode: Top SQL 50", "u": "https://leetcode.com/studyplan/top-sql-50/"}, {"t": "Mode SQL tutorial", "u": "https://mode.com/sql-tutorial/"}], "skills": [
+     {"id": "select", "title": "SELECT, filter, aggregate", "detail": "WHERE, GROUP BY, HAVING, ORDER BY, CASE WHEN.", "status": "learning", "evidence": ["Target Brazil Sql Case Study"]},
+     {"id": "joins", "title": "Joins", "detail": "Inner, left, self and anti joins; avoiding duplicate rows.", "status": "learning", "evidence": ["Target Brazil Sql Case Study"]},
+     {"id": "ctes", "title": "Subqueries and CTEs", "detail": "Readable multi-step queries with WITH.", "status": "todo"},
+     {"id": "windows", "title": "Window functions", "detail": "ROW_NUMBER, RANK, LAG/LEAD, running totals, moving averages.", "status": "todo"},
+     {"id": "dates", "title": "Dates and strings in SQL", "detail": "DATE_TRUNC, intervals, cohorts by month, string cleaning.", "status": "todo"},
+     {"id": "perf", "title": "Query performance", "detail": "Indexes, EXPLAIN, avoiding SELECT *, partitioned tables.", "status": "todo"}
+    ]},
+    {"id": "stats", "title": "Statistics", "short": "Stats", "summary": "Knowing when a difference is real. The part that makes an analyst trustworthy.", "weeks": 3, "learn": [{"t": "Khan Academy: Statistics and probability", "u": "https://www.khanacademy.org/math/statistics-probability"}], "skills": [
+     {"id": "descriptive", "title": "Descriptive statistics", "detail": "Mean, median, spread, percentiles, outliers, distributions.", "status": "done", "evidence": ["Aerofit Customer Analysis"]},
+     {"id": "probability", "title": "Probability", "detail": "Conditional probability, marginal tables, Bayes in practice.", "status": "done", "evidence": ["Aerofit Customer Analysis"]},
+     {"id": "hypothesis", "title": "Hypothesis testing", "detail": "t-tests, chi-square, ANOVA, p-values and what they do not mean.", "status": "done", "evidence": ["Insurance Cost Prediction", "Yulu Hypothesis Testing"]},
+     {"id": "ci", "title": "Confidence intervals and CLT", "detail": "Sampling distributions, bootstrap, margin of error.", "status": "done", "evidence": ["Walmart Black Friday Clt Analysis"]},
+     {"id": "ab", "title": "A/B testing", "detail": "Experiment design, sample size, power, guardrail metrics.", "status": "todo"},
+     {"id": "regression", "title": "Regression analysis", "detail": "Linear regression, interpreting coefficients, assumptions.", "status": "done", "evidence": ["Insurance Cost Prediction"]}
+    ]},
+    {"id": "python", "title": "Python for analysis", "short": "Python", "summary": "Repeatable analysis that scales past what a spreadsheet can hold.", "weeks": 3, "learn": [{"t": "Kaggle Learn: pandas", "u": "https://www.kaggle.com/learn/pandas"}], "skills": [
+     {"id": "pandas", "title": "pandas", "detail": "Loading, cleaning, merging, groupby, pivot, time series.", "status": "done", "evidence": ["Aerofit Customer Analysis", "Netflix Content Strategy Analysis"]},
+     {"id": "cleaning", "title": "Data cleaning", "detail": "Missing values, types, duplicates, outliers, tidy data.", "status": "done", "evidence": ["Aerofit Customer Analysis"]},
+     {"id": "eda", "title": "Exploratory data analysis", "detail": "Univariate, bivariate, segment comparisons, writing up insights.", "status": "done", "evidence": ["Aerofit Customer Analysis", "Insurance Cost Prediction"]},
+     {"id": "viz", "title": "Visualisation in Python", "detail": "Matplotlib, Seaborn, Plotly. Charts that answer one question each.", "status": "done", "evidence": ["Aerofit Customer Analysis"]},
+     {"id": "notebooks", "title": "Notebooks to reports", "detail": "Clean Jupyter notebooks, exported reports, reproducible runs.", "status": "done", "evidence": ["Aerofit Customer Analysis"]}
+    ]},
+    {"id": "bi", "title": "BI and storytelling", "short": "BI", "summary": "Dashboards people actually open, and the story that makes them act.", "weeks": 4, "learn": [{"t": "Microsoft Learn: Power BI", "u": "https://learn.microsoft.com/en-us/training/powerplatform/power-bi"}, {"t": "Tableau free training", "u": "https://www.tableau.com/learn/training"}], "skills": [
+     {"id": "tableau", "title": "Tableau", "detail": "Calculated fields, LOD expressions, parameters, dashboard actions.", "status": "done", "evidence": ["Product Sales Forecasting", "Network Anomaly Detection", "Insurance Cost Prediction"]},
+     {"id": "powerbi", "title": "Power BI", "detail": "Power Query, data model, DAX measures, publishing.", "status": "todo"},
+     {"id": "dax", "title": "DAX", "detail": "CALCULATE, filter context, time intelligence.", "status": "todo"},
+     {"id": "dash-design", "title": "Dashboard design", "detail": "Layout, hierarchy, colour, one decision per view.", "status": "learning"},
+     {"id": "story", "title": "Data storytelling", "detail": "Lead with the answer, show the evidence, recommend an action.", "status": "learning", "evidence": ["Netflix Content Insights"]}
+    ]},
+    {"id": "business", "title": "Analytics in the business", "short": "Business", "summary": "The analyses companies hire for: funnels, retention, segments and forecasts.", "weeks": 4, "skills": [
+     {"id": "product", "title": "Product analytics", "detail": "Funnels, activation, DAU/MAU, feature adoption.", "status": "todo"},
+     {"id": "cohorts", "title": "Cohorts and retention", "detail": "Cohort tables, retention curves, churn analysis.", "status": "todo"},
+     {"id": "segmentation", "title": "Customer segmentation", "detail": "RFM, profiling, clustering customers into actionable groups.", "status": "learning", "evidence": ["Aerofit Customer Analysis"]},
+     {"id": "forecasting", "title": "Forecasting", "detail": "Trend and seasonality, moving averages, ML forecasts.", "status": "done", "evidence": ["Product Sales Forecasting"]},
+     {"id": "marketing", "title": "Marketing analytics", "detail": "Attribution, campaign ROI, CAC by channel.", "status": "todo"}
+    ]},
+    {"id": "data-eng", "title": "Data engineering basics", "short": "Data eng", "summary": "Enough modern data stack to own your pipelines end to end.", "weeks": 2, "learn": [{"t": "dbt Learn", "u": "https://learn.getdbt.com/"}], "skills": [
+     {"id": "modeling", "title": "Data modelling", "detail": "Star schema, facts and dimensions, grain.", "status": "todo"},
+     {"id": "dbt", "title": "ETL and dbt", "detail": "Transform in the warehouse, tests, documentation.", "status": "todo"},
+     {"id": "warehouse", "title": "Cloud warehouses", "detail": "BigQuery or Snowflake: loading, costs, partitions.", "status": "todo"},
+     {"id": "git-da", "title": "Git for analysts", "detail": "Version your SQL and notebooks; PRs for analysis.", "status": "done", "evidence": ["Portfolio Website"]}
+    ]},
+    {"id": "job", "title": "Portfolio and job hunt", "short": "Job", "summary": "Proof of work and the interview loop: SQL rounds, case studies and take-homes.", "weeks": 3, "learn": [{"t": "Google Data Analytics Certificate", "u": "https://grow.google/certificates/data-analytics/"}], "skills": [
+     {"id": "case-studies", "title": "Five polished case studies", "detail": "Business question, method, insight, recommendation, dashboard.", "status": "learning", "evidence": ["Aerofit Customer Analysis", "Target Brazil Sql Case Study", "Walmart Black Friday Clt Analysis"]},
+     {"id": "da-resume", "title": "Analyst resume and LinkedIn", "detail": "Impact bullets with numbers; tools section that matches postings.", "status": "todo"},
+     {"id": "sql-rounds", "title": "SQL interview rounds", "detail": "Timed medium/hard SQL, explaining your query out loud.", "status": "todo"},
+     {"id": "case-rounds", "title": "Case interviews", "detail": "Metric drops, root-cause, product sense questions.", "status": "todo"},
+     {"id": "certs", "title": "A recognised certificate", "detail": "Google Data Analytics, PL-300 or Tableau certification.", "status": "todo"}
+    ]}
+   ],
+   "trackers": [
+    {"id": "sql-problems", "title": "SQL problems", "sub": "LeetCode, StrataScratch, DataLemur", "item": "Problem", "unit": "problems", "target": 200, "icon": "database", "accent": "cyan", "milestones": [25, 50, 100, 200], "quick": [1, 5], "log": []},
+    {"id": "dashboards", "title": "Dashboards built", "sub": "Tableau, Power BI, Excel", "item": "Dashboard", "unit": "dashboards", "target": 15, "icon": "chart", "accent": "violet", "milestones": [5, 10, 15], "quick": [1], "ask": "title", "link": true, "log": [
+     {"date": "2026-07-10", "title": "Insurance premiums (Tableau)"},
+     {"date": "2026-07-13", "title": "Network anomaly monitoring (Tableau)"},
+     {"date": "2026-10-31", "title": "Sales forecasting (Tableau)"}
+    ]},
+    {"id": "case-studies", "title": "Case studies published", "sub": "Question → insight → recommendation", "item": "Case study", "unit": "case studies", "target": 20, "icon": "briefcase", "accent": "emerald", "milestones": [5, 10, 20], "quick": [1], "ask": "title", "link": true, "log": [
+     {"date": "2026-07-28", "title": "Aerofit customer profiling"}
+    ]},
+    {"id": "da-hours", "title": "Study hours", "sub": "Focused practice time", "item": "Hour", "unit": "hours", "target": 300, "icon": "clock", "accent": "saffron", "milestones": [50, 150, 300], "quick": [1, 2], "log": []},
+    {"id": "da-certs", "title": "Certificates", "sub": "Google DA, PL-300, Tableau", "item": "Certificate", "unit": "certificates", "target": 3, "icon": "badge", "accent": "lotus", "milestones": [1, 2, 3], "quick": [1], "ask": "title", "link": true, "log": []},
+    {"id": "da-applications", "title": "Applications sent", "item": "Application", "unit": "applications", "target": 40, "icon": "send", "accent": "cyan", "milestones": [10, 20, 40], "quick": [1, 5], "ask": "optional", "funnel": true, "log": []},
+    {"id": "da-interviews", "title": "Interviews", "item": "Interview", "unit": "interviews", "target": 8, "icon": "chat", "accent": "violet", "milestones": [1, 4, 8], "quick": [1], "ask": "optional", "funnel": true, "log": []},
+    {"id": "da-offers", "title": "Offers", "item": "Offer", "unit": "offers", "target": 1, "icon": "trophy", "accent": "emerald", "milestones": [1], "quick": [1], "ask": "optional", "funnel": true, "score": false, "log": []}
+   ]
+  },
+  {
+   "id": "comp-designer",
+   "title": "Computational Designer",
+   "role": "Computational Designer",
+   "article": "a",
+   "accent": "emerald",
+   "icon": "leaf",
+   "subtitle": "Architect · Sustainable designer",
+   "tagline": "Design buildings with code and climate data: parametric tools, simulation and low-carbon thinking.",
+   "goal": "Portfolio-ready computational and sustainable designer",
+   "weekly_hours": 10,
+   "hours": "cd-hours",
+   "levels": ["Curious", "Sketcher", "Modeller", "Parametric", "Computational", "Studio-ready"],
+   "stages": [
+    {"id": "design", "title": "Design foundations", "short": "Design", "summary": "Think and draw like an architect: space, light, structure and materials.", "weeks": 4, "learn": [{"t": "Ching: Architecture, Form, Space and Order", "u": "https://www.wiley.com/en-us/Architecture%3A+Form%2C+Space%2C+and+Order%2C+5th+Edition-p-9781119853374"}], "skills": [
+     {"id": "drawing", "title": "Architectural drawing", "detail": "Plans, sections, elevations, scale, line weights, axonometrics.", "status": "todo"},
+     {"id": "principles", "title": "Design principles", "detail": "Proportion, rhythm, hierarchy, circulation, spatial sequence.", "status": "todo"},
+     {"id": "construction", "title": "Building construction", "detail": "Structure, envelope, assemblies, how buildings are actually made.", "status": "todo"},
+     {"id": "materials", "title": "Materials and their impact", "detail": "Timber, concrete, steel, earth, bamboo; embodied carbon of each.", "status": "todo"},
+     {"id": "cad", "title": "AutoCAD 2D", "detail": "Layers, blocks, xrefs, clean drawing sets.", "status": "todo"},
+     {"id": "precedents", "title": "Precedent studies", "detail": "Analyse 10 great buildings: diagrams of form, light and climate.", "status": "todo"}
+    ]},
+    {"id": "modeling", "title": "3D modelling and visualisation", "short": "Modelling", "summary": "From sketch to model to image: the tools every design studio expects.", "weeks": 3, "learn": [{"t": "Rhino learning resources", "u": "https://www.rhino3d.com/learn/"}], "skills": [
+     {"id": "rhino", "title": "Rhino NURBS modelling", "detail": "Curves, surfaces, solids, Make2D, clean geometry.", "status": "todo"},
+     {"id": "sketchup", "title": "Massing and SketchUp", "detail": "Fast concept massing and site models.", "status": "todo"},
+     {"id": "render", "title": "Rendering", "detail": "Enscape, V-Ray or Twinmotion: lighting, materials, cameras.", "status": "todo"},
+     {"id": "present", "title": "Presentation graphics", "detail": "Illustrator, Photoshop and InDesign for boards and portfolios.", "status": "todo"}
+    ]},
+    {"id": "parametric", "title": "Parametric design", "short": "Parametric", "summary": "Design with rules instead of lines. Grasshopper is the industry standard.", "weeks": 5, "learn": [{"t": "Grasshopper", "u": "https://www.grasshopper3d.com/"}, {"t": "Food4Rhino plugins", "u": "https://www.food4rhino.com/"}], "skills": [
+     {"id": "gh-basics", "title": "Grasshopper basics", "detail": "Components, lists, domains, series, the data flow mindset.", "status": "todo"},
+     {"id": "data-trees", "title": "Data trees", "detail": "Branches, paths, graft, flatten, simplify. The key unlock.", "status": "todo"},
+     {"id": "patterns", "title": "Parametric patterns and facades", "detail": "Attractor points, panelling, Voronoi, perforated skins.", "status": "todo"},
+     {"id": "form-finding", "title": "Form-finding", "detail": "Kangaroo physics: tensile, gridshells, relaxation.", "status": "todo"},
+     {"id": "meshes", "title": "Meshes and subdivision", "detail": "Weaverbird, mesh smoothing, mesh to fabrication.", "status": "todo"},
+     {"id": "plugins", "title": "Plugin ecosystem", "detail": "Lunchbox, Pufferfish, Human, Elefront from Food4Rhino.", "status": "todo"}
+    ]},
+    {"id": "scripting", "title": "Computational scripting", "short": "Scripting", "summary": "Where your programming background becomes a superpower in design.", "weeks": 3, "learn": [{"t": "Rhino developer docs", "u": "https://developer.rhino3d.com/"}, {"t": "Speckle", "u": "https://speckle.systems/"}], "skills": [
+     {"id": "gh-python", "title": "Python in Rhino and Grasshopper", "detail": "GhPython / Python 3 components, rhinoscriptsyntax, RhinoCommon.", "status": "learning", "evidence": ["Python Learn"]},
+     {"id": "csharp", "title": "C# scripting", "detail": "C# components and simple Grasshopper plugins.", "status": "todo"},
+     {"id": "geometry", "title": "Computational geometry", "detail": "Vectors, planes, transforms, curve and surface evaluation.", "status": "todo"},
+     {"id": "web-3d", "title": "Web and data exchange", "detail": "Rhino.Compute, Hops, Speckle, three.js for sharing models online.", "status": "todo"}
+    ]},
+    {"id": "bim", "title": "BIM", "short": "BIM", "summary": "How real buildings get documented and delivered.", "weeks": 3, "learn": [{"t": "DynamoBIM", "u": "https://dynamobim.org/"}], "skills": [
+     {"id": "revit", "title": "Revit modelling", "detail": "Walls, floors, families, views, sheets, schedules.", "status": "todo"},
+     {"id": "dynamo", "title": "Dynamo for Revit", "detail": "Automate Revit with visual scripts and Python nodes.", "status": "todo"},
+     {"id": "rir", "title": "Rhino.Inside.Revit and IFC", "detail": "Move parametric geometry into BIM; open standards.", "status": "todo"}
+    ]},
+    {"id": "analysis", "title": "Environmental analysis", "short": "Analysis", "summary": "Simulate sun, daylight, energy, wind and comfort before anything is built.", "weeks": 5, "learn": [{"t": "Ladybug Tools", "u": "https://www.ladybug.tools/"}, {"t": "EnergyPlus", "u": "https://energyplus.net/"}], "skills": [
+     {"id": "climate", "title": "Climate analysis", "detail": "EPW weather files, sun paths, wind roses, psychrometric charts in Ladybug.", "status": "todo"},
+     {"id": "radiation", "title": "Solar radiation and shading", "detail": "Radiation studies, shadow hours, shading device design.", "status": "todo"},
+     {"id": "daylight", "title": "Daylight simulation", "detail": "Honeybee-Radiance: daylight factor, sDA, ASE, glare.", "status": "todo"},
+     {"id": "energy", "title": "Energy modelling", "detail": "Honeybee-Energy with EnergyPlus/OpenStudio: loads, EUI.", "status": "todo"},
+     {"id": "cfd", "title": "Wind and CFD", "detail": "Outdoor wind comfort and natural ventilation (Eddy3D, Butterfly).", "status": "todo"},
+     {"id": "comfort", "title": "Thermal comfort", "detail": "UTCI, PMV, adaptive comfort maps.", "status": "todo"}
+    ]},
+    {"id": "sustainable", "title": "Sustainable design", "short": "Sustainable", "summary": "Design buildings that use less, emit less and feel better, and prove it.", "weeks": 4, "learn": [{"t": "USGBC: LEED Green Associate", "u": "https://www.usgbc.org/credentials/leed-green-associate"}, {"t": "IGBC", "u": "https://igbc.in/"}, {"t": "GRIHA", "u": "https://www.grihaindia.org/"}], "skills": [
+     {"id": "passive", "title": "Passive design strategies", "detail": "Orientation, shading, thermal mass, cross ventilation for hot-humid India.", "status": "todo"},
+     {"id": "ratings", "title": "Green rating systems", "detail": "LEED, IGBC and GRIHA: credits, documentation, process.", "status": "todo"},
+     {"id": "ecbc", "title": "Energy codes", "detail": "ECBC (India), ASHRAE 90.1 basics, compliance paths.", "status": "todo"},
+     {"id": "lca", "title": "Embodied carbon and LCA", "detail": "Whole-life carbon with One Click LCA or EC3.", "status": "todo"},
+     {"id": "netzero", "title": "Net zero and renewables", "detail": "Load reduction first, then solar PV sizing and offsets.", "status": "todo"},
+     {"id": "water", "title": "Water and site", "detail": "Rainwater harvesting, landscape, heat island mitigation.", "status": "todo"}
+    ]},
+    {"id": "optimise", "title": "Optimisation and AI for design", "short": "Opt + AI", "summary": "Your edge: combine machine learning with design to explore thousands of options.", "weeks": 4, "learn": [{"t": "Wallacei", "u": "https://www.wallacei.com/"}], "skills": [
+     {"id": "moo", "title": "Multi-objective optimisation", "detail": "Galapagos, Wallacei, Octopus: trade off daylight, energy and cost.", "status": "todo"},
+     {"id": "surrogate", "title": "ML surrogate models", "detail": "Train models that predict simulation results in milliseconds.", "status": "learning", "evidence": ["Product Sales Forecasting"]},
+     {"id": "genai-design", "title": "Generative AI for design", "detail": "Diffusion models, ControlNet, image-to-3D for concept exploration.", "status": "todo"},
+     {"id": "fabrication", "title": "Digital fabrication", "detail": "Laser cutting, 3D printing, CNC, robotic fabrication basics.", "status": "todo"}
+    ]},
+    {"id": "practice", "title": "Portfolio and practice", "short": "Portfolio", "summary": "Show your process and land a role in a design, consulting or sustainability firm.", "weeks": 3, "skills": [
+     {"id": "cd-portfolio", "title": "Computational design portfolio", "detail": "Process diagrams, scripts, simulation results, final images.", "status": "todo"},
+     {"id": "cd-cases", "title": "Three case studies with metrics", "detail": "Before/after energy, daylight or carbon numbers for each.", "status": "todo"},
+     {"id": "community", "title": "Community and visibility", "detail": "Share definitions online, join hackathons and AEC tech meetups.", "status": "todo"},
+     {"id": "cd-apply", "title": "Applications to studios and consultancies", "detail": "Computational designer, sustainability analyst, BIM specialist roles.", "status": "todo"}
+    ]}
+   ],
+   "trackers": [
+    {"id": "gh-definitions", "title": "Grasshopper definitions", "sub": "100 days of parametric design", "item": "Definition", "unit": "definitions", "target": 100, "icon": "grid", "accent": "emerald", "milestones": [10, 25, 50, 100], "quick": [1], "ask": "optional", "link": true, "log": []},
+    {"id": "simulations", "title": "Environmental simulations", "sub": "Daylight, energy, wind, comfort", "item": "Simulation", "unit": "simulations", "target": 50, "icon": "sun", "accent": "saffron", "milestones": [10, 25, 50], "quick": [1], "ask": "optional", "log": []},
+    {"id": "design-studies", "title": "Design studies and renders", "sub": "Massing, facades, visuals", "item": "Study", "unit": "studies", "target": 60, "icon": "cube", "accent": "cyan", "milestones": [10, 30, 60], "quick": [1], "ask": "optional", "link": true, "log": []},
+    {"id": "cd-portfolio", "title": "Portfolio projects", "sub": "Finished, documented pieces", "item": "Project", "unit": "projects", "target": 8, "icon": "layers", "accent": "violet", "milestones": [3, 5, 8], "quick": [1], "ask": "title", "link": true, "log": []},
+    {"id": "cd-hours", "title": "Practice hours", "sub": "Rhino, Grasshopper, simulation", "item": "Hour", "unit": "hours", "target": 400, "icon": "clock", "accent": "lotus", "milestones": [50, 200, 400], "quick": [1, 2], "log": []},
+    {"id": "green-certs", "title": "Green certifications", "sub": "LEED GA, IGBC AP or GRIHA CP", "item": "Certification", "unit": "certifications", "target": 2, "icon": "leaf", "accent": "emerald", "milestones": [1, 2], "quick": [1], "ask": "title", "log": []},
+    {"id": "cd-applications", "title": "Applications sent", "item": "Application", "unit": "applications", "target": 30, "icon": "send", "accent": "emerald", "milestones": [10, 20, 30], "quick": [1, 5], "ask": "optional", "funnel": true, "log": []},
+    {"id": "cd-interviews", "title": "Interviews", "item": "Interview", "unit": "interviews", "target": 6, "icon": "chat", "accent": "cyan", "milestones": [1, 3, 6], "quick": [1], "ask": "optional", "funnel": true, "log": []},
+    {"id": "cd-offers", "title": "Offers", "item": "Offer", "unit": "offers", "target": 1, "icon": "trophy", "accent": "violet", "milestones": [1], "quick": [1], "ask": "optional", "funnel": true, "score": false, "log": []}
+   ]
+  }
+ ]
+}
