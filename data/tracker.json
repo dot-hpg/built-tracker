@@ -205,10 +205,10 @@
    "week": 3,
    "project": "Data Analyst Website",
    "category": "AI agents & LLM apps",
-   "focus": "Build data analyst portfolio website",
+   "focus": "Point site metadata, sitemap and README at the Vercel URL; Publish the site to the gh-pages branch; Build data analyst portfolio website",
    "level": "Expert",
    "status": "Today",
-   "commits": 1,
+   "commits": 3,
    "plan_project": "GraphRAG",
    "plan_focus": "Knowledge graph over research papers in Neo4j with graph plus vector retrieval"
   },
