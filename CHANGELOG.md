@@ -2,6 +2,16 @@
 
 Each version is frozen on a `release/vN` branch. `main` is the live site, and the automatic activity logs and new videos land there between versions.
 
+## v13 (2026-11-11)
+
+New tracker: 1,000 Philosophy Posts (Insta Post Philosophy).
+
+- Added from your post tracker: 24 of 1,000 posts (2.4%). All 24 titles are in, and posts 18 to 24 are saved with their full text. Post 22 is "The Art of Discovering Your Own Pleasure", which replaced the earlier "You Can't Explain What You Never Explored".
+- A "Read the posts" reader on the tracker page opens on the latest post. Arrows step through every post, and tapping any post in the list opens it in the reader.
+- "The wall of 1,000" lights one square per post, with milestones at 50, 100, 250, 500, 750 and 1,000.
+- "Log a post" opens a sheet already numbered with the next post (#025). Type the title, optionally paste the full caption (it shows a word count), and add it. Search covers titles and text.
+- It has its own indigo colour and a post icon.
+
 ## v12 (2026-11-11)
 
 - Removed the 48-day plan page: its sidebar item, the Plan button in the phone dock, the `#plan` route and the 48-day build tracker table with its search and filters. An old `#plan` link now opens Goals.

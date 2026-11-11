@@ -520,8 +520,9 @@ svg { flex: 0 0 auto; }
 .tk-saffron { --a1: #ff8a00; --a2: #e8341c; --ink: #c2410c; }
 .tk-lotus { --a1: #f472b6; --a2: #8b5cf6; --ink: #be185d; }
 .tk-dawn { --a1: #fbbf24; --a2: #f43f5e; --ink: #b45309; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tk-violet { --ink: #a99fff; } :root:not([data-theme="light"]) .tk-cyan { --ink: #5fd8ee; } :root:not([data-theme="light"]) .tk-saffron { --ink: #ffa45c; } :root:not([data-theme="light"]) .tk-emerald { --ink: #4ade80; } :root:not([data-theme="light"]) .tk-lotus { --ink: #f9a8d4; } :root:not([data-theme="light"]) .tk-dawn { --ink: #fcd34d; } }
-:root[data-theme="dark"] .tk-violet { --ink: #a99fff; } :root[data-theme="dark"] .tk-cyan { --ink: #5fd8ee; } :root[data-theme="dark"] .tk-saffron { --ink: #ffa45c; } :root[data-theme="dark"] .tk-emerald { --ink: #4ade80; } :root[data-theme="dark"] .tk-lotus { --ink: #f9a8d4; } :root[data-theme="dark"] .tk-dawn { --ink: #fcd34d; }
+.tk-indigo { --a1: #38bdf8; --a2: #6366f1; --ink: #4338ca; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tk-violet { --ink: #a99fff; } :root:not([data-theme="light"]) .tk-cyan { --ink: #5fd8ee; } :root:not([data-theme="light"]) .tk-saffron { --ink: #ffa45c; } :root:not([data-theme="light"]) .tk-emerald { --ink: #4ade80; } :root:not([data-theme="light"]) .tk-lotus { --ink: #f9a8d4; } :root:not([data-theme="light"]) .tk-dawn { --ink: #fcd34d; } :root:not([data-theme="light"]) .tk-indigo { --ink: #a5b4fc; } }
+:root[data-theme="dark"] .tk-violet { --ink: #a99fff; } :root[data-theme="dark"] .tk-cyan { --ink: #5fd8ee; } :root[data-theme="dark"] .tk-saffron { --ink: #ffa45c; } :root[data-theme="dark"] .tk-emerald { --ink: #4ade80; } :root[data-theme="dark"] .tk-lotus { --ink: #f9a8d4; } :root[data-theme="dark"] .tk-dawn { --ink: #fcd34d; } :root[data-theme="dark"] .tk-indigo { --ink: #a5b4fc; }
 .tk-root { display: grid; gap: 22px; }
 .tk-mono { font-family: var(--font-mono); }
 .tk-hero { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
@@ -632,6 +633,32 @@ svg { flex: 0 0 auto; }
 .tk-vb.dense > div:not(:nth-child(5n + 1)) .x { visibility: hidden; }
 .tk-vb.dense .c i { border-radius: 4px 4px 2px 2px; }
 .tk-vb .x { font-family: var(--font-mono); font-size: .56rem; letter-spacing: -.03em; color: var(--color-fg-muted); text-align: center; white-space: nowrap; overflow: hidden; }
+.tk-wall { display: grid; grid-template-columns: repeat(50, minmax(0, 1fr)); gap: 2px; margin-top: 12px; }
+@media (min-width: 1000px) { .tk-wall { grid-template-columns: repeat(100, minmax(0, 1fr)); } }
+.tk-wall i { aspect-ratio: 1; border-radius: 2px; background: color-mix(in srgb, var(--track) 75%, transparent); }
+.tk-wall i.on { background: linear-gradient(135deg, var(--a1), var(--a2)); box-shadow: 0 0 6px -1px color-mix(in srgb, var(--a2) 70%, transparent); }
+.tk-wall i.nx { background: none; box-shadow: inset 0 0 0 1px var(--ink); animation: tkPulse 1.6s ease-in-out infinite; }
+.tk-wall i.mi:not(.on) { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 55%, transparent); }
+@keyframes tkPulse { 50% { opacity: .35; } }
+.tk-wallk { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 10px; font-size: .74rem; color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+.tk-reader { grid-column: 1 / -1; }
+.tk-rd-top { display: flex; align-items: center; gap: 10px; margin: 6px 0 14px; flex-wrap: wrap; }
+.tk-rd-no { font: 700 .78rem var(--font-mono, ui-monospace, monospace); color: var(--ink); padding: 4px 9px; border-radius: 999px; background: color-mix(in srgb, var(--a1) 14%, transparent); }
+.tk-rd-nav { margin-left: auto; display: flex; gap: 6px; }
+.tk-rd-nav button { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--line-soft); background: none; color: var(--color-fg); cursor: pointer; display: grid; place-items: center; }
+.tk-rd-nav button:disabled { opacity: .35; cursor: default; }
+.tk-rd-nav svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.tk-rd h3 { font-size: clamp(1.3rem, 2.4vw, 1.75rem); line-height: 1.2; margin: 0 0 14px; letter-spacing: -.01em; }
+.tk-rd-body { max-width: 68ch; }
+.tk-rd-body p { margin: 0 0 1em; line-height: 1.7; white-space: pre-line; color: var(--color-fg); font-size: 1rem; }
+.tk-rd-none { color: var(--color-fg-muted); font-style: italic; }
+.tk-rd.is-in { animation: tkRdIn .35s ease both; }
+@keyframes tkRdIn { from { opacity: 0; transform: translateY(6px); } }
+.tk-all li.can-read, .tk-recent li.can-read { cursor: pointer; }
+.tk-all li.can-read:hover, .tk-recent li.can-read:hover { border-color: color-mix(in srgb, var(--a1) 45%, transparent); }
+.lg-f textarea { width: 100%; box-sizing: border-box; min-height: 150px; resize: vertical; font: inherit; line-height: 1.55; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line-soft); background: color-mix(in srgb, var(--track) 40%, transparent); color: var(--color-fg); }
+.lg-f textarea:focus { outline: 2px solid color-mix(in srgb, var(--a1) 60%, transparent); outline-offset: 1px; }
+.lg-hint { font-size: .74rem; color: var(--color-fg-muted); margin: 6px 0 0; }
 .tk-mala { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 7px; margin-top: 8px; }
 .tk-bead { aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: .58rem; color: var(--color-fg-muted); background: var(--track); border: 1px solid var(--line-soft); transition: transform .2s; }
 .tk-bead.is-done { color: #fff; font-weight: 700; background: radial-gradient(circle at 35% 30%, var(--a1), var(--a2)); border-color: transparent; box-shadow: 0 4px 14px -4px var(--a2); }
@@ -1720,6 +1747,7 @@ dash.draw('updated', (el) => {
     leaf: '<svg viewBox="0 0 24 24"><path d="M5.5 19.5C5 11 10 5 19.5 4.5 19.5 14 14 19.5 5.5 19.5z"/><path d="M5.5 19.5c3-4.5 6.5-7.5 10-9.5"/></svg>',
     books: '<svg viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg>',
     movies: '<svg viewBox="0 0 24 24"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9M12.4 3.4l3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>',
+    posts: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6"/></svg>',
     sunrise: '<svg viewBox="0 0 24 24"><path d="M12 2v5M4.9 9.9l1.4 1.4M2 17h2M20 17h2M17.7 11.3l1.4-1.4M22 21H2M8 17a4 4 0 0 1 8 0"/><path d="m9 5 3-3 3 3"/></svg>',
     meditation: '<svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.2"/><path d="M12 8.5v5"/><path d="M7 11.5l5 2 5-2"/><path d="M4 19.5c2.5-2.6 5.2-3.6 8-3.6s5.5 1 8 3.6"/><path d="M7.5 17.2 12 20l4.5-2.8"/></svg>',
     workouts: '<svg viewBox="0 0 24 24"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>',
@@ -1760,6 +1788,7 @@ dash.draw('updated', (el) => {
     return b;
   };
 
+  const byIdT = (id) => { const l = all(); return l ? l.find((x) => x.id === id) : null; };
   const all = () => { const r = dash.data('trackers'); return r.status === 'ok' && r.data && Array.isArray(r.data.trackers) ? r.data.trackers : null; };
   const stats = (t) => {
     const n = t.entries.length, target = Number(t.target) || 1, p = Math.min(100, 100 * n / target);
@@ -1780,6 +1809,7 @@ dash.draw('updated', (el) => {
       return [e.date ? fd(e.date, { weekday: 'short', month: 'short', day: 'numeric' }) : null, m].filter(Boolean).join(' · ') || 'Details not recorded';
     }
     if (t.kind === 'readings') return [e.date ? fd(e.date, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' }) : 'Date not recorded', e.note || null].filter(Boolean).join(' · ');
+    if (t.kind === 'posts') { const x = String(e.text || '').replace(/\s+/g, ' ').replace(/☀️/g, '').trim(); return [e.date ? fd(e.date, { month: 'short', day: 'numeric', year: 'numeric' }) : null, x ? (x.length > 120 ? x.slice(0, 118).replace(/\s+\S*$/, '') + '…' : x) : 'Title only'].filter(Boolean).join(' · '); }
     const bits = t.kind === 'movies' ? [e.director, e.year, e.genre, e.runtime ? e.runtime + ' min' : null] : [e.author, e.year, e.genre];
     return bits.filter((x) => x != null && x !== '').join(' · ') || 'Details not recorded';
   };
@@ -1887,7 +1917,7 @@ dash.draw('updated', (el) => {
     const hero = mk('div', 'hero tk-hero');
     const L = mk('div');
     L.append(mk('p', 'hero-k', 'Personal trackers'));
-    const h = mk('h2', 'hero-title'); h.append(document.createTextNode('Every book, film, rep, sit and sunrise, '), mk('span', '', 'counted.'));
+    const h = mk('h2', 'hero-title'); h.append(document.createTextNode('Every book, film, post, rep, sit and sunrise, '), mk('span', '', 'counted.'));
     L.append(h, mk('p', 'hero-sub', `${int(total)} finished across ${list.length} long-haul commitments. Each bar runs from 0 to 100%, and every new one you finish moves it forward. Open a tracker to see its full history.`));
     const nx = mk('div', 'tk-next');
     list.forEach((t) => { const s = stats(t); if (s.left <= 0) return; const c = mk('span', 'tk-' + (t.accent || 'violet')); c.append(mk('i'), document.createTextNode('Up next: '), mk('b', '', `${t.item || 'Entry'} #${s.n + 1}`)); nx.append(c); });
@@ -1922,8 +1952,41 @@ dash.draw('updated', (el) => {
   const tally = (arr, key) => { const m = new Map(); arr.forEach((e, i) => { const k = key(e); if (!k) return; const o = m.get(k) || { l: k, v: 0, i }; o.v++; m.set(k, o); }); return [...m.values()].sort((a, b) => b.v - a.v || a.i - b.i); };
   const yr = (e) => { const y = parseInt(String(e.year).replace(/\D+/g, ''), 10); return Number.isFinite(y) ? y : null; };
 
+  // Posts: a reader for the full texts, and a wall of every post toward the target.
+  const readAt = {};
+  const NAV = (d) => `<svg viewBox="0 0 24 24"><path d="${d ? 'm9 6 6 6-6 6' : 'm15 6-6 6 6 6'}"/></svg>`;
+  const paintReader = (box, t, i, anim) => {
+    const E = t.entries; i = Math.max(0, Math.min(E.length - 1, i)); readAt[t.id] = i;
+    const e = E[i] || {}, rd = mk('div', 'tk-rd' + (anim ? ' is-in' : ''));
+    const top = mk('div', 'tk-rd-top'); top.append(mk('span', 'tk-rd-no', `${t.item} #${String(i + 1).padStart(3, '0')}`));
+    if (e.date) top.append(mk('span', 'bt-note', fd(e.date)));
+    const nav = mk('div', 'tk-rd-nav'), pv = mk('button'), nx = mk('button');
+    pv.type = nx.type = 'button'; pv.innerHTML = NAV(0); nx.innerHTML = NAV(1); pv.setAttribute('aria-label', 'Previous post'); nx.setAttribute('aria-label', 'Next post');
+    pv.disabled = i <= 0; nx.disabled = i >= E.length - 1;
+    pv.addEventListener('click', () => paintReader(box, t, i - 1, true)); nx.addEventListener('click', () => paintReader(box, t, i + 1, true));
+    nav.append(pv, nx); top.append(nav);
+    rd.append(top, mk('h3', '', e.title || nameOf(t, e, i)));
+    const body = mk('div', 'tk-rd-body');
+    if (e.text) String(e.text).split(/\n\s*\n/).forEach((para) => body.append(mk('p', '', para.trim())));
+    else body.append(mk('p', 'tk-rd-none', 'Only the title of this post is saved.'));
+    rd.append(body);
+    box.querySelector('.tk-rd') ? box.querySelector('.tk-rd').replaceWith(rd) : box.append(rd);
+  };
+  const postCards = (t, s) => {
+    const E = t.entries, full = E.filter((e) => e.text).length;
+    const rc = card('Read the posts', `${full} of ${s.n} posts are saved in full. Use the arrows, or tap any post in the list below.`); rc.classList.add('tk-reader'); rc.id = 'tk-reader';
+    if (E.length) paintReader(rc, t, readAt[t.id] != null ? readAt[t.id] : E.length - 1, false);
+    const ms = t.milestones || [];
+    const wc = card(`The wall of ${int(s.target)}`, `One square per post. ${int(s.n)} lit, ${int(s.left)} to go. The outlined squares are milestones${ms.length ? ' (' + ms.map(int).join(', ') + ')' : ''}.`); wc.classList.add('tk-reader');
+    const wall = mk('div', 'tk-wall'); wall.setAttribute('role', 'img'); wall.setAttribute('aria-label', `${s.n} of ${s.target} posts`);
+    for (let i = 0; i < s.target; i++) { const c = mk('i', (i < s.n ? 'on' : i === s.n ? 'nx' : '') + (ms.includes(i + 1) ? ' mi' : '')); if (i < s.n) c.title = `#${i + 1} · ${E[i].title || ''}`; wall.append(c); }
+    const k = mk('div', 'tk-wallk'); k.append(mk('span', '', `#1`), mk('span', '', s.next ? `Next milestone: ${int(s.next)} (${int(s.next - s.n)} to go)` : ''), mk('span', '', `#${int(s.target)}`));
+    wc.append(wall, k);
+    return [rc, wc];
+  };
   const insights = (t, s) => {
     const out = [], E = t.entries;
+    if (t.kind === 'posts') return postCards(t, s);
     if (t.kind === 'movies') {
       const ys = E.map(yr).filter(Boolean), lo = Math.floor(Math.min(...ys) / 10) * 10, hi = Math.floor(Math.max(...ys) / 10) * 10, dec = [];
       for (let d = lo; d <= hi; d += 10) dec.push({ l: String(d), v: ys.filter((y) => y >= d && y < d + 10).length });
@@ -2031,6 +2094,7 @@ dash.draw('updated', (el) => {
   };
   const row = (t, e, i, latest) => {
     const li = mk('li');
+    if (t.kind === 'posts') { li.classList.add('can-read'); li.dataset.tkRead = i; li.tabIndex = 0; li.title = e.text ? 'Read this post' : 'Show this post'; }
     li.append(mk('span', 'tk-n', '#' + (i + 1)));
     const w = mk('span', 'tk-rw'); w.append(mk('b', '', nameOf(t, e, i)), mk('span', '', metaOf(t, e)));
     li.append(w);
@@ -2062,6 +2126,18 @@ dash.draw('updated', (el) => {
   };
 
   const detail = (root, t, list, anim) => {
+    if (!root._tkRead) {
+      root._tkRead = true;
+      const go = (ev) => {
+        const li = ev.target.closest('[data-tk-read]'), tt = root.dataset.tkId && byIdT(root.dataset.tkId);
+        if (!li || !tt || tt.kind !== 'posts') return;
+        if (ev.type === 'keydown' && ev.key !== 'Enter' && ev.key !== ' ') return;
+        const box = root.querySelector('#tk-reader'); if (!box) return;
+        ev.preventDefault(); paintReader(box, tt, Number(li.dataset.tkRead), true);
+        box.scrollIntoView({ behavior: reduce() ? 'auto' : 'smooth', block: 'start' });
+      };
+      root.addEventListener('click', go); root.addEventListener('keydown', go);
+    }
     const s = stats(t), acc = 'tk-' + (t.accent || 'violet');
     root.classList.add(acc); root.dataset.tkId = t.id;
     const back = mk('a', 'tk-back'); back.href = '#trackers'; back.dataset.tkOpen = ''; back.innerHTML = BACK; back.append(document.createTextNode('All trackers'));
@@ -2087,6 +2163,7 @@ dash.draw('updated', (el) => {
     if (s.next) tile('Next milestone', s.next, `${s.next - s.n} more ${t.unit}`); else tile('Milestones', 'All', 'every milestone reached');
     if (t.kind === 'movies') tile('Directors', tally(t.entries, (e) => e.director).length, 'different filmmakers');
     else if (t.kind === 'books') tile('Authors', tally(t.entries, (e) => e.author).length, 'different writers');
+    else if (t.kind === 'posts') tile('Full texts', t.entries.filter((e) => e.text).length, 'posts saved in full');
     else if (t.kind === 'workouts') tile('Variations', t.entries.reduce((a, e) => a + vars(e), 0), 'exercise variations in total');
     else { const st = pd(t.start || (t.entries[0] && t.entries[0].date) || iso(new Date())); const days = Math.max(1, Math.round((new Date().setHours(0, 0, 0, 0) - st) / 864e5) + 1); tile('Per week', s.n * 7 / days, 'average since the start', (v) => v.toFixed(1)); }
     root.append(tiles);
@@ -2105,8 +2182,8 @@ dash.draw('updated', (el) => {
     const lc = card(t.kind === 'readings' ? `Full ${one(t)} log` : t.kind === 'workouts' ? 'Every workout day' : `Every ${String(t.item || 'entry').toLowerCase()}, numbered`);
     const tools = mk('div', 'tk-tools');
     let search = null;
-    if (!dated) { search = mk('input', 'bt-search'); search.type = 'search'; search.placeholder = t.kind === 'movies' ? 'Search films, directors, years' : 'Search books, authors, categories'; search.value = S.q; search.setAttribute('aria-label', 'Search ' + t.title); tools.append(search); }
-    const sorts = [['new', 'Newest'], ['old', 'Oldest']].concat(dated ? [] : [['az', 'A–Z'], ['year', 'Year']]).concat(t.kind === 'movies' && t.entries.some((e) => e.imdb) ? [['rating', 'Rating']] : []);
+    if (!dated) { search = mk('input', 'bt-search'); search.type = 'search'; search.placeholder = t.kind === 'movies' ? 'Search films, directors, years' : t.kind === 'posts' ? 'Search titles and text' : 'Search books, authors, categories'; search.value = S.q; search.setAttribute('aria-label', 'Search ' + t.title); tools.append(search); }
+    const sorts = [['new', 'Newest'], ['old', 'Oldest']].concat(dated ? [] : t.kind === 'posts' ? [['az', 'A–Z']] : [['az', 'A–Z'], ['year', 'Year']]).concat(t.kind === 'movies' && t.entries.some((e) => e.imdb) ? [['rating', 'Rating']] : []);
     sorts.forEach(([k, l]) => { const c = mk('button', 'bt-chip', l); c.type = 'button'; c.dataset.tkSort = k; c.setAttribute('aria-pressed', String(S.sort === k)); tools.append(c); });
     const cnt = mk('span', 'tk-count'); tools.append(cnt);
     const all = mk('ul', 'tk-all');
@@ -2584,7 +2661,7 @@ dash.draw('updated', (el) => {
 
   const formView = (t, preset) => sheet(t.accent || 'violet', (sh, close) => {
     const s = K().stats(t), E = t.entries, item = t.item.toLowerCase();
-    const ttl = t.kind === 'books' ? 'Log a book you finished' : t.kind === 'movies' ? 'Log a film you watched' : t.kind === 'workouts' ? `Log workout day ${s.n + 1}` : `Log ${t.title} ${K().one(t)} #${s.n + 1}`;
+    const ttl = t.kind === 'posts' ? `Log post #${String(s.n + 1).padStart(3, '0')}` : t.kind === 'books' ? 'Log a book you finished' : t.kind === 'movies' ? 'Log a film you watched' : t.kind === 'workouts' ? `Log workout day ${s.n + 1}` : `Log ${t.title} ${K().one(t)} #${s.n + 1}`;
     head(sh, t, ttl, t.kind === 'readings' ? `${K().cap(K().many(t))} are counted, not days in a row.` : t.kind === 'workouts' ? 'Tap a muscle group once for each exercise variation you did.' : `This becomes ${t.item} #${s.n + 1} in ${t.title}.`, close);
     const form = mk('form', 'lg-form'); form.noValidate = true;
     const vals = (k) => E.map((e) => e[k]).filter(Boolean);
@@ -2603,6 +2680,15 @@ dash.draw('updated', (el) => {
       I.runtime = field(form, 'runtime', 'Minutes', { size: 'third', type: 'number', inputMode: 'numeric', placeholder: 'Optional' });
       I.imdb = field(form, 'imdb', 'IMDb', { size: 'third', type: 'number', inputMode: 'decimal', step: '0.1', min: 0, max: 10, placeholder: '8.1' });
       I.date = field(form, 'date', 'Watched on', { type: 'date', value: today(), max: today() });
+    } else if (t.kind === 'posts') {
+      I.title = field(form, 'title', `Post #${String(s.n + 1).padStart(3, '0')} title`, { req: true, main: true, placeholder: 'e.g. The Art of Looking Foolish' });
+      const f = mk('div', 'lg-f'), l = mk('label', '', 'Full text'); l.htmlFor = 'lg-text';
+      I.text = mk('textarea'); I.text.id = 'lg-text'; I.text.name = 'text'; I.text.rows = 7; I.text.placeholder = 'Optional. Paste the caption here and it is saved with the post.';
+      const hint = mk('p', 'lg-hint', 'Optional. Leave it empty to save just the title.');
+      I.text.addEventListener('input', () => { const w = I.text.value.trim().split(/\s+/).filter(Boolean).length; hint.textContent = w ? `${w} word${w > 1 ? 's' : ''} · about ${Math.max(1, Math.round(w / 200))} min read` : 'Optional. Leave it empty to save just the title.'; });
+      I.text.addEventListener('keydown', (e) => e.stopPropagation());
+      f.append(l, I.text, hint); form.append(f);
+      I.date = field(form, 'date', 'Posted on', { type: 'date', value: today(), max: today() });
     } else if (t.kind === 'workouts') {
       I.date = field(form, 'date', 'Workout date', { type: 'date', value: today(), max: today() });
       I._m = {};
@@ -2677,6 +2763,7 @@ dash.draw('updated', (el) => {
         const dup = E.findIndex((e) => String(e.title || '').toLowerCase() === entry.title.toLowerCase());
         if (dup >= 0 && !confirmDup) { warn.textContent = `Already logged as #${dup + 1}. Press ${go.textContent} again to log it a second time.`; warn.hidden = false; confirmDup = true; return; }
       }
+      if (t.kind === 'posts' && I.text && I.text.value.trim()) entry.text = I.text.value.replace(/\r\n/g, '\n').trim();
       if (t.kind === 'books') { if (v('author')) entry.author = v('author'); if (v('genre')) entry.genre = v('genre'); if (v('year')) entry.year = Number(v('year')); }
       if (t.kind === 'movies') { if (v('year')) entry.year = Number(v('year')); if (v('director')) entry.director = v('director'); if (v('genre')) entry.genre = v('genre'); if (v('runtime')) entry.runtime = Number(v('runtime')); if (v('imdb')) entry.imdb = Number(v('imdb')); }
       if (I._extra && I._picked === I.title.value) Object.keys(I._extra).forEach((k) => { if (I._extra[k] != null && I._extra[k] !== '') entry[k] = I._extra[k]; });

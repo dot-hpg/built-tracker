@@ -463,6 +463,46 @@
    "entries": [
 
    ]
+  },
+  {
+   "id": "insta-1000",
+   "item": "Post",
+   "title": "1,000 Philosophy Posts",
+   "subtitle": "Insta Post Philosophy, one idea at a time",
+   "kind": "posts",
+   "unit": "posts",
+   "verb": "published",
+   "target": 1000,
+   "milestones": [50, 100, 250, 500, 750, 1000],
+   "accent": "indigo",
+   "fields": {"title": "Title", "text": "Full post text", "date": "Posted on"},
+   "notes": ["The number of each post is its position: post #025 is the 25th entry.", "Posts 1 to 17 have titles only. Full texts are saved from post 18 on. Post 22 replaced the earlier 'You Can’t Explain What You Never Explored'."],
+   "entries": [
+    {"title": "Beyond Binary Thinking"},
+    {"title": "The Tyranny of Relevance"},
+    {"title": "Taking Sides Beyond Morality"},
+    {"title": "Love Beyond Expectations"},
+    {"title": "Emotion as a Conscious Tool"},
+    {"title": "Compassionate Parents, Secure Adults"},
+    {"title": "Lust for Life"},
+    {"title": "Awareness as a Conscious Tool"},
+    {"title": "Silent Prayers"},
+    {"title": "When Ego Blinds Self-Awareness"},
+    {"title": "Validation"},
+    {"title": "Trust as a Social Currency"},
+    {"title": "Unspoken Is Unknown"},
+    {"title": "Truth on Trial"},
+    {"title": "The Experiment of Becoming"},
+    {"title": "Sustainable Excellence"},
+    {"title": "Ambition as an Experiment"},
+    {"title": "The Art of Looking Foolish", "text": "Not everything valuable begins with reason. Some discoveries emerge from play, some from absurdity, and some from the courage to attempt what others consider foolish.\n\nThe desire to appear intelligent can become an obstacle to becoming intelligent. The moment you fear looking ridiculous, you begin avoiding the very experiments that could transform you.\n\nFoolishness is not wisdom, but the willingness to risk foolishness is often the price of discovering it. Sometimes, you must endure the humiliation of being inexperienced before earning the freedom of understanding.\n\nThe real foolishness is not looking like a fool while discovering something new, but protecting your image so fiercely that you never discover anything at all.\n\n☀️"},
+    {"title": "The Architecture of Self-Control", "text": "You may not be destroying your future. You may simply be entertaining yourself while it disappears. Every time you choose distraction over discipline, you abandon a brick in the architecture of your future.\n\nThe real danger of entertainment is that escaping your potential can feel better than confronting it. Your attention is your life in disguise; whatever controls it eventually controls what you become.\n\nThe biggest enemy of intelligence is an ego that would rather defend an illusion than confront the truth. Philosophy means nothing if it only makes you sound intelligent.\n\nYou don’t destroy your potential overnight. You surrender it slowly, through distractions, excuses, and unquestioned beliefs. Stop watching others build their lives while you postpone your own. Start building.\n\n☀️"},
+    {"title": "Learn Without Imitating", "text": "The successful person shows you what works. The failure shows you what breaks. The unhappy person reveals the price of choices that once looked attractive.\n\nLife is constantly exposing its experiments. Some people are living proof of a principle. Others are living proof of its consequences. You don’t need to worship the successful or look down on the failures. Both are data. Your ego wants heroes and villains. Your intelligence should be looking for patterns.\n\nThe biggest mistake is copying someone’s life without understanding the conditions that made it work. You see the result, imitate the behaviour, and ignore the circumstances. What made one person successful could destroy another.\n\nDon’t study people to become them. Study them to understand human nature, including the parts of yourself you’d rather not see.\n\nWisdom is learning from other people’s consequences before life forces you to experience them yourself.\n\nThe world is full of lessons. Most people are too busy judging the characters to understand the story.\n\nObserve. Question. Learn. But never surrender your own thinking.\n\n☀️"},
+    {"title": "The Psychology of Ruining Your Own Pleasure", "text": "Nobody ruins your happiness more than you. Not your enemy. Not your ex. Not your boss. You. And the scary part is, you do it while trying to enjoy it.\n\nHere’s how. You are eating your favourite food. But instead of tasting it, you start watching yourself eat it.\n\n“Am I enjoying this? Is it as good as last time?” That’s it. The taste is gone. Not from the plate. From your mind.\n\nNow the food is not the hero. YOU are the hero. And that’s the most boring movie ever made. This is what overthinking does. You get so busy monitoring life that you forget to live it.\n\nSame with love. Same with confidence. Same with happiness. The moment you ask, “Do I look confident?” You are not confident anymore. The moment you ask, “Am I happy?” You are not happy anymore. You are just a spectator, watching your own happiness from the last row.\n\nPeople think mindfulness means stopping your thoughts. No. Nobody can stop thoughts. Not even saints. Mindfulness is simply knowing this: A thought is just a thought. It is not an order. You are not its servant. Your mind will keep talking till your last breath. Commenting. Judging. Doubting. Like a critic who never bought a ticket.\n\nBut remember this: The critic doesn’t make the film. He only reviews it. So let your mind review your life. You go and make it. Because one day the film will end. And the only question that matters is, were you in it, or were you just watching?\n\n☀️"},
+    {"title": "The Art of Discovering Your Own Pleasure", "text": "Society teaches you to feel ashamed of your body, then expects you to understand your pleasure. It hides the script, forbids the questions, and blames you for not knowing the answers.\n\nGiving someone a guitar but forbidding them from touching it, then asking why they can’t make music, sounds ridiculous. Yet society does something similar with our bodies.\n\nPleasure begins with understanding yourself. Every body is different, and what feels good to one person may not feel the same to another. You discover what brings you comfort, satisfaction, and pleasure through curiosity, awareness, and exploration without shame.\n\nThe same applies to your fitness, career, and identity. You cannot discover what works for you by blindly copying someone else’s journey. You must explore, experiment, and learn from your own experience.\n\nYou cannot learn the music of your own body by copying someone else’s rhythm. You must learn to listen to yourself.\n\n☀️"},
+    {"title": "Temporary Imperfection Is Not Permanent Neglect", "text": "A garden can survive a season without flowers. It cannot survive forever without water.\n\nSometimes, building your future means accepting a temporarily imperfect present. You may sleep less during an important project, spend fewer evenings socialising, or postpone a personal goal to pursue a greater one. That is prioritisation, not failure.\n\nBut when temporary sacrifices become permanent habits, ambition begins destroying the very life it promised to elevate.\n\nThe wisdom is not in giving everything equal attention. It is in knowing what can wait, what must never be abandoned, and when to restore the balance.\n\nSacrifice with intention. Never confuse neglect with ambition.\n\n☀️"},
+    {"title": "The Life You Never Chose", "text": "You’re not confused.\nYou’re scared.\n\nA better job. A better partner. A better you.\nYou keep searching.\nBecause as long as you’re searching…\nyou never have to choose.\n\nYou research businesses. Never build one.\nCollect courses. Never master one.\nCompare chances. Never take one.\n\nYour mind calls it preparation.\nIt’s fear wearing intelligence as a costume.\n\nHere’s what nobody tells you:\nSome certainty only comes after commitment.\nYou can’t study your way into who you could become.\n\nEvery option you keep alive\nkills a life you could have lived.\n\nChoosing wrong isn’t the tragedy.\nThe tragedy is never letting anything become right.\n\nSo search until you understand.\nCompare until you can judge.\nThen choose. Commit.\n\nThe perfect life is never found.\nYou build it from an imperfect choice.\n\nStop collecting possibilities.\nGive one of them a chance to become something.\n\n☀️"}
+   ]
   }
  ]
 }
