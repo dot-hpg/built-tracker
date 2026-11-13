@@ -220,7 +220,7 @@
    "category": "NLP & deep learning",
    "focus": "Vision-language question answering over charts, tables and scanned PDFs",
    "level": "Advanced",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -231,8 +231,8 @@
    "category": "Web & product",
    "focus": "Blog post on fine-tuning vs RAG with your own benchmark numbers",
    "level": "Intermediate",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 21,
