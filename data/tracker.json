@@ -253,7 +253,7 @@
    "category": "MLOps & infra",
    "focus": "Data and prediction drift detection with alerts and a monitoring dashboard",
    "level": "Advanced",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -264,8 +264,8 @@
    "category": "MLOps & infra",
    "focus": "GitHub Actions to Docker to Cloud Run with automated tests and model gates",
    "level": "Advanced",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 24,
