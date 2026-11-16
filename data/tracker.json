@@ -260,12 +260,14 @@
    "day": 23,
    "date": "2026-11-16",
    "week": 4,
-   "project": "ML CI/CD",
+   "project": "Resume Design",
    "category": "MLOps & infra",
    "focus": "GitHub Actions to Docker to Cloud Run with automated tests and model gates",
    "level": "Advanced",
    "status": "Today",
-   "commits": 0
+   "commits": 1,
+   "plan_project": "ML CI/CD",
+   "plan_focus": "GitHub Actions to Docker to Cloud Run with automated tests and model gates"
   },
   {
    "day": 24,

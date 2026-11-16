@@ -321,6 +321,20 @@
    "status": "Active",
    "progress": 20,
    "evidence": "GitHub (auto)"
+  },
+  {
+   "name": "Resume Design",
+   "category": "New this sprint",
+   "description": "New repo picked up automatically. Tell Claude what it is to categorise it.",
+   "stack": "Python",
+   "repo": "resume-design",
+   "repo_url": "https://github.com/dot-hpg/resume-design",
+   "start": "2026-11-11",
+   "last": "2026-11-16",
+   "commits": 1,
+   "status": "Active",
+   "progress": 20,
+   "evidence": "GitHub (auto)"
   }
  ]
 }
