@@ -264,7 +264,7 @@
    "category": "MLOps & infra",
    "focus": "GitHub Actions to Docker to Cloud Run with automated tests and model gates",
    "level": "Advanced",
-   "status": "Today",
+   "status": "Done",
    "commits": 1,
    "plan_project": "ML CI/CD",
    "plan_focus": "GitHub Actions to Docker to Cloud Run with automated tests and model gates"
@@ -277,8 +277,8 @@
    "category": "MLOps & infra",
    "focus": "Autoscaled Twitter NER deployment with load tests and a latency SLO",
    "level": "Expert",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 25,
