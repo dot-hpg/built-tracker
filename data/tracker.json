@@ -277,7 +277,7 @@
    "category": "MLOps & infra",
    "focus": "Autoscaled Twitter NER deployment with load tests and a latency SLO",
    "level": "Expert",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -288,8 +288,8 @@
    "category": "Machine learning",
    "focus": "Two-tower retrieval plus a ranking model for e-commerce products",
    "level": "Expert",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 26,
