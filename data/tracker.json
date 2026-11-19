@@ -299,7 +299,7 @@
    "category": "Machine learning",
    "focus": "Compare a time-series transformer against LightGBM on the sales data",
    "level": "Advanced",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -310,8 +310,8 @@
    "category": "Web & product",
    "focus": "Portfolio refresh with an MLOps section and architecture diagrams",
    "level": "Intermediate",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 28,
