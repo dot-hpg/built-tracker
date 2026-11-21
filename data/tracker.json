@@ -321,7 +321,7 @@
    "category": "AI agents & LLM apps",
    "focus": "Playwright computer-use agent that completes a real multi-step web workflow",
    "level": "Expert",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -332,8 +332,8 @@
    "category": "AI agents & LLM apps",
    "focus": "Agent that reads an issue, writes a fix with tests and opens a pull request",
    "level": "Expert",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 30,
