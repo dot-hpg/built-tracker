@@ -310,7 +310,7 @@
    "category": "Web & product",
    "focus": "Portfolio refresh with an MLOps section and architecture diagrams",
    "level": "Intermediate",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -321,8 +321,8 @@
    "category": "AI agents & LLM apps",
    "focus": "Playwright computer-use agent that completes a real multi-step web workflow",
    "level": "Expert",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 29,
