@@ -332,7 +332,7 @@
    "category": "AI agents & LLM apps",
    "focus": "Agent that reads an issue, writes a fix with tests and opens a pull request",
    "level": "Expert",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -343,8 +343,8 @@
    "category": "Web & product",
    "focus": "Accounts, saved clients, payments and premium templates for BillBahi",
    "level": "Advanced",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 31,
