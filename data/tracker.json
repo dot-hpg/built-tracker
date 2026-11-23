@@ -343,7 +343,7 @@
    "category": "Web & product",
    "focus": "Accounts, saved clients, payments and premium templates for BillBahi",
    "level": "Advanced",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -354,8 +354,8 @@
    "category": "Web & product",
    "focus": "Browser extension that scores any job post against your resume in place",
    "level": "Advanced",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 32,
