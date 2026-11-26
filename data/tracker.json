@@ -365,7 +365,7 @@
    "category": "AI agents & LLM apps",
    "focus": "Private semantic search over your notes with hybrid retrieval and reranking, fully local",
    "level": "Advanced",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -376,8 +376,8 @@
    "category": "MLOps & infra",
    "focus": "OpenTelemetry tracing, token and cost dashboard for all your agents",
    "level": "Advanced",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 34,
