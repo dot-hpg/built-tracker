@@ -376,7 +376,7 @@
    "category": "MLOps & infra",
    "focus": "OpenTelemetry tracing, token and cost dashboard for all your agents",
    "level": "Advanced",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -387,8 +387,8 @@
    "category": "Web & product",
    "focus": "Demo videos for the agent builds and a launch post",
    "level": "Intermediate",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 35,
