@@ -387,7 +387,7 @@
    "category": "Web & product",
    "focus": "Demo videos for the agent builds and a launch post",
    "level": "Intermediate",
-   "status": "Today",
+   "status": "Missed",
    "commits": 0
   },
   {
@@ -398,8 +398,8 @@
    "category": "Deep learning from scratch",
    "focus": "Write and train a small GPT in PyTorch on English and Telugu text",
    "level": "Expert",
-   "status": "Planned",
-   "commits": null
+   "status": "Today",
+   "commits": 0
   },
   {
    "day": 36,
